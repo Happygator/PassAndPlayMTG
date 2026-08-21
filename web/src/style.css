@@ -19,6 +19,19 @@ button,
   touch-action: manipulation;
 }
 body { background: var(--bg); color: var(--text); font-family: system-ui, sans-serif; }
+/* No text selection anywhere (a finger drifting during hold-to-reveal would
+   otherwise start highlighting the build screen that appears under it);
+   form fields keep normal selection. */
+body {
+  -webkit-user-select: none;
+  user-select: none;
+}
+input,
+textarea,
+select {
+  -webkit-user-select: text;
+  user-select: text;
+}
 button, input, select { color: inherit; font: inherit; }
 button { cursor: pointer; }
 button[aria-disabled='true'] { cursor: not-allowed; opacity: 0.45; }
@@ -331,4 +344,50 @@ img,
   background: transparent;
   color: var(--accent);
   font-weight: 700;
+}
+
+/* Pai Gow: play-a-card-by-name field inline with each deck header */
+.match-deck-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.match-deck-header h2 {
+  flex: 0 1 auto;
+  margin: 0;
+  text-align: left;
+}
+.play-card {
+  display: flex;
+  flex: 1 1 160px;
+  min-width: 0;
+  gap: 6px;
+}
+.play-card input {
+  flex: 1;
+  min-width: 0;
+  min-height: 36px;
+  padding: 4px 8px;
+  border: 1px solid #434d5c;
+  border-radius: 8px;
+  background: var(--bg);
+  font-size: 16px; /* >= 16px: iOS does not auto-zoom the page on focus */
+}
+.play-card button {
+  flex: 0 0 auto;
+  min-height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+.play-card-miss {
+  margin: 0;
+  color: #ffb3a8;
+  font-size: 0.8rem;
+  text-align: center;
 }

@@ -95,7 +95,7 @@ export function BuildScreen({
   return (
     <main class={`screen build-screen player-${player + 1}`}>
       <header class="screen-header">
-        <h1>{name} -- build {decks.length} deck(s)</h1>
+        <h1>{name} -- build {decks.length} {decks.length === 1 ? 'deck' : 'decks'}</h1>
         <p>
           Tap a card to add it to the highlighted deck. Tap it again to remove it.
           Pinch to zoom.
