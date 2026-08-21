@@ -301,3 +301,25 @@ img { width: 100%; display: block; }
   color: white;
   font-weight: 800;
 }
+.pwa-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: min(100%, 720px);
+  margin: 0 auto;
+  padding: 10px 16px;
+  background: var(--panel);
+  border-bottom: 1px solid #303846;
+  font-size: 0.9rem;
+}
+.pwa-action {
+  flex: 0 0 auto;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--accent);
+  font-weight: 700;
+}
