@@ -21,8 +21,17 @@ button,
 body { background: var(--bg); color: var(--text); font-family: system-ui, sans-serif; }
 button, input, select { color: inherit; font: inherit; }
 button { cursor: pointer; }
-button:disabled { cursor: not-allowed; opacity: 0.45; }
+button[aria-disabled='true'] { cursor: not-allowed; opacity: 0.45; }
 img { width: 100%; display: block; }
+img,
+.card-thumb,
+.hold-button {
+  /* No iOS long-press image sheet / text selection: a held finger carries over
+     from the hold-to-reveal button onto the freshly revealed pool. */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
 .app-shell { min-height: 100vh; }
 .screen { width: min(100%, 720px); min-height: 100vh; margin: 0 auto; padding: 20px 16px 96px; }
 .centered-screen {
@@ -259,7 +268,7 @@ img { width: 100%; display: block; }
   width: 36px; min-height: 32px; border: 1px solid #434d5c; border-radius: 7px;
   background: var(--bg); color: var(--accent); font-weight: 800;
 }
-.order-arrows button:disabled { opacity: 0.35; }
+.order-arrows button[aria-disabled='true'] { opacity: 0.35; }
 .order-actions { display: flex; gap: 10px; }
 .order-actions button { flex: 1; }
 .secondary-button {

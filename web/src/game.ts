@@ -12,6 +12,9 @@ export function shuffle<T>(arr: readonly T[]): T[] {
   return a;
 }
 
+/** How a dealt pool is ordered on the deckbuilding screen. */
+export type PoolSort = 'cost' | 'type-then-cost';
+
 export interface ModeRules {
   label: string;
   /** One-line description shown under the mode selector. */
@@ -24,6 +27,8 @@ export interface ModeRules {
   hiddenCards: boolean;
   /** Result buttons for one matchup, in display order. */
   results: MatchResult[];
+  /** Pool display order: by cost, or grouped by card type first (§3.3). */
+  poolSort: PoolSort;
 }
 
 export const MODE_RULES: Record<GameMode, ModeRules> = {
@@ -35,6 +40,7 @@ export const MODE_RULES: Record<GameMode, ModeRules> = {
     allowBasics: true,
     hiddenCards: false,
     results: ['p1-sweep', 'p1-play', 'even', 'p2-play', 'p2-sweep'],
+    poolSort: 'cost',
   },
   paigow: {
     label: 'Pai Gow MTG',
@@ -44,6 +50,7 @@ export const MODE_RULES: Record<GameMode, ModeRules> = {
     allowBasics: false,
     hiddenCards: true,
     results: ['p1-win', 'draw', 'p2-win'],
+    poolSort: 'type-then-cost',
   },
 };
 
@@ -51,19 +58,20 @@ export const MODE_RULES: Record<GameMode, ModeRules> = {
 export function dealPools(
   cube: CubeData,
   poolSize: number,
-  allowRepeats = false
+  allowRepeats = false,
+  order: PoolSort = 'cost'
 ): [CardData[], CardData[]] {
   if (allowRepeats) {
     // Independent draws: seeing a card in your pool says nothing about the opponent's.
     return [
-      sortPool(shuffle(cube.cards).slice(0, poolSize)),
-      sortPool(shuffle(cube.cards).slice(0, poolSize)),
+      sortPool(shuffle(cube.cards).slice(0, poolSize), order),
+      sortPool(shuffle(cube.cards).slice(0, poolSize), order),
     ];
   }
   const shuffled = shuffle(cube.cards);
   return [
-    sortPool(shuffled.slice(0, poolSize)),
-    sortPool(shuffled.slice(poolSize, poolSize * 2)),
+    sortPool(shuffled.slice(0, poolSize), order),
+    sortPool(shuffled.slice(poolSize, poolSize * 2), order),
   ];
 }
 
@@ -77,10 +85,33 @@ export function colorBucket(colorIdentity: readonly string[]): number {
   return i === -1 ? 6 : i;
 }
 
-/** Sort by mana value, then color bucket, then name. Defensive against pre-cmc cube JSON. */
-export function sortPool(cards: readonly CardData[]): CardData[] {
+const TYPE_ORDER = [
+  'Creature',
+  'Planeswalker',
+  'Instant',
+  'Sorcery',
+  'Artifact',
+  'Enchantment',
+  'Battle',
+] as const;
+
+/**
+ * Sort bucket for a type line: creatures 0 … battles 6, lands 7, anything else 8.
+ * The front face decides for multi-faced cards; artifact lands are lands and
+ * artifact creatures are creatures (Land is checked first, then the list order).
+ */
+export function typeBucket(typeLine: string): number {
+  const front = (typeLine ?? '').split(' // ')[0];
+  if (/\bLand\b/.test(front)) return 7;
+  const i = TYPE_ORDER.findIndex((t) => new RegExp(`\\b${t}\\b`).test(front));
+  return i === -1 ? 8 : i;
+}
+
+/** Sort by (optionally) card type, then mana value, then color bucket, then name. */
+export function sortPool(cards: readonly CardData[], order: PoolSort = 'cost'): CardData[] {
   return cards.slice().sort(
     (a, b) =>
+      (order === 'type-then-cost' ? typeBucket(a.typeLine) - typeBucket(b.typeLine) : 0) ||
       (a.cmc ?? 0) - (b.cmc ?? 0) ||
       colorBucket(a.colorIdentity ?? []) - colorBucket(b.colorIdentity ?? []) ||
       a.name.localeCompare(b.name)

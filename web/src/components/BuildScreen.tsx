@@ -173,8 +173,9 @@ export function BuildScreen({
         <button
           type="button"
           class="submit-button"
-          disabled={!allComplete}
+          aria-disabled={!allComplete}
           onClick={() => {
+            if (!allComplete) return;
             if (decks.length > 1) onSubmit();
             else if (confirming) onSubmit();
             else setConfirming(true);

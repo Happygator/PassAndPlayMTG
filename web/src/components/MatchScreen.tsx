@@ -125,8 +125,11 @@ export function MatchScreen({ state, onRecord, onGoto }: MatchScreenProps) {
       <button
         type="button"
         class="text-button"
-        disabled={state.currentMatchup === 0}
-        onClick={() => onGoto(state.currentMatchup - 1)}
+        aria-disabled={state.currentMatchup === 0}
+        onClick={() => {
+          if (state.currentMatchup === 0) return;
+          onGoto(state.currentMatchup - 1);
+        }}
       >
         Previous
       </button>

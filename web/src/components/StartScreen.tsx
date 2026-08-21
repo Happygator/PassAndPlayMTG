@@ -169,8 +169,11 @@ export function StartScreen({ onStart, initial }: StartScreenProps) {
                 <button
                   type="button"
                   class={`mode-option${entryMode === mode ? ' selected' : ''}`}
-                  disabled={cubesFor(entryMode).length === 0}
-                  onClick={() => switchMode(entryMode)}
+                  aria-disabled={cubesFor(entryMode).length === 0}
+                  onClick={() => {
+                    if (cubesFor(entryMode).length === 0) return;
+                    switchMode(entryMode);
+                  }}
                 >
                   {rules.label}
                 </button>
@@ -208,30 +211,42 @@ export function StartScreen({ onStart, initial }: StartScreenProps) {
           <div class="stepper">
             <button
               type="button"
-              onClick={() => setPoolSize(Math.max(minimumPool, poolSize - 5))}
-              disabled={poolSize <= minimumPool}
+              onClick={() => {
+                if (poolSize <= minimumPool) return;
+                setPoolSize(Math.max(minimumPool, poolSize - 5));
+              }}
+              aria-disabled={poolSize <= minimumPool}
             >
               -5
             </button>
             <button
               type="button"
-              onClick={() => setPoolSize(Math.max(minimumPool, poolSize - 1))}
-              disabled={poolSize <= minimumPool}
+              onClick={() => {
+                if (poolSize <= minimumPool) return;
+                setPoolSize(Math.max(minimumPool, poolSize - 1));
+              }}
+              aria-disabled={poolSize <= minimumPool}
             >
               -1
             </button>
             <output>{poolSize}</output>
             <button
               type="button"
-              onClick={() => setPoolSize(Math.min(maximumPool, poolSize + 1))}
-              disabled={poolSize >= maximumPool}
+              onClick={() => {
+                if (poolSize >= maximumPool) return;
+                setPoolSize(Math.min(maximumPool, poolSize + 1));
+              }}
+              aria-disabled={poolSize >= maximumPool}
             >
               +1
             </button>
             <button
               type="button"
-              onClick={() => setPoolSize(Math.min(maximumPool, poolSize + 5))}
-              disabled={poolSize >= maximumPool}
+              onClick={() => {
+                if (poolSize >= maximumPool) return;
+                setPoolSize(Math.min(maximumPool, poolSize + 5));
+              }}
+              aria-disabled={poolSize >= maximumPool}
             >
               +5
             </button>
@@ -244,8 +259,11 @@ export function StartScreen({ onStart, initial }: StartScreenProps) {
           <div class="stepper">
             <button
               type="button"
-              onClick={() => setDecksPerPlayer(Math.max(1, decksPerPlayer - 1))}
-              disabled={decksPerPlayer <= 1}
+              onClick={() => {
+                if (decksPerPlayer <= 1) return;
+                setDecksPerPlayer(Math.max(1, decksPerPlayer - 1));
+              }}
+              aria-disabled={decksPerPlayer <= 1}
             >
               -1
             </button>
@@ -253,12 +271,13 @@ export function StartScreen({ onStart, initial }: StartScreenProps) {
             <button
               type="button"
               onClick={() => {
+                if (decksPerPlayer >= maximumDecks) return;
                 const next = Math.min(maximumDecks, decksPerPlayer + 1);
                 setDecksPerPlayer(next);
                 // Grow the pool so 3 cards per deck still fit (no card reuse across decks).
                 if (poolSize < 3 * next) setPoolSize(Math.min(maximumPool, 3 * next));
               }}
-              disabled={decksPerPlayer >= maximumDecks}
+              aria-disabled={decksPerPlayer >= maximumDecks}
             >
               +1
             </button>
@@ -287,8 +306,11 @@ export function StartScreen({ onStart, initial }: StartScreenProps) {
         <button
           type="button"
           class="primary-button"
-          disabled={!validConfig || starting}
-          onClick={startGame}
+          aria-disabled={!validConfig || starting}
+          onClick={() => {
+            if (!validConfig || starting) return;
+            startGame();
+          }}
         >
           {starting ? 'Loading cube...' : 'Start game'}
         </button>

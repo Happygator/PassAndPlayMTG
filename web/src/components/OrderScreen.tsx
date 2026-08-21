@@ -132,16 +132,22 @@ export function OrderScreen({ name, decks, pool, basics, onReorder, onBack, onCo
               <button
                 type="button"
                 aria-label={`Move deck in position ${index + 1} up`}
-                disabled={index === 0}
-                onClick={() => onReorder(index, index - 1)}
+                aria-disabled={index === 0}
+                onClick={() => {
+                  if (index === 0) return;
+                  onReorder(index, index - 1);
+                }}
               >
                 ↑
               </button>
               <button
                 type="button"
                 aria-label={`Move deck in position ${index + 1} down`}
-                disabled={index === decks.length - 1}
-                onClick={() => onReorder(index, index + 1)}
+                aria-disabled={index === decks.length - 1}
+                onClick={() => {
+                  if (index === decks.length - 1) return;
+                  onReorder(index, index + 1);
+                }}
               >
                 ↓
               </button>

@@ -57,7 +57,12 @@ function advanceAfterDecks(state: ActiveState, player: 0 | 1): ActiveState {
 
 function reducer(state: AppState, action: Action): AppState {
   if (action.type === 'start') {
-    const pools = dealPools(action.cube, action.config.poolSize, action.config.allowRepeats);
+    const pools = dealPools(
+      action.cube,
+      action.config.poolSize,
+      action.config.allowRepeats,
+      MODE_RULES[action.config.mode].poolSort
+    );
     return {
       phase: { t: 'handoff', player: 0 },
       config: action.config,
