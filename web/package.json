@@ -1,0 +1,21 @@
+{
+  "name": "three-card-blind",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "start": "node scripts/start.mjs",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "cube": "node scripts/build-cube.mjs"
+  },
+  "dependencies": {
+    "preact": "^10.22.0"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.9.0",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.0"
+  }
+}

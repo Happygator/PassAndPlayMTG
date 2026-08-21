@@ -1,0 +1,303 @@
+:root {
+  --bg: #14181f;
+  --panel: #1e242e;
+  --text: #e8e6e3;
+  --muted: #9aa3b2;
+  --accent: #d8b45a;
+  --p1: #4f8fd6;
+  --p2: #d6604f;
+  --even: #7a8494;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0 }
+/* Page-wide: allows panning and pinch-zoom but disables double-tap zoom,
+   so rapid taps anywhere (buttons, steppers, nearby whitespace) never zoom.
+   Descendants can still restrict further (.order-row uses touch-action: none). */
+html,
+button,
+.card-thumb {
+  touch-action: manipulation;
+}
+body { background: var(--bg); color: var(--text); font-family: system-ui, sans-serif; }
+button, input, select { color: inherit; font: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; opacity: 0.45; }
+img { width: 100%; display: block; }
+.app-shell { min-height: 100vh; }
+.screen { width: min(100%, 720px); min-height: 100vh; margin: 0 auto; padding: 20px 16px 96px; }
+.centered-screen {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 32px; text-align: center;
+}
+.panel { border: 1px solid #303846; border-radius: 12px; background: var(--panel); padding: 16px; }
+.title-block, .screen-header { margin-bottom: 20px; }
+.title-block h1, .screen-header h1 { color: var(--accent); font-size: clamp(1.7rem, 8vw, 2.5rem); }
+.title-block p, .screen-header p, .handoff-screen p { color: var(--muted); margin-top: 8px; }
+.setup-form { display: grid; gap: 18px; }
+.setup-form label, .field-group { display: grid; gap: 7px; font-weight: 650; }
+.setup-form .checkbox-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+.setup-form .checkbox-row input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  min-height: 0;
+  margin: 0;
+  accent-color: var(--accent);
+}
+.setup-form input, .setup-form select {
+  width: 100%; min-height: 46px; border: 1px solid #434d5c; border-radius: 8px;
+  background: var(--bg); padding: 10px 12px;
+}
+.muted, .field-group small { color: var(--muted); font-weight: 400; }
+.mode-switch { display: flex; gap: 8px; }
+.mode-option { flex: 1; min-height: 46px; border: 1px solid var(--accent); border-radius: 8px; background: transparent; font-weight: 700; color: inherit; }
+.mode-option.selected { background: var(--accent); color: #17130a; }
+.stepper { display: flex; align-items: center; gap: 8px; }
+.stepper button {
+  flex: 0 0 auto; min-height: 44px; min-width: 44px; padding: 0 6px;
+  border: 1px solid var(--accent); border-radius: 8px;
+  background: transparent; font-size: 1.2rem;
+}
+.stepper output { flex: 1; text-align: center; font-size: 1.2rem; }
+.primary-button, .submit-button {
+  width: 100%; min-height: 52px; border: 0; border-radius: 10px;
+  background: var(--accent); color: #17130a; padding: 12px 16px; font-weight: 800;
+}
+.error-card, .error-text { color: #ffb3a8; }
+.handoff-screen h1 { font-size: clamp(1.7rem, 8vw, 2.4rem); }
+.hold-button {
+  position: relative; width: min(100%, 420px); min-height: 72px; overflow: hidden;
+  border: 2px solid var(--accent); border-radius: 14px; background: var(--panel);
+  font-size: 1.2rem; font-weight: 800;
+}
+.hold-button::before {
+  position: absolute; inset: 0; width: 0; background: var(--accent); content: "";
+  opacity: 0.35; transition: width 0s;
+}
+.hold-button.holding::before { width: 100%; transition: width 600ms linear; }
+.hold-button span { position: relative; z-index: 1; }
+.deck-list, .basics-section, .pool-section, .results-section, .full-pools {
+  display: grid; gap: 12px; margin-bottom: 22px;
+}
+.deck-row {
+  border: 2px solid #37404d; border-radius: 12px; background: var(--panel); padding: 10px;
+}
+.deck-row h2, .basics-section h2, .pool-section h2, .results-section h2, .full-pools h2 {
+  margin-bottom: 9px; font-size: 1.05rem;
+}
+.active-deck { border-color: var(--accent); box-shadow: 0 0 0 2px rgb(216 180 90 / 18%); }
+.deck-slots, .match-card-row {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 140px));
+  gap: 8px; justify-content: center;
+}
+.card-thumb, .empty-slot {
+  position: relative; width: 100%; max-width: 140px; aspect-ratio: 63 / 88; border-radius: 4.5%;
+}
+.card-thumb { overflow: hidden; background: #0b0e13; }
+.card-back {
+  background: repeating-linear-gradient(45deg, #2a3242, #2a3242 6px, #1e242e 6px, #1e242e 12px);
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.card-thumb img { height: 100%; object-fit: cover; }
+.empty-slot { border: 2px dashed var(--muted); background: rgb(255 255 255 / 3%); }
+.basics-bar {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 10px; padding-bottom: 6px;
+}
+.basics-bar .card-thumb { width: 29%; max-width: none; }
+.pool-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(88px, 1fr)); gap: 8px;
+}
+.pool-grid .card-thumb { max-width: none; }
+.used-card { opacity: 0.38; }
+.deck-badge {
+  position: absolute; right: 4px; bottom: 4px; border-radius: 999px;
+  background: rgb(10 13 18 / 88%); padding: 3px 7px; font-size: 0.72rem; font-weight: 800;
+}
+.sticky-action {
+  position: fixed; z-index: 5; right: 0; bottom: 0; left: 0;
+  border-top: 1px solid #343d49; background: rgb(20 24 31 / 96%);
+  padding: 12px max(16px, calc((100vw - 688px) / 2));
+}
+.match-deck { display: grid; gap: 8px; }
+.match-deck h2, .match-deck h3 { text-align: center; font-size: 1rem; }
+.versus { color: var(--muted); margin: 9px 0; text-align: center; font-weight: 800; }
+.running-tally { font-weight: 700; }
+.result-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.8fr;
+  grid-template-areas:
+    'p1s p1p even'
+    'p2s p2p even';
+  gap: 8px;
+  margin-top: 14px;
+}
+.result-buttons button {
+  width: 100%; border: 2px solid transparent; border-radius: 9px;
+  color: white; font-weight: 750;
+  min-height: 52px; padding: 8px 6px; font-size: 0.85rem; white-space: normal;
+}
+.result-buttons button:nth-child(1) { grid-area: p1s; }
+.result-buttons button:nth-child(2) { grid-area: p1p; }
+.result-buttons button:nth-child(3) { grid-area: even; }
+.result-buttons button:nth-child(4) { grid-area: p2p; }
+.result-buttons button:nth-child(5) { grid-area: p2s; }
+.result-buttons.results-3 {
+  grid-template-columns: 1fr 0.8fr 1fr;
+  grid-template-areas: 'p1s even p2s';
+}
+.result-buttons.results-3 button:nth-child(1) { grid-area: p1s; }
+.result-buttons.results-3 button:nth-child(2) { grid-area: even; }
+.result-buttons.results-3 button:nth-child(3) { grid-area: p2s; }
+.p1-result, .p1-favored { background: var(--p1); }
+.p2-result, .p2-favored { background: var(--p2); }
+.even-result, .even-favored { background: var(--even); }
+.result-buttons .selected-result { border-color: var(--accent); box-shadow: 0 0 0 2px var(--bg); }
+.text-button {
+  border: 0; background: transparent; color: var(--accent); margin-top: 16px; padding: 12px 0;
+}
+.matchup-summary { display: grid; gap: 5px; }
+.matchup-summary button {
+  min-height: 42px; border: 0; border-bottom: 1px solid #39424f;
+  background: transparent; text-align: left;
+}
+.confirm-results { margin-top: 18px; }
+.play-again { margin: 4px 0 12px; }
+.winner-banner {
+  border: 2px solid var(--accent); border-radius: 14px; background: rgb(216 180 90 / 12%);
+  margin-bottom: 24px; padding: 22px 12px; text-align: center;
+}
+.table-scroll { overflow-x: auto; }
+.results-matrix {
+  width: 100%; border-collapse: separate; border-spacing: 4px; text-align: center;
+}
+.results-matrix th { color: var(--muted); padding: 7px; }
+.results-matrix button {
+  min-width: 58px; min-height: 46px; border: 0; border-radius: 7px;
+  color: white; font-weight: 800;
+}
+.pairing-detail { display: grid; gap: 16px; margin-bottom: 24px; }
+.pool-reveal { display: grid; gap: 9px; margin-bottom: 14px; }
+.match-screen {
+  padding-top: 14px;
+  padding-bottom: 14px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+.match-screen .screen-header { margin-bottom: 10px; }
+.match-screen .screen-header h1 { font-size: 1.05rem; margin-bottom: 2px; }
+.match-screen .running-tally { font-size: 0.9rem; }
+.match-screen .match-deck {
+  gap: 5px;
+  flex: 1;
+  align-content: center;
+}
+.match-screen .match-deck h2 { font-size: 0.9rem; margin-bottom: 2px; }
+.match-screen .match-card-row {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+.match-card-row .card-thumb {
+  /* Viewport-relative: three cards must fit the row width (30vw) and two
+     card rows plus header/buttons/Previous must fit the height (16dvh).
+     Was 30% of a 140px grid track, which rendered ~42px cards. */
+  width: min(30vw, 16vh);
+  width: min(30vw, 16dvh);
+  max-width: 140px;
+}
+.match-screen .versus { margin: 4px 0; }
+.match-screen .result-buttons { margin-top: 10px; }
+.match-screen .text-button { margin-top: 8px; padding: 8px 0; }
+@media (min-width: 600px) {
+  .screen { padding-right: 24px; padding-left: 24px; }
+}
+
+.order-screen {
+  display: flex; flex-direction: column; gap: 18px; width: min(100%, 720px);
+  min-height: 100vh; margin: 0 auto; padding: 20px 16px 36px;
+}
+.order-screen h2 { color: var(--accent); }
+.order-screen .hint { color: var(--muted); line-height: 1.45; }
+.order-list { display: flex; flex-direction: column; gap: 10px; }
+.order-row {
+  display: flex; align-items: center; gap: 10px; border: 1px solid #303846;
+  border-radius: 12px; background: var(--panel); padding: 10px;
+  touch-action: none; user-select: none; position: relative;
+}
+.order-list.drag-active .order-row {
+  transition: transform 140ms ease;
+}
+.order-row.dragging {
+  border-color: var(--accent); box-shadow: 0 8px 20px rgb(0 0 0 / 32%);
+  transition: none; z-index: 2;
+}
+.order-row.settling {
+  transition: transform 140ms ease;
+  z-index: 2;
+}
+.order-position { min-width: 62px; font-weight: 800; }
+.order-cards { display: flex; gap: 6px; min-width: 0; }
+.order-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.order-deck-names { margin: 0; font-size: 0.85rem; color: var(--muted); }
+.order-cards .card-thumb { width: 56px; flex: 0 1 56px; }
+.order-arrows { display: flex; flex-direction: column; gap: 4px; }
+.order-arrows button {
+  width: 36px; min-height: 32px; border: 1px solid #434d5c; border-radius: 7px;
+  background: var(--bg); color: var(--accent); font-weight: 800;
+}
+.order-arrows button:disabled { opacity: 0.35; }
+.order-actions { display: flex; gap: 10px; }
+.order-actions button { flex: 1; }
+.secondary-button {
+  width: 100%; min-height: 52px; border: 1px solid var(--accent); border-radius: 10px;
+  background: var(--panel); color: var(--accent); padding: 12px 16px; font-weight: 800;
+}
+.show-pools {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  margin: 0 auto 22px;
+  text-align: center;
+}
+.pairing-results { display: flex; flex-direction: column; gap: 8px; }
+.pairing-result {
+  display: grid;
+  gap: 8px;
+  border: 1px solid #303846;
+  border-radius: 12px;
+  background: var(--panel);
+  padding: 10px 12px;
+  text-align: center;
+}
+.pairing-title {
+  color: var(--text);
+  font-size: 1rem;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #303846;
+}
+.pairing-body { display: grid; gap: 3px; }
+.pairing-deck { font-size: 0.92rem; }
+.pairing-vs { color: var(--muted); font-size: 0.85rem; font-weight: 700; }
+.pairing-outcome {
+  justify-self: center;
+  min-width: 96px;
+  min-height: 40px;
+  border: 0;
+  border-radius: 8px;
+  color: white;
+  font-weight: 800;
+}

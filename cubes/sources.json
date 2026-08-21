@@ -1,0 +1,16 @@
+[
+  {
+    "id": "3cb-cube",
+    "name": "The 3CB Cube",
+    "description": "Mini cube created for 3CB sealed",
+    "modes": ["3cb"],
+    "moxfield": "https://moxfield.com/decks/QzyKhcI8HUiphceMw1JthQ"
+  },
+  {
+    "id": "paigow-cube",
+    "name": "Pai Gow Sample Cube",
+    "description": "Pai Gow Cube with a high power level",
+    "modes": ["paigow"],
+    "moxfield": "https://moxfield.com/decks/iYZeX_DgQkKEBxR0xbK83w"
+  }
+]

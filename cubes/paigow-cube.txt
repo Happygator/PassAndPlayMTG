@@ -1,0 +1,60 @@
+1 Abstergo Entertainment (ACR) 79
+1 Abstruse Appropriation (MH3) 177
+1 Angel of Sanctions (C19) 61
+1 Archenemy's Charm (EOE) 88
+1 Beacon of Tomorrows (DDS) 2
+1 Countersquall (PLST) DDH-59
+1 Davriel, Rogue Shadowmage (WAR) 83
+1 Deflecting Palm (MKC) 205
+1 Depth Defiler (MH3) 58
+1 Disdainful Stroke (WOE) 47
+1 Dovin's Veto (WAR) 193
+1 Dragonwing Glider (ONE) 128
+1 Dryad's Revival (MID) 183
+1 Elixir of Immortality (C21) 243
+1 Ertai Resurrected (DMU) 199
+1 Evincar's Justice (CMA) 58
+1 Faerie Macabre (GVL) 42
+1 Fangkeeper's Familiar (TDM) 183
+1 Fleetfoot Dancer (SNC) 188
+1 Fleetwheel Cruiser (KLD) 214
+1 Fold into Aether (5DN) 31
+1 Frenzied Baloth (EOE) 183
+1 Glen Elendra Archmage (UMA) 58
+1 Grixis Slavedriver (MM3) 74
+1 Hexing Squelcher (ECL) 145
+1 Hit-Monkey (MSC) 723
+1 Honored Hydra (AKH) 172
+1 Inkshield (SOC) 316
+1 Kaya's Guile (MH1) 205
+1 Launch Mishap (J22) 14
+1 Lava Axe (M19) 150
+1 Leyline of Anticipation (CLB) 726
+1 Lier, Disciple of the Drowned (TDC) 157
+1 Lingering Souls (TDC) 123
+1 Live or Die (DSK) 107
+1 Maze of Ith (DMR) 250
+1 Meteor Swarm (AFR) 155
+1 Murderous Rider // Swift End (MOC) 258
+1 Pontiff of Blight (CLB) 768
+1 Providence (EMN) 37
+1 Prowling Serpopard (AKH) 180
+1 Resounding Silence (ALA) 22
+1 Sage of the Skies (TDM) 22
+1 Seasons Past (SOI) 226
+1 Seht's Tiger (C17) 72
+1 Settle the Wreckage (HOB) 26
+1 Slice from the Shadows (MKM) 103
+1 Songcrafter Mage (TDM) 225
+1 Spell Queller (INR) 248
+1 Summary Dismissal (INR) 88
+1 Summon: Primal Odin (FIN) 121
+1 Sundering Archaic (SOS) 3
+1 Sword Coast Serpent // Capsizing Wave (CLB) 99
+1 The Fantasticar (MSC) 104
+1 Timeless Witness (TDC) 274
+1 Twinmaw Stormbrood // Charring Bite (TDM) 232
+1 Urza's Factory (TSR) 288
+1 Vindicate (MH2) 294
+1 Vraska's Contempt (XLN) 129
+1 Wretched Confluence (CMM) 200
