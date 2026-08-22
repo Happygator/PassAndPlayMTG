@@ -66,6 +66,8 @@ export type MatchResult =
 export interface Matchup {
   p1Deck: number;
   p2Deck: number;
+  /** Who is on the play (0 = player 1, 1 = player 2). Only set by modes with randomFirstPlayer. */
+  onPlay?: 0 | 1;
   result: MatchResult | null;
 }
 

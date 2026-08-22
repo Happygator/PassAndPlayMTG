@@ -1,5 +1,5 @@
 import { useState } from 'preact/hooks';
-import { MODE_RULES, formatPoints, resolveRef, resultButtonLabel, resultSide, tally } from '../game';
+import { MODE_RULES, resolveRef, resultButtonLabel, resultSide } from '../game';
 import type { CardData, DeckSlots, GameState, MatchResult } from '../types';
 
 interface MatchScreenProps {
@@ -16,7 +16,8 @@ function frontName(name: string): string {
 }
 
 interface MatchDeckProps {
-  label: string;
+  name: string;
+  deckNumber: number;
   deck: DeckSlots;
   pool: CardData[];
   basics: CardData[];
@@ -27,10 +28,13 @@ interface MatchDeckProps {
   onReveal: (key: string) => void;
   /** Lowercased front-face names of every card in the cube (for auto-reveal on a picked suggestion). */
   cubeNames: Set<string>;
+  /** Player 2's label and reveal field sit BELOW the cards, mirroring player 1 across the "vs". */
+  labelBelow: boolean;
 }
 
 function MatchDeck({
-  label,
+  name,
+  deckNumber,
   deck,
   pool,
   basics,
@@ -40,9 +44,11 @@ function MatchDeck({
   revealed,
   onReveal,
   cubeNames,
+  labelBelow,
 }: MatchDeckProps) {
   const [query, setQuery] = useState('');
   const [miss, setMiss] = useState(false);
+  const playerClass = player === 0 ? 'p1-text' : 'p2-text';
 
   // Reveal-by-name: the player says what they are casting instead of guessing
   // a position, so the wrong card can never be flipped by mistake.
@@ -62,66 +68,86 @@ function MatchDeck({
     return true;
   };
 
+  const header = (
+    <div class="match-deck-header">
+      <h2>
+        <span class={playerClass}>{name}</span> -- Deck {deckNumber}
+      </h2>
+      {hidden && (
+        <form
+          class="play-card"
+          onSubmit={(event) => {
+            event.preventDefault();
+            revealByName(query);
+          }}
+        >
+          <input
+            type="text"
+            list={NAMES_LIST_ID}
+            placeholder="Reveal by name..."
+            aria-label={`${name}, deck ${deckNumber}: reveal a card by name`}
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck={false}
+            value={query}
+            onInput={(event) => {
+              setQuery(event.currentTarget.value);
+              setMiss(false);
+            }}
+            onChange={(event) => {
+              // Fires when a suggestion is picked: reveal immediately if it is a real cube card.
+              const value = event.currentTarget.value;
+              if (cubeNames.has(frontName(value))) revealByName(value);
+            }}
+          />
+          <button type="submit">Reveal</button>
+        </form>
+      )}
+    </div>
+  );
+  const missLine = hidden && miss ? <p class="play-card-miss">Not in this deck.</p> : null;
+  const cards = (
+    <div class="match-card-row">
+      {deck.map((ref, index) => {
+        if (ref === null) return <div class="empty-slot" key={index} />;
+        const key = `${matchupIndex}:${player}:${index}`;
+        if (hidden && !revealed.has(key)) {
+          return (
+            <button
+              type="button"
+              class="card-thumb card-back"
+              aria-label={`Reveal card ${index + 1}`}
+              onClick={() => onReveal(key)}
+            >
+              Reveal
+            </button>
+          );
+        }
+        const card = resolveRef(ref, pool, basics);
+        return (
+          <div class="card-thumb" key={index}>
+            <img src={`./${card.imagePath}`} alt={card.name} />
+          </div>
+        );
+      })}
+    </div>
+  );
+
   return (
     <section class="match-deck">
-      <div class="match-deck-header">
-        <h2>{label}</h2>
-        {hidden && (
-          <form
-            class="play-card"
-            onSubmit={(event) => {
-              event.preventDefault();
-              revealByName(query);
-            }}
-          >
-            <input
-              type="text"
-              list={NAMES_LIST_ID}
-              placeholder="Play a card..."
-              aria-label={`${label}: play a card by name`}
-              autocomplete="off"
-              autocapitalize="off"
-              spellcheck={false}
-              value={query}
-              onInput={(event) => {
-                setQuery(event.currentTarget.value);
-                setMiss(false);
-              }}
-              onChange={(event) => {
-                // Fires when a suggestion is picked: reveal immediately if it is a real cube card.
-                const value = event.currentTarget.value;
-                if (cubeNames.has(frontName(value))) revealByName(value);
-              }}
-            />
-            <button type="submit">Reveal</button>
-          </form>
-        )}
-      </div>
-      {hidden && miss && <p class="play-card-miss">Not in this deck.</p>}
-      <div class="match-card-row">
-        {deck.map((ref, index) => {
-          if (ref === null) return <div class="empty-slot" key={index} />;
-          const key = `${matchupIndex}:${player}:${index}`;
-          if (hidden && !revealed.has(key)) {
-            return (
-              <button
-                type="button"
-                class="card-thumb card-back"
-                aria-label={`Reveal card ${index + 1}`}
-                onClick={() => onReveal(key)}
-              >
-                Reveal
-              </button>
-            );
-          }
-          const card = resolveRef(ref, pool, basics);
-          return (
-            <div class="card-thumb" key={index}>
-              <img src={`./${card.imagePath}`} alt={card.name} />
-            </div>
-          );
-        })}
-      </div>
+      {labelBelow ? (
+        <>
+          {cards}
+          {header}
+          {missLine}
+        </>
+      ) : (
+        <>
+          {header}
+          {missLine}
+          {cards}
+        </>
+      )}
     </section>
   );
 }
@@ -129,15 +155,8 @@ function MatchDeck({
 export function MatchScreen({ state, onRecord, onGoto }: MatchScreenProps) {
   const rules = MODE_RULES[state.config.mode];
   const [revealed, setRevealed] = useState<Set<string>>(() => new Set());
-  const [playerOnePoints, playerTwoPoints] = tally(state.matchups);
   const playerOneName = state.config.playerNames[0];
   const playerTwoName = state.config.playerNames[1];
-  const tallyLine = (
-    <p class="running-tally">
-      {playerOneName} {formatPoints(playerOnePoints)} - {formatPoints(playerTwoPoints)}{' '}
-      {playerTwoName}
-    </p>
-  );
 
   // Suggestions span the whole cube so the list reveals nothing about either deck.
   const allCards = [...state.cube.cards, ...state.cube.basics];
@@ -150,9 +169,16 @@ export function MatchScreen({ state, onRecord, onGoto }: MatchScreenProps) {
 
   return (
     <main class="screen match-screen">
-      <header class="screen-header">
+      <header class="screen-header match-header">
         <h1>Matchup {state.currentMatchup + 1} of {state.matchups.length}</h1>
-        {tallyLine}
+        {matchup.onPlay !== undefined && (
+          <p class="first-player">
+            <span class={matchup.onPlay === 0 ? 'p1-text' : 'p2-text'}>
+              {state.config.playerNames[matchup.onPlay]}
+            </span>{' '}
+            goes first
+          </p>
+        )}
       </header>
 
       {rules.hiddenCards && (
@@ -164,7 +190,8 @@ export function MatchScreen({ state, onRecord, onGoto }: MatchScreenProps) {
       )}
 
       <MatchDeck
-        label={`${playerOneName} -- Deck ${matchup.p1Deck + 1}`}
+        name={playerOneName}
+        deckNumber={matchup.p1Deck + 1}
         deck={state.decks[0][matchup.p1Deck]}
         pool={state.pools[0]}
         basics={state.cube.basics}
@@ -174,10 +201,12 @@ export function MatchScreen({ state, onRecord, onGoto }: MatchScreenProps) {
         revealed={revealed}
         onReveal={reveal}
         cubeNames={cubeNames}
+        labelBelow={false}
       />
       <div class="versus">vs</div>
       <MatchDeck
-        label={`${playerTwoName} -- Deck ${matchup.p2Deck + 1}`}
+        name={playerTwoName}
+        deckNumber={matchup.p2Deck + 1}
         deck={state.decks[1][matchup.p2Deck]}
         pool={state.pools[1]}
         basics={state.cube.basics}
@@ -187,6 +216,7 @@ export function MatchScreen({ state, onRecord, onGoto }: MatchScreenProps) {
         revealed={revealed}
         onReveal={reveal}
         cubeNames={cubeNames}
+        labelBelow={true}
       />
 
       <div class={`result-buttons results-${rules.results.length}`}>

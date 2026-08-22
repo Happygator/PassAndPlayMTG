@@ -29,6 +29,8 @@ export interface ModeRules {
   results: MatchResult[];
   /** Pool display order: by cost, or grouped by card type first (§3.3). */
   poolSort: PoolSort;
+  /** Whether each matchup randomly assigns who goes first (single best-of-one games). */
+  randomFirstPlayer: boolean;
 }
 
 export const MODE_RULES: Record<GameMode, ModeRules> = {
@@ -41,6 +43,7 @@ export const MODE_RULES: Record<GameMode, ModeRules> = {
     hiddenCards: false,
     results: ['p1-sweep', 'p1-play', 'even', 'p2-play', 'p2-sweep'],
     poolSort: 'cost',
+    randomFirstPlayer: false,
   },
   paigow: {
     label: 'Pai Gow MTG',
@@ -51,6 +54,7 @@ export const MODE_RULES: Record<GameMode, ModeRules> = {
     hiddenCards: true,
     results: ['p1-win', 'draw', 'p2-win'],
     poolSort: 'type-then-cost',
+    randomFirstPlayer: true,
   },
 };
 
@@ -122,9 +126,30 @@ export function emptyDecks(decksPerPlayer: number): DeckSlots[] {
   return Array.from({ length: decksPerPlayer }, () => [null, null, null] as DeckSlots);
 }
 
-/** One matchup per deck position: each player's deck k plays only the opponent's deck k. */
-export function createMatchups(n: number): Matchup[] {
-  return Array.from({ length: n }, (_, i) => ({ p1Deck: i, p2Deck: i, result: null }));
+/** Fair coin flip via crypto randomness: 0 = player 1, 1 = player 2. */
+export function coinFlip(): 0 | 1 {
+  const buf = new Uint8Array(1);
+  crypto.getRandomValues(buf);
+  return (buf[0] & 1) as 0 | 1;
+}
+
+/**
+ * One matchup per deck position: each player's deck k plays only the opponent's
+ * deck k. With randomFirstPlayer, each matchup also fixes who is on the play,
+ * balanced across the game: each player is on the play in floor(n / 2) games,
+ * an odd leftover game goes to a coin flip, and the order is shuffled.
+ */
+export function createMatchups(n: number, randomFirstPlayer = false): Matchup[] {
+  const half = Math.floor(n / 2);
+  const firsts: (0 | 1)[] = [...new Array<0 | 1>(half).fill(0), ...new Array<0 | 1>(half).fill(1)];
+  if (n % 2 === 1) firsts.push(coinFlip());
+  const order = shuffle(firsts);
+  return Array.from({ length: n }, (_, i) => ({
+    p1Deck: i,
+    p2Deck: i,
+    result: null,
+    ...(randomFirstPlayer ? { onPlay: order[i] } : {}),
+  }));
 }
 
 /** Game points [p1, p2]: 3CB results span a 2-game match, Pai Gow results a single game; win = 1, draw = ½. */

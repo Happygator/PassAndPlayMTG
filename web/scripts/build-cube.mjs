@@ -3,7 +3,11 @@
 // the Scryfall API, downloads card images into public/cards/, and emits cube
 // JSON + an index into public/cubes/. Runtime never touches any API.
 //
-// Usage: node scripts/build-cube.mjs   (requires Node 18+, network access)
+// Usage: node scripts/build-cube.mjs [--refresh]   (requires Node 18+, network access)
+// - Card data is cached in cubes/card-cache.json keyed by set/collector number,
+//   so an unchanged card costs no API call, and a card whose image is already on
+//   disk costs no network at all. --refresh ignores the cache and re-resolves
+//   everything (use if Scryfall corrected a card's data).
 // - A Moxfield fetch failure falls back to the last synced cubes/<id>.txt with
 //   a warning, so a Moxfield outage or block can never break the build.
 // - Any card that fails to resolve to an image FAILS the build (exit 1) —
@@ -18,6 +22,8 @@ const ROOT = new URL('..', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '
 const CUBES_DIR = join(ROOT, '..', 'cubes');
 const OUT_CARDS = join(ROOT, 'public', 'cards');
 const OUT_CUBES = join(ROOT, 'public', 'cubes');
+const CACHE_PATH = join(CUBES_DIR, 'card-cache.json');
+const REFRESH = process.argv.includes('--refresh');
 
 const API_DELAY_MS = 120;
 const HEADERS = {
@@ -109,6 +115,24 @@ async function syncSources() {
   return meta;
 }
 
+function loadCache() {
+  if (REFRESH || !existsSync(CACHE_PATH)) return { version: 1, cards: {}, basics: {} };
+  try {
+    const parsed = JSON.parse(readFileSync(CACHE_PATH, 'utf8'));
+    if (parsed && parsed.version === 1 && parsed.cards && parsed.basics) return parsed;
+  } catch {
+    // fall through to a fresh cache
+  }
+  console.warn('WARNING: card-cache.json unreadable; rebuilding it from Scryfall.');
+  return { version: 1, cards: {}, basics: {} };
+}
+
+function saveCache(cache) {
+  const sortKeys = (obj) => Object.fromEntries(Object.keys(obj).sort().map((k) => [k, obj[k]]));
+  const out = { version: 1, cards: sortKeys(cache.cards), basics: sortKeys(cache.basics) };
+  writeFileSync(CACHE_PATH, JSON.stringify(out, null, 2) + '\n');
+}
+
 function pickImages(card) {
   if (card.image_uris && card.image_uris.normal) {
     return { front: card.image_uris.normal, back: null };
@@ -120,6 +144,22 @@ function pickImages(card) {
   return { front, back: back || null };
 }
 
+/** Scryfall card object -> cache entry: everything the app needs, plus the image URLs. */
+function toEntry(card) {
+  const { front, back } = pickImages(card);
+  const faces = card.card_faces || [];
+  return {
+    scryfallId: card.id,
+    name: card.name,
+    manaCost: card.mana_cost ?? faces.map((f) => f.mana_cost).filter(Boolean).join(' // '),
+    typeLine: card.type_line ?? faces.map((f) => f.type_line).filter(Boolean).join(' // '),
+    cmc: card.cmc ?? 0,
+    colorIdentity: card.color_identity ?? [],
+    frontUrl: front,
+    backUrl: back,
+  };
+}
+
 async function download(url, filePath) {
   if (existsSync(filePath)) return false;
   // Scryfall's image CDN 400s requests without a User-Agent.
@@ -129,28 +169,56 @@ async function download(url, filePath) {
   return true;
 }
 
-async function resolveCard(card) {
-  const { front, back } = pickImages(card);
-  const frontFile = `${card.id}.jpg`;
-  await download(front, join(OUT_CARDS, frontFile));
-  let backImagePath;
-  if (back) {
-    const backFile = `${card.id}-back.jpg`;
-    await download(back, join(OUT_CARDS, backFile));
-    backImagePath = `cards/${backFile}`;
+/** Make sure the entry's image file(s) exist on disk; returns how many were downloaded. */
+async function ensureImages(entry) {
+  let downloaded = 0;
+  if (await download(entry.frontUrl, join(OUT_CARDS, `${entry.scryfallId}.jpg`))) downloaded++;
+  if (entry.backUrl && (await download(entry.backUrl, join(OUT_CARDS, `${entry.scryfallId}-back.jpg`)))) {
+    downloaded++;
   }
-  const faces = card.card_faces || [];
-  const entry = {
-    scryfallId: card.id,
-    name: card.name,
-    imagePath: `cards/${frontFile}`,
-    manaCost: card.mana_cost ?? faces.map((f) => f.mana_cost).filter(Boolean).join(' // '),
-    typeLine: card.type_line ?? faces.map((f) => f.type_line).filter(Boolean).join(' // '),
-    cmc: card.cmc ?? 0,
-    colorIdentity: card.color_identity ?? [],
+  return downloaded;
+}
+
+/** Cache entry -> the card object emitted into the cube JSON. */
+function toCardJson(entry) {
+  const out = {
+    scryfallId: entry.scryfallId,
+    name: entry.name,
+    imagePath: `cards/${entry.scryfallId}.jpg`,
+    manaCost: entry.manaCost,
+    typeLine: entry.typeLine,
+    cmc: entry.cmc,
+    colorIdentity: entry.colorIdentity,
   };
-  if (backImagePath) entry.backImagePath = backImagePath;
-  return entry;
+  if (entry.backUrl) out.backImagePath = `cards/${entry.scryfallId}-back.jpg`;
+  return out;
+}
+
+/**
+ * Resolve one card through the cache: no network for a cached card whose image
+ * is on disk; an image download only when the file is missing; a Scryfall lookup
+ * only for an uncached printing (or when a cached image URL has gone stale).
+ * Returns { entry, status } with status 'cached' | 'image' | 'resolved'.
+ */
+async function resolveCached(bucket, key, fetchCard) {
+  let entry = bucket[key];
+  let status = 'cached';
+  if (!entry) {
+    entry = toEntry(await fetchCard());
+    bucket[key] = entry;
+    status = 'resolved';
+  }
+  try {
+    if ((await ensureImages(entry)) > 0 && status === 'cached') status = 'image';
+  } catch (err) {
+    if (status === 'resolved') throw err;
+    // Stale cached image URL: re-resolve once from Scryfall and retry the download.
+    entry = toEntry(await fetchCard());
+    bucket[key] = entry;
+    await ensureImages(entry);
+    status = 'resolved';
+  }
+  return { entry, status };
 }
 
 function parseLine(line, lineNo, file) {
@@ -163,6 +231,8 @@ async function main() {
   mkdirSync(OUT_CARDS, { recursive: true });
   mkdirSync(OUT_CUBES, { recursive: true });
 
+  const cache = loadCache();
+  const cacheSnapshot = JSON.stringify(cache);
   const sourceMeta = await syncSources();
 
   const cubeFiles = readdirSync(CUBES_DIR).filter((f) => f.endsWith('.txt'));
@@ -174,9 +244,11 @@ async function main() {
   console.log('Resolving basic lands...');
   const basics = [];
   for (const name of BASIC_NAMES) {
-    const card = await scryfall(`https://api.scryfall.com/cards/named?exact=${encodeURIComponent(name)}`);
-    basics.push(await resolveCard(card));
-    console.log(`  ${name} ok`);
+    const { entry, status } = await resolveCached(cache.basics, name, () =>
+      scryfall(`https://api.scryfall.com/cards/named?exact=${encodeURIComponent(name)}`)
+    );
+    basics.push(toCardJson(entry));
+    if (status !== 'cached') console.log(`  ${name} (${status})`);
   }
 
   const index = [];
@@ -192,20 +264,26 @@ async function main() {
 
     console.log(`\nCube "${id}": ${lines.length} lines`);
     const cards = [];
+    const counts = { cached: 0, image: 0, resolved: 0 };
     for (let i = 0; i < lines.length; i++) {
       const { count, name, set, number } = parseLine(lines[i], i + 1, file);
+      const key = `${set}/${number}`;
       try {
-        const card = await scryfall(
-          `https://api.scryfall.com/cards/${set}/${encodeURIComponent(number)}`
+        const { entry, status } = await resolveCached(cache.cards, key, () =>
+          scryfall(`https://api.scryfall.com/cards/${set}/${encodeURIComponent(number)}`)
         );
-        const entry = await resolveCard(card);
-        for (let c = 0; c < count; c++) cards.push(entry);
-        console.log(`  [${i + 1}/${lines.length}] ${card.name}`);
+        counts[status]++;
+        if (status !== 'cached') console.log(`  [${i + 1}/${lines.length}] ${entry.name} (${status})`);
+        const json = toCardJson(entry);
+        for (let c = 0; c < count; c++) cards.push(json);
       } catch (err) {
         failures.push(`${file}:${i + 1} ${name} (${set}) ${number} -> ${err.message}`);
         console.error(`  [${i + 1}/${lines.length}] FAILED ${name}: ${err.message}`);
       }
     }
+    console.log(
+      `  ${counts.cached} cached, ${counts.image} image download(s), ${counts.resolved} resolved via Scryfall`
+    );
 
     const cube = {
       id,
@@ -226,6 +304,7 @@ async function main() {
   }
 
   writeFileSync(join(OUT_CUBES, 'index.json'), JSON.stringify(index, null, 2));
+  if (JSON.stringify(cache) !== cacheSnapshot) saveCache(cache);
 
   if (failures.length > 0) {
     console.error(`\nBUILD FAILED — ${failures.length} unresolved card(s):`);

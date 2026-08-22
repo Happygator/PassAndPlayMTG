@@ -219,9 +219,9 @@ img,
   display: flex;
   flex-direction: column;
 }
-.match-screen .screen-header { margin-bottom: 10px; }
+.match-screen .screen-header { margin-bottom: 10px; text-align: center; }
 .match-screen .screen-header h1 { font-size: 1.05rem; margin-bottom: 2px; }
-.match-screen .running-tally { font-size: 0.9rem; }
+.match-screen .first-player { font-size: 1.2rem; font-weight: 800; margin-top: 4px; text-align: center; }
 .match-screen .match-deck {
   gap: 5px;
   flex: 1;
@@ -390,4 +390,16 @@ img,
   color: #ffb3a8;
   font-size: 0.8rem;
   text-align: center;
+}
+
+.first-player {
+  margin: 2px 0 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+.p1-text { color: var(--p1); }
+.p2-text { color: var(--p2); }
+.pairing-first {
+  color: var(--muted);
+  font-size: 0.8rem;
 }

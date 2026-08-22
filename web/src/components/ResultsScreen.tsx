@@ -102,6 +102,11 @@ export function ResultsScreen({ state, onNewGame }: ResultsScreenProps) {
                   <span class="pairing-deck">
                     {deckNames(state.decks[1][matchup.p2Deck], state.pools[1], state.cube.basics)}
                   </span>
+                  {matchup.onPlay !== undefined && (
+                    <span class="pairing-first">
+                      {state.config.playerNames[matchup.onPlay]} went first
+                    </span>
+                  )}
                 </div>
                 <button
                   type="button"

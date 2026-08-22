@@ -58,7 +58,7 @@ The app is designed for a phone, so you'll want to test there. The phone must be
 npm start -- --host
 ```
 
-Vite prints `Network:` addresses; open the one for your Wi-Fi adapter on the phone, e.g. `http://192.168.1.23:5173`. The first time, Windows Firewall will ask whether to allow Node.js — allow it on *private* networks. If the phone still can't connect, check that both devices are on the same (non-guest) network.
+Vite prints `Network:` addresses; open the one for your Wi-Fi adapter on the phone, e.g. `http://192.168.1.23:5173`. The first time, Windows Firewall may ask whether to allow Node.js — allow it on *private* networks. If the phone still can't connect, check that both devices are on the same (non-guest) network.
 
 **Different network.** Expose the running server through a temporary public tunnel in a second terminal:
 
@@ -89,7 +89,7 @@ Cubes are defined in **`cubes/sources.json`** at the repository root:
 - `moxfield` is a **public** Moxfield deck URL. Each `npm start` / `npm run cube` re-fetches it, so editing the deck on Moxfield and restarting is the whole update loop. The fetched list is cached as `cubes/<id>.txt` (Moxfield plaintext format, `1 Card Name (SET) 123`) and used as a fallback if Moxfield can't be reached.
 - No Moxfield? Omit `moxfield` and write `cubes/<id>.txt` by hand in that same format — one card per line with set code and collector number, which pins the exact printing. To change a card's printing, change its set/number (on Moxfield, use the card's printing selector).
 
-Then run `npm start`. New cards are resolved and their images downloaded automatically; a card that can't be resolved **fails the build** with its name printed, because the app deliberately never shows a card without its image.
+Then run `npm start`. Only new or changed cards are looked up and downloaded — resolved card data is cached in `cubes/card-cache.json` (keyed by set and collector number), so an unchanged cube rebuilds almost instantly and the log lists only what changed. A card that can't be resolved **fails the build** with its name printed, because the app deliberately never shows a card without its image. If Scryfall ever corrects a card's data, `npm run cube -- --refresh` re-resolves everything.
 
 Curation matters more than in normal sealed. For 3-Card Blind, avoid randomness (coin flips, random discard) and hidden-information mechanics, and prefer cards whose matchups can be settled by a short discussion. For Pai Gow, the game is played out for real, so ordinary sealed curation applies.
 

@@ -1,0 +1,1834 @@
+{
+  "version": 1,
+  "cards": {
+    "2x2/69": {
+      "scryfallId": "b9640cbf-b016-410e-9eff-e8924883517b",
+      "name": "Bitterblossom",
+      "manaCost": "{1}{B}",
+      "typeLine": "Kindred Enchantment — Faerie",
+      "cmc": 2,
+      "colorIdentity": [
+        "B"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/b/9/b9640cbf-b016-410e-9eff-e8924883517b.jpg?1783921908",
+      "backUrl": null
+    },
+    "5dn/31": {
+      "scryfallId": "615157d6-0160-417b-b06c-0e253b306c37",
+      "name": "Fold into Aether",
+      "manaCost": "{2}{U}{U}",
+      "typeLine": "Instant",
+      "cmc": 4,
+      "colorIdentity": [
+        "U"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/6/1/615157d6-0160-417b-b06c-0e253b306c37.jpg?1783944404",
+      "backUrl": null
+    },
+    "9ed/97": {
+      "scryfallId": "82e836c8-4371-402f-8f90-81325a9879b8",
+      "name": "Sea's Claim",
+      "manaCost": "{U}",
+      "typeLine": "Enchantment — Aura",
+      "cmc": 1,
+      "colorIdentity": [
+        "U"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/8/2/82e836c8-4371-402f-8f90-81325a9879b8.jpg?1783944031",
+      "backUrl": null
+    },
+    "a25/246": {
+      "scryfallId": "d2507bc2-da17-4e46-b4c5-ba0080ce2c6f",
+      "name": "Rishadan Port",
+      "manaCost": "",
+      "typeLine": "Land",
+      "cmc": 0,
+      "colorIdentity": [],
+      "frontUrl": "https://cards.scryfall.io/normal/front/d/2/d2507bc2-da17-4e46-b4c5-ba0080ce2c6f.jpg?1783935099",
+      "backUrl": null
+    },
+    "acr/79": {
+      "scryfallId": "4d197866-7633-493c-80dd-ec3a09165934",
+      "name": "Abstergo Entertainment",
+      "manaCost": "",
+      "typeLine": "Legendary Land",
+      "cmc": 0,
+      "colorIdentity": [],
+      "frontUrl": "https://cards.scryfall.io/normal/front/4/d/4d197866-7633-493c-80dd-ec3a09165934.jpg?1783910964",
+      "backUrl": null
+    },
+    "afr/155": {
+      "scryfallId": "b8f5e669-4e69-4763-bbb9-e9685bde912c",
+      "name": "Meteor Swarm",
+      "manaCost": "{X}{R}{R}{R}",
+      "typeLine": "Sorcery",
+      "cmc": 3,
+      "colorIdentity": [
+        "R"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/b/8/b8f5e669-4e69-4763-bbb9-e9685bde912c.jpg?1783926474",
+      "backUrl": null
+    },
+    "akh/172": {
+      "scryfallId": "21c33902-a06a-4321-bdf4-cea5494fda63",
+      "name": "Honored Hydra",
+      "manaCost": "{5}{G}",
+      "typeLine": "Creature — Snake Hydra",
+      "cmc": 6,
+      "colorIdentity": [
+        "G"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/2/1/21c33902-a06a-4321-bdf4-cea5494fda63.jpg?1783936473",
+      "backUrl": null
+    },
+    "akh/180": {
+      "scryfallId": "92921fc1-11d0-41a9-b9b2-b44fd0913d31",
+      "name": "Prowling Serpopard",
+      "manaCost": "{1}{G}{G}",
+      "typeLine": "Creature — Cat Snake",
+      "cmc": 3,
+      "colorIdentity": [
+        "G"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/9/2/92921fc1-11d0-41a9-b9b2-b44fd0913d31.jpg?1783936471",
+      "backUrl": null
+    },
+    "ala/22": {
+      "scryfallId": "5b3b0908-5408-41fd-8e69-2bc785e19304",
+      "name": "Resounding Silence",
+      "manaCost": "{3}{W}",
+      "typeLine": "Instant",
+      "cmc": 4,
+      "colorIdentity": [
+        "G",
+        "U",
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/5/b/5b3b0908-5408-41fd-8e69-2bc785e19304.jpg?1783942579",
+      "backUrl": null
+    },
+    "big/11": {
+      "scryfallId": "4c6cf93a-d073-48ac-88db-c46bf3e10beb",
+      "name": "Generous Plunderer",
+      "manaCost": "{1}{R}",
+      "typeLine": "Creature — Human Rogue",
+      "cmc": 2,
+      "colorIdentity": [
+        "R"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/4/c/4c6cf93a-d073-48ac-88db-c46bf3e10beb.jpg?1783912000",
+      "backUrl": null
+    },
+    "blb/184": {
+      "scryfallId": "e5246540-5a84-41d8-9e30-8e7a6c0e84e1",
+      "name": "Mistbreath Elder",
+      "manaCost": "{G}",
+      "typeLine": "Creature — Frog Warrior",
+      "cmc": 1,
+      "colorIdentity": [
+        "G"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/e/5/e5246540-5a84-41d8-9e30-8e7a6c0e84e1.jpg?1783910806",
+      "backUrl": null
+    },
+    "blb/41": {
+      "scryfallId": "211af1bf-910b-41a5-b928-f378188d1871",
+      "name": "Azure Beastbinder",
+      "manaCost": "{1}{U}",
+      "typeLine": "Creature — Rat Rogue",
+      "cmc": 2,
+      "colorIdentity": [
+        "U"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/2/1/211af1bf-910b-41a5-b928-f378188d1871.jpg?1783910852",
+      "backUrl": null
+    },
+    "bok/98": {
+      "scryfallId": "8ab16152-4617-4deb-b995-195e21f8f485",
+      "name": "Crack the Earth",
+      "manaCost": "{R}",
+      "typeLine": "Sorcery — Arcane",
+      "cmc": 1,
+      "colorIdentity": [
+        "R"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/8/a/8ab16152-4617-4deb-b995-195e21f8f485.jpg?1783944191",
+      "backUrl": null
+    },
+    "c17/72": {
+      "scryfallId": "5970a4c8-0e1f-42cc-bd8e-7ba3946c6e41",
+      "name": "Seht's Tiger",
+      "manaCost": "{2}{W}{W}",
+      "typeLine": "Creature — Cat",
+      "cmc": 4,
+      "colorIdentity": [
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/5/9/5970a4c8-0e1f-42cc-bd8e-7ba3946c6e41.jpg?1783935924",
+      "backUrl": null
+    },
+    "c19/61": {
+      "scryfallId": "f3f7f258-7ac0-4149-9d8c-712b5ea7f0a8",
+      "name": "Angel of Sanctions",
+      "manaCost": "{3}{W}{W}",
+      "typeLine": "Creature — Angel",
+      "cmc": 5,
+      "colorIdentity": [
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/f/3/f3f7f258-7ac0-4149-9d8c-712b5ea7f0a8.jpg?1783932791",
+      "backUrl": null
+    },
+    "c21/243": {
+      "scryfallId": "6741ab27-9e1f-4aa5-96b9-b450eda7c5c2",
+      "name": "Elixir of Immortality",
+      "manaCost": "{1}",
+      "typeLine": "Artifact",
+      "cmc": 1,
+      "colorIdentity": [],
+      "frontUrl": "https://cards.scryfall.io/normal/front/6/7/6741ab27-9e1f-4aa5-96b9-b450eda7c5c2.jpg?1783927513",
+      "backUrl": null
+    },
+    "chk/131": {
+      "scryfallId": "c8265c39-d287-4c5a-baba-f2f09dd80a1c",
+      "name": "Nezumi Shortfang // Stabwhisker the Odious",
+      "manaCost": "{1}{B}",
+      "typeLine": "Creature — Rat Rogue // Legendary Creature — Rat Shaman",
+      "cmc": 2,
+      "colorIdentity": [
+        "B"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/c/8/c8265c39-d287-4c5a-baba-f2f09dd80a1c.jpg?1783944311",
+      "backUrl": null
+    },
+    "clb/726": {
+      "scryfallId": "f57bdaa1-ce8a-4103-8598-fee751e65a53",
+      "name": "Leyline of Anticipation",
+      "manaCost": "{2}{U}{U}",
+      "typeLine": "Enchantment",
+      "cmc": 4,
+      "colorIdentity": [
+        "U"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/f/5/f57bdaa1-ce8a-4103-8598-fee751e65a53.jpg?1783922469",
+      "backUrl": null
+    },
+    "clb/768": {
+      "scryfallId": "fa04c8f5-e174-4055-a98c-efec2f064d69",
+      "name": "Pontiff of Blight",
+      "manaCost": "{4}{B}{B}",
+      "typeLine": "Creature — Zombie Cleric",
+      "cmc": 6,
+      "colorIdentity": [
+        "B"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/f/a/fa04c8f5-e174-4055-a98c-efec2f064d69.jpg?1783922442",
+      "backUrl": null
+    },
+    "clb/903": {
+      "scryfallId": "52cc2f10-142d-4e6a-984e-b25f566cc960",
+      "name": "Mutavault",
+      "manaCost": "",
+      "typeLine": "Land",
+      "cmc": 0,
+      "colorIdentity": [],
+      "frontUrl": "https://cards.scryfall.io/normal/front/5/2/52cc2f10-142d-4e6a-984e-b25f566cc960.jpg?1783922371",
+      "backUrl": null
+    },
+    "clb/99": {
+      "scryfallId": "0bbfb7ae-9a32-428d-903c-99d0d8669b8d",
+      "name": "Sword Coast Serpent // Capsizing Wave",
+      "manaCost": "{5}{U}{U} // {1}{U}",
+      "typeLine": "Creature — Serpent Dragon // Instant — Adventure",
+      "cmc": 7,
+      "colorIdentity": [
+        "U"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/0/b/0bbfb7ae-9a32-428d-903c-99d0d8669b8d.jpg?1783922774",
+      "backUrl": null
+    },
+    "clu/246": {
+      "scryfallId": "fdc53c6a-8e28-4314-9bcf-b31b6c6f56d7",
+      "name": "Selesnya Sanctuary",
+      "manaCost": "",
+      "typeLine": "Land",
+      "cmc": 0,
+      "colorIdentity": [
+        "G",
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/f/d/fdc53c6a-8e28-4314-9bcf-b31b6c6f56d7.jpg?1783912503",
+      "backUrl": null
+    },
+    "cma/246": {
+      "scryfallId": "1c28ab69-1a46-45af-a331-1f52f99a9da3",
+      "name": "Crystal Vein",
+      "manaCost": "",
+      "typeLine": "Land",
+      "cmc": 0,
+      "colorIdentity": [],
+      "frontUrl": "https://cards.scryfall.io/normal/front/1/c/1c28ab69-1a46-45af-a331-1f52f99a9da3.jpg?1783936203",
+      "backUrl": null
+    },
+    "cma/58": {
+      "scryfallId": "2e0fffc6-4395-441e-95a9-c9cf33af7907",
+      "name": "Evincar's Justice",
+      "manaCost": "{2}{B}{B}",
+      "typeLine": "Sorcery",
+      "cmc": 4,
+      "colorIdentity": [
+        "B"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/2/e/2e0fffc6-4395-441e-95a9-c9cf33af7907.jpg?1783936286",
+      "backUrl": null
+    },
+    "cmm/200": {
+      "scryfallId": "20203edb-1363-4ed3-8c5b-b1d96ff2b7c0",
+      "name": "Wretched Confluence",
+      "manaCost": "{3}{B}{B}",
+      "typeLine": "Instant",
+      "cmc": 5,
+      "colorIdentity": [
+        "B"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/2/0/20203edb-1363-4ed3-8c5b-b1d96ff2b7c0.jpg?1783915661",
+      "backUrl": null
+    },
+    "cmm/987": {
+      "scryfallId": "cdad14f1-d541-4e58-af9f-f8e587fca05f",
+      "name": "Blast Zone",
+      "manaCost": "",
+      "typeLine": "Land",
+      "cmc": 0,
+      "colorIdentity": [],
+      "frontUrl": "https://cards.scryfall.io/normal/front/c/d/cdad14f1-d541-4e58-af9f-f8e587fca05f.jpg?1783915394",
+      "backUrl": null
+    },
+    "ddj/14": {
+      "scryfallId": "97a6c6c9-dd26-4ce7-850f-0b3fc49245bd",
+      "name": "Force Spike",
+      "manaCost": "{U}",
+      "typeLine": "Instant",
+      "cmc": 1,
+      "colorIdentity": [
+        "U"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/9/7/97a6c6c9-dd26-4ce7-850f-0b3fc49245bd.jpg?1783940420",
+      "backUrl": null
+    },
+    "ddm/2": {
+      "scryfallId": "787b6916-3fce-41dd-ab52-f17546fd04ed",
+      "name": "Chronomaton",
+      "manaCost": "{1}",
+      "typeLine": "Artifact Creature — Golem",
+      "cmc": 1,
+      "colorIdentity": [],
+      "frontUrl": "https://cards.scryfall.io/normal/front/7/8/787b6916-3fce-41dd-ab52-f17546fd04ed.jpg?1783939502",
+      "backUrl": null
+    },
+    "dds/2": {
+      "scryfallId": "1bf05e3d-601a-481b-8880-24058a3442e9",
+      "name": "Beacon of Tomorrows",
+      "manaCost": "{6}{U}{U}",
+      "typeLine": "Sorcery",
+      "cmc": 8,
+      "colorIdentity": [
+        "U"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/1/b/1bf05e3d-601a-481b-8880-24058a3442e9.jpg?1783936579",
+      "backUrl": null
+    },
+    "dmr/250": {
+      "scryfallId": "5889fde1-730d-43d0-aaa4-499784a80530",
+      "name": "Maze of Ith",
+      "manaCost": "",
+      "typeLine": "Land",
+      "cmc": 0,
+      "colorIdentity": [],
+      "frontUrl": "https://cards.scryfall.io/normal/front/5/8/5889fde1-730d-43d0-aaa4-499784a80530.jpg?1783918402",
+      "backUrl": null
+    },
+    "dmu/199": {
+      "scryfallId": "7f7e780e-fbc5-4dc0-b5c7-efcb8645c7c6",
+      "name": "Ertai Resurrected",
+      "manaCost": "{2}{U}{B}",
+      "typeLine": "Legendary Creature — Phyrexian Human Wizard",
+      "cmc": 4,
+      "colorIdentity": [
+        "B",
+        "U"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/7/f/7f7e780e-fbc5-4dc0-b5c7-efcb8645c7c6.jpg?1783921288",
+      "backUrl": null
+    },
+    "dsc/261": {
+      "scryfallId": "50ef0ac3-e911-4d67-a751-8d86160ae843",
+      "name": "Azorius Chancery",
+      "manaCost": "",
+      "typeLine": "Land",
+      "cmc": 0,
+      "colorIdentity": [
+        "U",
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/5/0/50ef0ac3-e911-4d67-a751-8d86160ae843.jpg?1783909580",
+      "backUrl": null
+    },
+    "dsc/270": {
+      "scryfallId": "84bf9d60-64b8-4209-acfe-e07eefc6bf1f",
+      "name": "Dimir Aqueduct",
+      "manaCost": "",
+      "typeLine": "Land",
+      "cmc": 0,
+      "colorIdentity": [
+        "B",
+        "U"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/8/4/84bf9d60-64b8-4209-acfe-e07eefc6bf1f.jpg?1783909578",
+      "backUrl": null
+    },
+    "dsc/273": {
+      "scryfallId": "e3ddbebf-72cd-4d1b-ba0d-d94934654ab7",
+      "name": "Dryad Arbor",
+      "manaCost": "",
+      "typeLine": "Land Creature — Forest Dryad",
+      "cmc": 0,
+      "colorIdentity": [
+        "G"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/e/3/e3ddbebf-72cd-4d1b-ba0d-d94934654ab7.jpg?1783909577",
+      "backUrl": null
+    },
+    "dsk/107": {
+      "scryfallId": "cd81e438-e38f-42a1-b677-202dbcb3837c",
+      "name": "Live or Die",
+      "manaCost": "{3}{B}{B}",
+      "typeLine": "Instant",
+      "cmc": 5,
+      "colorIdentity": [
+        "B"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/c/d/cd81e438-e38f-42a1-b677-202dbcb3837c.jpg?1783909479",
+      "backUrl": null
+    },
+    "dsk/119": {
+      "scryfallId": "c78da035-6b5b-4136-9ab6-f622b64fdc54",
+      "name": "Unstoppable Slasher",
+      "manaCost": "{2}{B}",
+      "typeLine": "Creature — Zombie Assassin",
+      "cmc": 3,
+      "colorIdentity": [
+        "B"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/c/7/c78da035-6b5b-4136-9ab6-f622b64fdc54.jpg?1783909475",
+      "backUrl": null
+    },
+    "dsk/201": {
+      "scryfallId": "416c025b-e40e-4d95-a774-ba3961f43808",
+      "name": "Twitching Doll",
+      "manaCost": "{1}{G}",
+      "typeLine": "Artifact Creature — Spider Toy",
+      "cmc": 2,
+      "colorIdentity": [
+        "G"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/4/1/416c025b-e40e-4d95-a774-ba3961f43808.jpg?1783909449",
+      "backUrl": null
+    },
+    "dsk/39": {
+      "scryfallId": "7b54447f-1daf-4352-b5c3-3c0ec8b8f4d0",
+      "name": "Unwanted Remake",
+      "manaCost": "{W}",
+      "typeLine": "Instant",
+      "cmc": 1,
+      "colorIdentity": [
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/7/b/7b54447f-1daf-4352-b5c3-3c0ec8b8f4d0.jpg?1783909500",
+      "backUrl": null
+    },
+    "ecc/152": {
+      "scryfallId": "f19d2b68-1415-4a0c-bb68-cfacb611c4d2",
+      "name": "Gruul Turf",
+      "manaCost": "",
+      "typeLine": "Land",
+      "cmc": 0,
+      "colorIdentity": [
+        "G",
+        "R"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/f/1/f19d2b68-1415-4a0c-bb68-cfacb611c4d2.jpg?1783904526",
+      "backUrl": null
+    },
+    "ecc/161": {
+      "scryfallId": "20c799a9-ab94-46e6-9111-00505e071c41",
+      "name": "Rakdos Carnarium",
+      "manaCost": "",
+      "typeLine": "Land",
+      "cmc": 0,
+      "colorIdentity": [
+        "B",
+        "R"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/2/0/20c799a9-ab94-46e6-9111-00505e071c41.jpg?1783904522",
+      "backUrl": null
+    },
+    "ecl/145": {
+      "scryfallId": "674960ce-ff33-4d5e-a24a-a4582b2e9809",
+      "name": "Hexing Squelcher",
+      "manaCost": "{1}{R}",
+      "typeLine": "Creature — Goblin Sorcerer",
+      "cmc": 2,
+      "colorIdentity": [
+        "R"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/6/7/674960ce-ff33-4d5e-a24a-a4582b2e9809.jpg?1783904442",
+      "backUrl": null
+    },
+    "ema/44": {
+      "scryfallId": "f05e9a3e-8a35-4687-85cb-e31b3927a5e2",
+      "name": "Daze",
+      "manaCost": "{1}{U}",
+      "typeLine": "Instant",
+      "cmc": 2,
+      "colorIdentity": [
+        "U"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/f/0/f05e9a3e-8a35-4687-85cb-e31b3927a5e2.jpg?1783937617",
+      "backUrl": null
+    },
+    "ema/92": {
+      "scryfallId": "3faa8c5e-9e1b-4cee-b322-a033bf33dcbc",
+      "name": "Hymn to Tourach",
+      "manaCost": "{B}{B}",
+      "typeLine": "Sorcery",
+      "cmc": 2,
+      "colorIdentity": [
+        "B"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/3/f/3faa8c5e-9e1b-4cee-b322-a033bf33dcbc.jpg?1783937597",
+      "backUrl": null
+    },
+    "emn/37": {
+      "scryfallId": "2e5edd8d-8e10-4414-a326-95a672dfcff7",
+      "name": "Providence",
+      "manaCost": "{5}{W}{W}",
+      "typeLine": "Sorcery",
+      "cmc": 7,
+      "colorIdentity": [
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/2/e/2e5edd8d-8e10-4414-a326-95a672dfcff7.jpg?1783937512",
+      "backUrl": null
+    },
+    "eoc/144": {
+      "scryfallId": "7601fbf2-916f-44b2-837a-201fd8304613",
+      "name": "Steel Overseer",
+      "manaCost": "{2}",
+      "typeLine": "Artifact Creature — Construct",
+      "cmc": 2,
+      "colorIdentity": [],
+      "frontUrl": "https://cards.scryfall.io/normal/front/7/6/7601fbf2-916f-44b2-837a-201fd8304613.jpg?1783906018",
+      "backUrl": null
+    },
+    "eoe/183": {
+      "scryfallId": "c72d85e9-a0bc-4f73-8d73-c58843577f4e",
+      "name": "Frenzied Baloth",
+      "manaCost": "{G}{G}",
+      "typeLine": "Creature — Beast",
+      "cmc": 2,
+      "colorIdentity": [
+        "G"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/c/7/c72d85e9-a0bc-4f73-8d73-c58843577f4e.jpg?1783905939",
+      "backUrl": null
+    },
+    "eoe/24": {
+      "scryfallId": "635245e9-c27f-4a51-a6f1-bae62e696542",
+      "name": "Lightstall Inquisitor",
+      "manaCost": "{W}",
+      "typeLine": "Creature — Angel Wizard",
+      "cmc": 1,
+      "colorIdentity": [
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/6/3/635245e9-c27f-4a51-a6f1-bae62e696542.jpg?1783905994",
+      "backUrl": null
+    },
+    "eoe/88": {
+      "scryfallId": "dcde5f27-e2f0-4d2a-afa3-f300896ec4b1",
+      "name": "Archenemy's Charm",
+      "manaCost": "{B}{B}{B}",
+      "typeLine": "Instant",
+      "cmc": 3,
+      "colorIdentity": [
+        "B"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/d/c/dcde5f27-e2f0-4d2a-afa3-f300896ec4b1.jpg?1783905971",
+      "backUrl": null
+    },
+    "exo/143": {
+      "scryfallId": "a7a8b6b8-b95f-4014-b17a-a6d44d965995",
+      "name": "City of Traitors",
+      "manaCost": "",
+      "typeLine": "Land",
+      "cmc": 0,
+      "colorIdentity": [],
+      "frontUrl": "https://cards.scryfall.io/normal/front/a/7/a7a8b6b8-b95f-4014-b17a-a6d44d965995.jpg?1783946497",
+      "backUrl": null
+    },
+    "fin/121": {
+      "scryfallId": "8b1b5f06-e34d-44a3-976e-5157c4b7a0f4",
+      "name": "Summon: Primal Odin",
+      "manaCost": "{4}{B}{B}",
+      "typeLine": "Enchantment Creature — Saga Knight",
+      "cmc": 6,
+      "colorIdentity": [
+        "B"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/8/b/8b1b5f06-e34d-44a3-976e-5157c4b7a0f4.jpg?1783906611",
+      "backUrl": null
+    },
+    "gvl/42": {
+      "scryfallId": "62103ceb-b16d-48ea-af42-d3df88d1ee4c",
+      "name": "Faerie Macabre",
+      "manaCost": "{1}{B}{B}",
+      "typeLine": "Creature — Faerie Rogue",
+      "cmc": 3,
+      "colorIdentity": [
+        "B"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/6/2/62103ceb-b16d-48ea-af42-d3df88d1ee4c.jpg?1783938752",
+      "backUrl": null
+    },
+    "gvl/53": {
+      "scryfallId": "75bbe89f-09af-494e-b58e-271f64bde4b5",
+      "name": "Snuff Out",
+      "manaCost": "{3}{B}",
+      "typeLine": "Instant",
+      "cmc": 4,
+      "colorIdentity": [
+        "B"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/7/5/75bbe89f-09af-494e-b58e-271f64bde4b5.jpg?1783938751",
+      "backUrl": null
+    },
+    "hob/26": {
+      "scryfallId": "31a7a5e2-4cb8-48fc-8351-18344b4a7560",
+      "name": "Settle the Wreckage",
+      "manaCost": "{2}{W}{W}",
+      "typeLine": "Instant",
+      "cmc": 4,
+      "colorIdentity": [
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/3/1/31a7a5e2-4cb8-48fc-8351-18344b4a7560.jpg?1785496349",
+      "backUrl": null
+    },
+    "hou/132": {
+      "scryfallId": "e991d1eb-70ab-4e2c-862d-fb8bfcefc542",
+      "name": "Rhonas's Last Stand",
+      "manaCost": "{G}{G}",
+      "typeLine": "Sorcery",
+      "cmc": 2,
+      "colorIdentity": [
+        "G"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/e/9/e991d1eb-70ab-4e2c-862d-fb8bfcefc542.jpg?1783936013",
+      "backUrl": null
+    },
+    "inr/248": {
+      "scryfallId": "a9364b43-ab2e-4433-91e8-88a0d5d5965c",
+      "name": "Spell Queller",
+      "manaCost": "{1}{W}{U}",
+      "typeLine": "Creature — Spirit",
+      "cmc": 3,
+      "colorIdentity": [
+        "U",
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/a/9/a9364b43-ab2e-4433-91e8-88a0d5d5965c.jpg?1783908071",
+      "backUrl": null
+    },
+    "inr/88": {
+      "scryfallId": "91b51351-d4ea-4bf8-aa43-29e71cd01819",
+      "name": "Summary Dismissal",
+      "manaCost": "{2}{U}{U}",
+      "typeLine": "Instant",
+      "cmc": 4,
+      "colorIdentity": [
+        "U"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/9/1/91b51351-d4ea-4bf8-aa43-29e71cd01819.jpg?1783908156",
+      "backUrl": null
+    },
+    "j22/14": {
+      "scryfallId": "abc561d3-9e52-41fd-8311-60cc9dfffdd1",
+      "name": "Launch Mishap",
+      "manaCost": "{2}{U}",
+      "typeLine": "Instant",
+      "cmc": 3,
+      "colorIdentity": [
+        "U"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/a/b/abc561d3-9e52-41fd-8311-60cc9dfffdd1.jpg?1783919193",
+      "backUrl": null
+    },
+    "j22/391": {
+      "scryfallId": "b948b2a2-0864-4dd8-89f7-27a8c6748911",
+      "name": "Cruel Sadist",
+      "manaCost": "{B}",
+      "typeLine": "Creature — Human Assassin",
+      "cmc": 1,
+      "colorIdentity": [
+        "B"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/b/9/b948b2a2-0864-4dd8-89f7-27a8c6748911.jpg?1783919017",
+      "backUrl": null
+    },
+    "kld/214": {
+      "scryfallId": "5fdaca1e-5741-456e-ae98-e2c45fd1731b",
+      "name": "Fleetwheel Cruiser",
+      "manaCost": "{4}",
+      "typeLine": "Artifact — Vehicle",
+      "cmc": 4,
+      "colorIdentity": [],
+      "frontUrl": "https://cards.scryfall.io/normal/front/5/f/5fdaca1e-5741-456e-ae98-e2c45fd1731b.jpg?1783937156",
+      "backUrl": null
+    },
+    "lci/286": {
+      "scryfallId": "9385abf3-b067-4586-bf3d-175526cf8f0a",
+      "name": "Volatile Fault",
+      "manaCost": "",
+      "typeLine": "Land — Cave",
+      "cmc": 0,
+      "colorIdentity": [],
+      "frontUrl": "https://cards.scryfall.io/normal/front/9/3/9385abf3-b067-4586-bf3d-175526cf8f0a.jpg?1783913712",
+      "backUrl": null
+    },
+    "m19/150": {
+      "scryfallId": "c3dab325-8f4f-4288-9f3f-960e52b4335b",
+      "name": "Lava Axe",
+      "manaCost": "{4}{R}",
+      "typeLine": "Sorcery",
+      "cmc": 5,
+      "colorIdentity": [
+        "R"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/c/3/c3dab325-8f4f-4288-9f3f-960e52b4335b.jpg?1783934548",
+      "backUrl": null
+    },
+    "m3c/305": {
+      "scryfallId": "19911e6e-7c35-4281-b31c-266382f052cc",
+      "name": "Sol Ring",
+      "manaCost": "{1}",
+      "typeLine": "Artifact",
+      "cmc": 1,
+      "colorIdentity": [],
+      "frontUrl": "https://cards.scryfall.io/normal/front/1/9/19911e6e-7c35-4281-b31c-266382f052cc.jpg?1783911346",
+      "backUrl": null
+    },
+    "mbs/74": {
+      "scryfallId": "373eb109-0e30-41c1-b2df-6bc78d968890",
+      "name": "Red Sun's Zenith",
+      "manaCost": "{X}{R}",
+      "typeLine": "Sorcery",
+      "cmc": 1,
+      "colorIdentity": [
+        "R"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/3/7/373eb109-0e30-41c1-b2df-6bc78d968890.jpg?1783941377",
+      "backUrl": null
+    },
+    "mh1/168": {
+      "scryfallId": "89f5cc05-5d9d-4709-b3c5-a6249c294acc",
+      "name": "Hexdrinker",
+      "manaCost": "{G}",
+      "typeLine": "Creature — Snake",
+      "cmc": 1,
+      "colorIdentity": [
+        "G"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/8/9/89f5cc05-5d9d-4709-b3c5-a6249c294acc.jpg?1783933097",
+      "backUrl": null
+    },
+    "mh1/205": {
+      "scryfallId": "179bd74b-c458-49d6-90ac-6075454e43dd",
+      "name": "Kaya's Guile",
+      "manaCost": "{1}{W}{B}",
+      "typeLine": "Instant",
+      "cmc": 3,
+      "colorIdentity": [
+        "B",
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/1/7/179bd74b-c458-49d6-90ac-6075454e43dd.jpg?1783933081",
+      "backUrl": null
+    },
+    "mh2/126": {
+      "scryfallId": "bd281158-8180-40b9-a5b7-03cfc712d81a",
+      "name": "Fury",
+      "manaCost": "{3}{R}{R}",
+      "typeLine": "Creature — Elemental Incarnation",
+      "cmc": 5,
+      "colorIdentity": [
+        "R"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/b/d/bd281158-8180-40b9-a5b7-03cfc712d81a.jpg?1783926844",
+      "backUrl": null
+    },
+    "mh2/259": {
+      "scryfallId": "c1e0f201-42cb-46a1-901a-65bb4fc18f6c",
+      "name": "Urza's Saga",
+      "manaCost": "",
+      "typeLine": "Enchantment Land — Urza's Saga",
+      "cmc": 0,
+      "colorIdentity": [],
+      "frontUrl": "https://cards.scryfall.io/normal/front/c/1/c1e0f201-42cb-46a1-901a-65bb4fc18f6c.jpg?1783926791",
+      "backUrl": null
+    },
+    "mh2/294": {
+      "scryfallId": "683c4e13-525c-45c9-8832-bfe67965c34e",
+      "name": "Vindicate",
+      "manaCost": "{1}{W}{B}",
+      "typeLine": "Sorcery",
+      "cmc": 3,
+      "colorIdentity": [
+        "B",
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/6/8/683c4e13-525c-45c9-8832-bfe67965c34e.jpg?1783926778",
+      "backUrl": null
+    },
+    "mh2/32": {
+      "scryfallId": "47a6234f-309f-4e03-9263-66da48b57153",
+      "name": "Solitude",
+      "manaCost": "{3}{W}{W}",
+      "typeLine": "Creature — Elemental Incarnation",
+      "cmc": 5,
+      "colorIdentity": [
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/4/7/47a6234f-309f-4e03-9263-66da48b57153.jpg?1783926885",
+      "backUrl": null
+    },
+    "mh2/72": {
+      "scryfallId": "2ff414bc-6736-428b-bb60-9d62793a5ae5",
+      "name": "Tide Shaper",
+      "manaCost": "{U}",
+      "typeLine": "Creature — Merfolk Wizard",
+      "cmc": 1,
+      "colorIdentity": [
+        "U"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/2/f/2ff414bc-6736-428b-bb60-9d62793a5ae5.jpg?1783926867",
+      "backUrl": null
+    },
+    "mh3/177": {
+      "scryfallId": "d7149359-bb3f-413c-b21d-e4cd88618e56",
+      "name": "Abstruse Appropriation",
+      "manaCost": "{2}{W}{B}",
+      "typeLine": "Instant",
+      "cmc": 4,
+      "colorIdentity": [
+        "B",
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/d/7/d7149359-bb3f-413c-b21d-e4cd88618e56.jpg?1783911253",
+      "backUrl": null
+    },
+    "mh3/210": {
+      "scryfallId": "d5e1ff6d-190a-497f-89c3-35e0979c93b5",
+      "name": "Idol of False Gods",
+      "manaCost": "{2}",
+      "typeLine": "Kindred Artifact — Eldrazi",
+      "cmc": 2,
+      "colorIdentity": [],
+      "frontUrl": "https://cards.scryfall.io/normal/front/d/5/d5e1ff6d-190a-497f-89c3-35e0979c93b5.jpg?1783911245",
+      "backUrl": null
+    },
+    "mh3/237": {
+      "scryfallId": "0d16e8e0-31b2-4389-afd6-783c501f6fa0",
+      "name": "Ajani, Nacatl Pariah // Ajani, Nacatl Avenger",
+      "manaCost": "{1}{W}",
+      "typeLine": "Legendary Creature — Cat Warrior // Legendary Planeswalker — Ajani",
+      "cmc": 2,
+      "colorIdentity": [
+        "R",
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/0/d/0d16e8e0-31b2-4389-afd6-783c501f6fa0.jpg?1783911238",
+      "backUrl": "https://cards.scryfall.io/normal/back/0/d/0d16e8e0-31b2-4389-afd6-783c501f6fa0.jpg?1783911238"
+    },
+    "mh3/38": {
+      "scryfallId": "89cf6f57-230f-497e-a14e-ad1e8737fd42",
+      "name": "Ocelot Pride",
+      "manaCost": "{W}",
+      "typeLine": "Creature — Cat",
+      "cmc": 1,
+      "colorIdentity": [
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/8/9/89cf6f57-230f-497e-a14e-ad1e8737fd42.jpg?1783911298",
+      "backUrl": null
+    },
+    "mh3/40": {
+      "scryfallId": "55707746-da6e-46e5-a5ca-7ac843fdc38e",
+      "name": "Phelia, Exuberant Shepherd",
+      "manaCost": "{1}{W}",
+      "typeLine": "Legendary Creature — Dog",
+      "cmc": 2,
+      "colorIdentity": [
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/5/5/55707746-da6e-46e5-a5ca-7ac843fdc38e.jpg?1783911298",
+      "backUrl": null
+    },
+    "mh3/58": {
+      "scryfallId": "37684797-7503-460d-9f74-047b1ab2fac3",
+      "name": "Depth Defiler",
+      "manaCost": "{3}{U}{U}",
+      "typeLine": "Creature — Eldrazi",
+      "cmc": 5,
+      "colorIdentity": [
+        "U"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/3/7/37684797-7503-460d-9f74-047b1ab2fac3.jpg?1783911292",
+      "backUrl": null
+    },
+    "mh3/91": {
+      "scryfallId": "428e255d-bdda-4265-91cf-d02962e818e4",
+      "name": "Etched Slith",
+      "manaCost": "{1}{B}",
+      "typeLine": "Artifact Creature — Phyrexian Slith",
+      "cmc": 2,
+      "colorIdentity": [
+        "B"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/4/2/428e255d-bdda-4265-91cf-d02962e818e4.jpg?1783911281",
+      "backUrl": null
+    },
+    "mid/183": {
+      "scryfallId": "5c0aa3eb-0aa8-42da-b437-a3f336df585d",
+      "name": "Dryad's Revival",
+      "manaCost": "{2}{G}",
+      "typeLine": "Sorcery",
+      "cmc": 3,
+      "colorIdentity": [
+        "G"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/5/c/5c0aa3eb-0aa8-42da-b437-a3f336df585d.jpg?1783925579",
+      "backUrl": null
+    },
+    "mkc/205": {
+      "scryfallId": "c5bda1a7-537f-4a80-95a0-c45eb127969b",
+      "name": "Deflecting Palm",
+      "manaCost": "{R}{W}",
+      "typeLine": "Instant",
+      "cmc": 2,
+      "colorIdentity": [
+        "R",
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/c/5/c5bda1a7-537f-4a80-95a0-c45eb127969b.jpg?1783912980",
+      "backUrl": null
+    },
+    "mkc/25": {
+      "scryfallId": "d827fc3c-bc86-4ee9-9db9-461cb0276f6b",
+      "name": "Watcher of Hours",
+      "manaCost": "{5}{U}",
+      "typeLine": "Creature — Sphinx",
+      "cmc": 6,
+      "colorIdentity": [
+        "U"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/d/8/d827fc3c-bc86-4ee9-9db9-461cb0276f6b.jpg?1783913045",
+      "backUrl": null
+    },
+    "mkm/103": {
+      "scryfallId": "317800b3-6b2d-4de6-8e44-7e54dd623055",
+      "name": "Slice from the Shadows",
+      "manaCost": "{X}{B}",
+      "typeLine": "Instant",
+      "cmc": 1,
+      "colorIdentity": [
+        "B"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/3/1/317800b3-6b2d-4de6-8e44-7e54dd623055.jpg?1783912894",
+      "backUrl": null
+    },
+    "mkm/170": {
+      "scryfallId": "f58cfb23-4d99-4133-bf4b-d7e7c7d17cea",
+      "name": "Pick Your Poison",
+      "manaCost": "{G}",
+      "typeLine": "Sorcery",
+      "cmc": 1,
+      "colorIdentity": [
+        "G"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/f/5/f58cfb23-4d99-4133-bf4b-d7e7c7d17cea.jpg?1783912863",
+      "backUrl": null
+    },
+    "mm2/219": {
+      "scryfallId": "683a5707-cddb-494d-9b41-51b4584ded69",
+      "name": "Lodestone Golem",
+      "manaCost": "{4}",
+      "typeLine": "Artifact Creature — Golem",
+      "cmc": 4,
+      "colorIdentity": [],
+      "frontUrl": "https://cards.scryfall.io/normal/front/6/8/683a5707-cddb-494d-9b41-51b4584ded69.jpg?1783938382",
+      "backUrl": null
+    },
+    "mm3/74": {
+      "scryfallId": "7b1fef26-7a5d-4e8d-95df-aac67dd25fd5",
+      "name": "Grixis Slavedriver",
+      "manaCost": "{5}{B}",
+      "typeLine": "Creature — Zombie Giant",
+      "cmc": 6,
+      "colorIdentity": [
+        "B"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/7/b/7b1fef26-7a5d-4e8d-95df-aac67dd25fd5.jpg?1783936654",
+      "backUrl": null
+    },
+    "mma/124": {
+      "scryfallId": "fd618eb1-0013-461c-873e-a66377fa284a",
+      "name": "Pardic Dragon",
+      "manaCost": "{4}{R}{R}",
+      "typeLine": "Creature — Dragon",
+      "cmc": 6,
+      "colorIdentity": [
+        "R"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/f/d/fd618eb1-0013-461c-873e-a66377fa284a.jpg?1783939980",
+      "backUrl": null
+    },
+    "mmq/317": {
+      "scryfallId": "41f352c3-4b63-4174-b2b4-6c19fb8c06ff",
+      "name": "Fountain of Cho",
+      "manaCost": "",
+      "typeLine": "Land",
+      "cmc": 0,
+      "colorIdentity": [
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/4/1/41f352c3-4b63-4174-b2b4-6c19fb8c06ff.jpg?1783945908",
+      "backUrl": null
+    },
+    "mmq/319": {
+      "scryfallId": "af7aafb7-6870-4d09-a191-70786766c459",
+      "name": "Hickory Woodlot",
+      "manaCost": "",
+      "typeLine": "Land",
+      "cmc": 0,
+      "colorIdentity": [
+        "G"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/a/f/af7aafb7-6870-4d09-a191-70786766c459.jpg?1783945906",
+      "backUrl": null
+    },
+    "mmq/321": {
+      "scryfallId": "6f787cb6-78cb-4baa-a9cf-cee8b7d8d6b1",
+      "name": "Mercadian Bazaar",
+      "manaCost": "",
+      "typeLine": "Land",
+      "cmc": 0,
+      "colorIdentity": [
+        "R"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/6/f/6f787cb6-78cb-4baa-a9cf-cee8b7d8d6b1.jpg?1783945907",
+      "backUrl": null
+    },
+    "mmq/322": {
+      "scryfallId": "bcc9d1e0-c8f4-4bac-90d4-8167f7a1515a",
+      "name": "Peat Bog",
+      "manaCost": "",
+      "typeLine": "Land",
+      "cmc": 0,
+      "colorIdentity": [
+        "B"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/b/c/bcc9d1e0-c8f4-4bac-90d4-8167f7a1515a.jpg?1783945905",
+      "backUrl": null
+    },
+    "mmq/323": {
+      "scryfallId": "115cab84-60d7-4bf2-9beb-b4ed7b5ceaf4",
+      "name": "Remote Farm",
+      "manaCost": "",
+      "typeLine": "Land",
+      "cmc": 0,
+      "colorIdentity": [
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/1/1/115cab84-60d7-4bf2-9beb-b4ed7b5ceaf4.jpg?1783945906",
+      "backUrl": null
+    },
+    "mmq/325": {
+      "scryfallId": "c315c72c-3e2f-4aff-b7d7-2f709ccec332",
+      "name": "Rushwood Grove",
+      "manaCost": "",
+      "typeLine": "Land",
+      "cmc": 0,
+      "colorIdentity": [
+        "G"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/c/3/c315c72c-3e2f-4aff-b7d7-2f709ccec332.jpg?1783945905",
+      "backUrl": null
+    },
+    "mmq/326": {
+      "scryfallId": "82bc7c6b-2e3d-42d1-b2bb-b37b6f34d33b",
+      "name": "Sandstone Needle",
+      "manaCost": "",
+      "typeLine": "Land",
+      "cmc": 0,
+      "colorIdentity": [
+        "R"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/8/2/82bc7c6b-2e3d-42d1-b2bb-b37b6f34d33b.jpg?1783945904",
+      "backUrl": null
+    },
+    "mmq/327": {
+      "scryfallId": "52a69122-19c0-47ec-8bea-478511ba88e6",
+      "name": "Saprazzan Cove",
+      "manaCost": "",
+      "typeLine": "Land",
+      "cmc": 0,
+      "colorIdentity": [
+        "U"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/5/2/52a69122-19c0-47ec-8bea-478511ba88e6.jpg?1783945905",
+      "backUrl": null
+    },
+    "mmq/328": {
+      "scryfallId": "006871fd-2641-42cb-a2ac-a33d05fc5a35",
+      "name": "Saprazzan Skerry",
+      "manaCost": "",
+      "typeLine": "Land",
+      "cmc": 0,
+      "colorIdentity": [
+        "U"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/0/0/006871fd-2641-42cb-a2ac-a33d05fc5a35.jpg?1783945904",
+      "backUrl": null
+    },
+    "mmq/329": {
+      "scryfallId": "edc199d1-970b-489f-b713-8285151f16ae",
+      "name": "Subterranean Hangar",
+      "manaCost": "",
+      "typeLine": "Land",
+      "cmc": 0,
+      "colorIdentity": [
+        "B"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/e/d/edc199d1-970b-489f-b713-8285151f16ae.jpg?1783945904",
+      "backUrl": null
+    },
+    "moc/258": {
+      "scryfallId": "80fffad3-2486-4350-8dff-54a215ebfc28",
+      "name": "Murderous Rider // Swift End",
+      "manaCost": "{1}{B}{B} // {1}{B}{B}",
+      "typeLine": "Creature — Zombie Knight // Instant — Adventure",
+      "cmc": 3,
+      "colorIdentity": [
+        "B"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/8/0/80fffad3-2486-4350-8dff-54a215ebfc28.jpg?1783917156",
+      "backUrl": null
+    },
+    "moc/287": {
+      "scryfallId": "2f5689e2-d8a2-442b-8027-f89686adcb67",
+      "name": "Krenko, Tin Street Kingpin",
+      "manaCost": "{2}{R}",
+      "typeLine": "Legendary Creature — Goblin",
+      "cmc": 3,
+      "colorIdentity": [
+        "R"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/2/f/2f5689e2-d8a2-442b-8027-f89686adcb67.jpg?1783917146",
+      "backUrl": null
+    },
+    "msc/104": {
+      "scryfallId": "ed0beb69-8441-4104-9990-81bd82f81f9a",
+      "name": "The Fantasticar",
+      "manaCost": "{3}",
+      "typeLine": "Legendary Artifact — Vehicle",
+      "cmc": 3,
+      "colorIdentity": [],
+      "frontUrl": "https://cards.scryfall.io/normal/front/e/d/ed0beb69-8441-4104-9990-81bd82f81f9a.jpg?1786399169",
+      "backUrl": null
+    },
+    "msc/654": {
+      "scryfallId": "2973e855-fe93-41a1-a62e-4699ef2c3d1d",
+      "name": "Doctor Doom, Unrivaled",
+      "manaCost": "{2}{B}{B}",
+      "typeLine": "Legendary Creature — Human Sorcerer Villain",
+      "cmc": 4,
+      "colorIdentity": [
+        "B"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/2/9/2973e855-fe93-41a1-a62e-4699ef2c3d1d.jpg?1783903062",
+      "backUrl": null
+    },
+    "msc/723": {
+      "scryfallId": "7a253dc9-1593-4914-90ca-309aa3aed53d",
+      "name": "Hit-Monkey",
+      "manaCost": "{3}{G}",
+      "typeLine": "Legendary Creature — Monkey Assassin",
+      "cmc": 4,
+      "colorIdentity": [
+        "G"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/7/a/7a253dc9-1593-4914-90ca-309aa3aed53d.jpg?1783903038",
+      "backUrl": null
+    },
+    "msh/148": {
+      "scryfallId": "2d5819ca-165d-4f4c-9500-3ac206994880",
+      "name": "Quicksilver, Brash Blur",
+      "manaCost": "{R}",
+      "typeLine": "Legendary Creature — Mutant Hero",
+      "cmc": 1,
+      "colorIdentity": [
+        "R"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/2/d/2d5819ca-165d-4f4c-9500-3ac206994880.jpg?1783902925",
+      "backUrl": null
+    },
+    "ncc/205": {
+      "scryfallId": "dcd27fa3-f6b6-4137-9b6c-4cba7187664c",
+      "name": "Luminarch Aspirant",
+      "manaCost": "{1}{W}",
+      "typeLine": "Creature — Human Cleric",
+      "cmc": 2,
+      "colorIdentity": [
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/d/c/dcd27fa3-f6b6-4137-9b6c-4cba7187664c.jpg?1783923289",
+      "backUrl": null
+    },
+    "neo/266": {
+      "scryfallId": "2135ac5a-187b-4dc9-8f82-34e8d1603416",
+      "name": "Boseiju, Who Endures",
+      "manaCost": "",
+      "typeLine": "Legendary Land",
+      "cmc": 0,
+      "colorIdentity": [
+        "G"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/2/1/2135ac5a-187b-4dc9-8f82-34e8d1603416.jpg?1783923818",
+      "backUrl": null
+    },
+    "neo/42": {
+      "scryfallId": "fab2d8a9-ab4c-4225-a570-22636293c17d",
+      "name": "The Wandering Emperor",
+      "manaCost": "{2}{W}{W}",
+      "typeLine": "Legendary Planeswalker",
+      "cmc": 4,
+      "colorIdentity": [
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/f/a/fab2d8a9-ab4c-4225-a570-22636293c17d.jpg?1783923909",
+      "backUrl": null
+    },
+    "nph/38": {
+      "scryfallId": "61e9c6df-1c84-4eab-9076-a4feb6347c10",
+      "name": "Mental Misstep",
+      "manaCost": "{U/P}",
+      "typeLine": "Instant",
+      "cmc": 1,
+      "colorIdentity": [
+        "U"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/6/1/61e9c6df-1c84-4eab-9076-a4feb6347c10.jpg?1783941319",
+      "backUrl": null
+    },
+    "nph/81": {
+      "scryfallId": "dd3520a7-a55f-4c00-b4f1-c1c154adfc8f",
+      "name": "Chancellor of the Forge",
+      "manaCost": "{4}{R}{R}{R}",
+      "typeLine": "Creature — Phyrexian Giant",
+      "cmc": 7,
+      "colorIdentity": [
+        "R"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/d/d/dd3520a7-a55f-4c00-b4f1-c1c154adfc8f.jpg?1783941309",
+      "backUrl": null
+    },
+    "one/128": {
+      "scryfallId": "5456b036-231e-4a64-b060-0709f5254664",
+      "name": "Dragonwing Glider",
+      "manaCost": "{3}{R}{R}",
+      "typeLine": "Artifact — Equipment",
+      "cmc": 5,
+      "colorIdentity": [
+        "R"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/5/4/5456b036-231e-4a64-b060-0709f5254664.jpg?1783918031",
+      "backUrl": null
+    },
+    "ons/305": {
+      "scryfallId": "fdb9565f-5b09-4127-b169-3146079dab84",
+      "name": "Words of Wilding",
+      "manaCost": "{2}{G}",
+      "typeLine": "Enchantment",
+      "cmc": 3,
+      "colorIdentity": [
+        "G"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/f/d/fdb9565f-5b09-4127-b169-3146079dab84.jpg?1783945032",
+      "backUrl": null
+    },
+    "plst/MM2-79": {
+      "scryfallId": "4ccd8394-cbc9-4346-9b48-f6be447b3e08",
+      "name": "Dismember",
+      "manaCost": "{1}{B/P}{B/P}",
+      "typeLine": "Instant",
+      "cmc": 3,
+      "colorIdentity": [
+        "B"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/4/c/4ccd8394-cbc9-4346-9b48-f6be447b3e08.jpg?1783931909",
+      "backUrl": null
+    },
+    "plst/SOM-174": {
+      "scryfallId": "7b8f6516-3d00-4deb-b852-bcd3b72e49ea",
+      "name": "Memnite",
+      "manaCost": "{0}",
+      "typeLine": "Artifact Creature — Construct",
+      "cmc": 0,
+      "colorIdentity": [],
+      "frontUrl": "https://cards.scryfall.io/normal/front/7/b/7b8f6516-3d00-4deb-b852-bcd3b72e49ea.jpg?1783931255",
+      "backUrl": null
+    },
+    "snc/188": {
+      "scryfallId": "2473d738-fe15-402a-ad24-0d6e5c4dfda3",
+      "name": "Fleetfoot Dancer",
+      "manaCost": "{1}{R}{G}{W}",
+      "typeLine": "Creature — Elf Druid",
+      "cmc": 4,
+      "colorIdentity": [
+        "G",
+        "R",
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/2/4/2473d738-fe15-402a-ad24-0d6e5c4dfda3.jpg?1783923085",
+      "backUrl": null
+    },
+    "soc/184": {
+      "scryfallId": "e6cebc57-d7b0-4e86-bc9e-ebb1de58f932",
+      "name": "White Orchid Phantom",
+      "manaCost": "{W}{W}",
+      "typeLine": "Creature — Spirit Knight",
+      "cmc": 2,
+      "colorIdentity": [
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/e/6/e6cebc57-d7b0-4e86-bc9e-ebb1de58f932.jpg?1783903796",
+      "backUrl": null
+    },
+    "soc/316": {
+      "scryfallId": "3362ade8-d585-40be-8486-382cad6efaf8",
+      "name": "Inkshield",
+      "manaCost": "{3}{W}{B}",
+      "typeLine": "Instant",
+      "cmc": 5,
+      "colorIdentity": [
+        "B",
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/3/3/3362ade8-d585-40be-8486-382cad6efaf8.jpg?1783903751",
+      "backUrl": null
+    },
+    "soc/348": {
+      "scryfallId": "cc387ccf-f746-4855-81e5-64f5a5e0fdda",
+      "name": "Hangarback Walker",
+      "manaCost": "{X}{X}",
+      "typeLine": "Artifact Creature — Construct",
+      "cmc": 0,
+      "colorIdentity": [],
+      "frontUrl": "https://cards.scryfall.io/normal/front/c/c/cc387ccf-f746-4855-81e5-64f5a5e0fdda.jpg?1783903740",
+      "backUrl": null
+    },
+    "soi/226": {
+      "scryfallId": "668afd78-3cf5-4daf-8dfb-fca90de0ae5a",
+      "name": "Seasons Past",
+      "manaCost": "{4}{G}{G}",
+      "typeLine": "Sorcery",
+      "cmc": 6,
+      "colorIdentity": [
+        "G"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/6/6/668afd78-3cf5-4daf-8dfb-fca90de0ae5a.jpg?1783937721",
+      "backUrl": null
+    },
+    "sos/15": {
+      "scryfallId": "32e670da-7563-4f6a-a7db-4c126a440eb8",
+      "name": "Erode",
+      "manaCost": "{W}",
+      "typeLine": "Instant",
+      "cmc": 1,
+      "colorIdentity": [
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/3/2/32e670da-7563-4f6a-a7db-4c126a440eb8.jpg?1783903705",
+      "backUrl": null
+    },
+    "sos/160": {
+      "scryfallId": "3a925370-58ac-4181-9acc-db7b0e0abf17",
+      "name": "Slumbering Trudge",
+      "manaCost": "{X}{G}",
+      "typeLine": "Creature — Plant Beast",
+      "cmc": 1,
+      "colorIdentity": [
+        "G"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/3/a/3a925370-58ac-4181-9acc-db7b0e0abf17.jpg?1783903653",
+      "backUrl": null
+    },
+    "sos/3": {
+      "scryfallId": "c35b57e4-2358-46c0-8f09-cd27c10eaf2d",
+      "name": "Sundering Archaic",
+      "manaCost": "{6}",
+      "typeLine": "Creature — Avatar",
+      "cmc": 6,
+      "colorIdentity": [],
+      "frontUrl": "https://cards.scryfall.io/normal/front/c/3/c35b57e4-2358-46c0-8f09-cd27c10eaf2d.jpg?1783903710",
+      "backUrl": null
+    },
+    "tdc/123": {
+      "scryfallId": "2a00c585-5bbc-4622-bf5b-4ec63b669f4c",
+      "name": "Lingering Souls",
+      "manaCost": "{2}{W}",
+      "typeLine": "Sorcery",
+      "cmc": 3,
+      "colorIdentity": [
+        "B",
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/2/a/2a00c585-5bbc-4622-bf5b-4ec63b669f4c.jpg?1783907122",
+      "backUrl": null
+    },
+    "tdc/157": {
+      "scryfallId": "b8b70585-e0ea-4cb4-9360-a8ab47626696",
+      "name": "Lier, Disciple of the Drowned",
+      "manaCost": "{3}{U}{U}",
+      "typeLine": "Legendary Creature — Human Wizard",
+      "cmc": 5,
+      "colorIdentity": [
+        "U"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/b/8/b8b70585-e0ea-4cb4-9360-a8ab47626696.jpg?1783907103",
+      "backUrl": null
+    },
+    "tdc/274": {
+      "scryfallId": "8b63ec86-670b-4acd-b14c-3d90acbde087",
+      "name": "Timeless Witness",
+      "manaCost": "{2}{G}{G}",
+      "typeLine": "Creature — Human Shaman",
+      "cmc": 4,
+      "colorIdentity": [
+        "G"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/8/b/8b63ec86-670b-4acd-b14c-3d90acbde087.jpg?1783907036",
+      "backUrl": null
+    },
+    "tdm/183": {
+      "scryfallId": "655fa2e1-3e1c-424c-b17a-daa7b8fface4",
+      "name": "Fangkeeper's Familiar",
+      "manaCost": "{1}{B}{G}{U}",
+      "typeLine": "Creature — Snake",
+      "cmc": 4,
+      "colorIdentity": [
+        "B",
+        "G",
+        "U"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/6/5/655fa2e1-3e1c-424c-b17a-daa7b8fface4.jpg?1783907319",
+      "backUrl": null
+    },
+    "tdm/21": {
+      "scryfallId": "312f7072-3bf8-449f-bfb7-93727ef26c66",
+      "name": "Riling Dawnbreaker // Signaling Roar",
+      "manaCost": "{4}{W} // {1}{W}",
+      "typeLine": "Creature — Dragon // Sorcery — Omen",
+      "cmc": 5,
+      "colorIdentity": [
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/3/1/312f7072-3bf8-449f-bfb7-93727ef26c66.jpg?1783907410",
+      "backUrl": null
+    },
+    "tdm/22": {
+      "scryfallId": "6ade6918-6d1d-448d-ab56-93996051e9a9",
+      "name": "Sage of the Skies",
+      "manaCost": "{2}{W}",
+      "typeLine": "Creature — Human Monk",
+      "cmc": 3,
+      "colorIdentity": [
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/6/a/6ade6918-6d1d-448d-ab56-93996051e9a9.jpg?1783907412",
+      "backUrl": null
+    },
+    "tdm/225": {
+      "scryfallId": "9523bc07-49e5-409c-ae6b-b28e305eef36",
+      "name": "Songcrafter Mage",
+      "manaCost": "{G}{U}{R}",
+      "typeLine": "Creature — Human Bard",
+      "cmc": 3,
+      "colorIdentity": [
+        "G",
+        "R",
+        "U"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/9/5/9523bc07-49e5-409c-ae6b-b28e305eef36.jpg?1783907298",
+      "backUrl": null
+    },
+    "tdm/232": {
+      "scryfallId": "2999e3b1-6510-42b2-9429-28c07a64a44f",
+      "name": "Twinmaw Stormbrood // Charring Bite",
+      "manaCost": "{5}{W} // {1}{R}",
+      "typeLine": "Creature — Dragon // Sorcery — Omen",
+      "cmc": 6,
+      "colorIdentity": [
+        "R",
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/2/9/2999e3b1-6510-42b2-9429-28c07a64a44f.jpg?1783907291",
+      "backUrl": null
+    },
+    "tla/149": {
+      "scryfallId": "9fbe94e9-a71d-4a31-9210-c599abe08e3f",
+      "name": "Price of Freedom",
+      "manaCost": "{1}{R}",
+      "typeLine": "Sorcery — Lesson",
+      "cmc": 2,
+      "colorIdentity": [
+        "R"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/9/f/9fbe94e9-a71d-4a31-9210-c599abe08e3f.jpg?1783904953",
+      "backUrl": null
+    },
+    "tpr/56": {
+      "scryfallId": "2639c3c1-c631-4b2d-a311-a01bbea4753d",
+      "name": "Legacy's Allure",
+      "manaCost": "{U}{U}",
+      "typeLine": "Enchantment",
+      "cmc": 2,
+      "colorIdentity": [
+        "U"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/2/6/2639c3c1-c631-4b2d-a311-a01bbea4753d.jpg?1783938495",
+      "backUrl": null
+    },
+    "tsr/175": {
+      "scryfallId": "7c9bd75c-9606-4607-bfa6-d6acdee12820",
+      "name": "Magus of the Moon",
+      "manaCost": "{2}{R}",
+      "typeLine": "Creature — Human Wizard",
+      "cmc": 3,
+      "colorIdentity": [
+        "R"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/7/c/7c9bd75c-9606-4607-bfa6-d6acdee12820.jpg?1783927794",
+      "backUrl": null
+    },
+    "tsr/288": {
+      "scryfallId": "d03f17f1-b0fd-4b84-82ea-085c2f87eeda",
+      "name": "Urza's Factory",
+      "manaCost": "",
+      "typeLine": "Land — Urza's",
+      "cmc": 0,
+      "colorIdentity": [],
+      "frontUrl": "https://cards.scryfall.io/normal/front/d/0/d03f17f1-b0fd-4b84-82ea-085c2f87eeda.jpg?1783927747",
+      "backUrl": null
+    },
+    "tsr/78": {
+      "scryfallId": "9cb19ac2-edf9-4f9a-b9ba-2a33ba96a4d8",
+      "name": "Piracy Charm",
+      "manaCost": "{U}",
+      "typeLine": "Instant",
+      "cmc": 1,
+      "colorIdentity": [
+        "U"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/9/c/9cb19ac2-edf9-4f9a-b9ba-2a33ba96a4d8.jpg?1783927841",
+      "backUrl": null
+    },
+    "uma/198": {
+      "scryfallId": "f99f864e-a10f-47f4-94c5-4571b5c11b3b",
+      "name": "Countersquall",
+      "manaCost": "{U}{B}",
+      "typeLine": "Instant",
+      "cmc": 2,
+      "colorIdentity": [
+        "B",
+        "U"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/f/9/f99f864e-a10f-47f4-94c5-4571b5c11b3b.jpg?1783933777",
+      "backUrl": null
+    },
+    "uma/236": {
+      "scryfallId": "bd3d4b4b-cf31-4f89-8140-9650edb03c7b",
+      "name": "Ancient Tomb",
+      "manaCost": "",
+      "typeLine": "Land",
+      "cmc": 0,
+      "colorIdentity": [],
+      "frontUrl": "https://cards.scryfall.io/normal/front/b/d/bd3d4b4b-cf31-4f89-8140-9650edb03c7b.jpg?1783933762",
+      "backUrl": null
+    },
+    "uma/244": {
+      "scryfallId": "e52214e1-404a-405a-b08e-20e13c087338",
+      "name": "Karakas",
+      "manaCost": "",
+      "typeLine": "Legendary Land",
+      "cmc": 0,
+      "colorIdentity": [
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/e/5/e52214e1-404a-405a-b08e-20e13c087338.jpg?1783933757",
+      "backUrl": null
+    },
+    "uma/58": {
+      "scryfallId": "bd9af767-42da-46c7-a2b8-3957b2e3063f",
+      "name": "Glen Elendra Archmage",
+      "manaCost": "{3}{U}",
+      "typeLine": "Creature — Faerie Wizard",
+      "cmc": 4,
+      "colorIdentity": [
+        "U"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/b/d/bd9af767-42da-46c7-a2b8-3957b2e3063f.jpg?1783933842",
+      "backUrl": null
+    },
+    "vma/4": {
+      "scryfallId": "bd8fa327-dd41-4737-8f19-2cf5eb1f7cdd",
+      "name": "Black Lotus",
+      "manaCost": "{0}",
+      "typeLine": "Artifact",
+      "cmc": 0,
+      "colorIdentity": [],
+      "frontUrl": "https://cards.scryfall.io/normal/front/b/d/bd8fa327-dd41-4737-8f19-2cf5eb1f7cdd.jpg?1783939332",
+      "backUrl": null
+    },
+    "vma/5": {
+      "scryfallId": "aced2c55-7543-4076-bcdd-36c4d649b8ae",
+      "name": "Mox Emerald",
+      "manaCost": "{0}",
+      "typeLine": "Artifact",
+      "cmc": 0,
+      "colorIdentity": [
+        "G"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/a/c/aced2c55-7543-4076-bcdd-36c4d649b8ae.jpg?1783939332",
+      "backUrl": null
+    },
+    "vma/6": {
+      "scryfallId": "5f6927e1-c580-483a-8e2a-6e2deb74800e",
+      "name": "Mox Jet",
+      "manaCost": "{0}",
+      "typeLine": "Artifact",
+      "cmc": 0,
+      "colorIdentity": [
+        "B"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/5/f/5f6927e1-c580-483a-8e2a-6e2deb74800e.jpg?1783939331",
+      "backUrl": null
+    },
+    "vma/7": {
+      "scryfallId": "ed0216a0-c5c9-4a99-b869-53e4d0256326",
+      "name": "Mox Pearl",
+      "manaCost": "{0}",
+      "typeLine": "Artifact",
+      "cmc": 0,
+      "colorIdentity": [
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/e/d/ed0216a0-c5c9-4a99-b869-53e4d0256326.jpg?1783939331",
+      "backUrl": null
+    },
+    "vma/8": {
+      "scryfallId": "45fd6e91-df76-497f-b642-33dc3d5f6a5a",
+      "name": "Mox Ruby",
+      "manaCost": "{0}",
+      "typeLine": "Artifact",
+      "cmc": 0,
+      "colorIdentity": [
+        "R"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/4/5/45fd6e91-df76-497f-b642-33dc3d5f6a5a.jpg?1783939329",
+      "backUrl": null
+    },
+    "vma/9": {
+      "scryfallId": "ea1feac0-d3a7-45eb-9719-1cdaf51ea0b6",
+      "name": "Mox Sapphire",
+      "manaCost": "{0}",
+      "typeLine": "Artifact",
+      "cmc": 0,
+      "colorIdentity": [
+        "U"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/e/a/ea1feac0-d3a7-45eb-9719-1cdaf51ea0b6.jpg?1783939328",
+      "backUrl": null
+    },
+    "war/193": {
+      "scryfallId": "5d6b5054-2224-4f68-9d82-3ed17c5dacc4",
+      "name": "Dovin's Veto",
+      "manaCost": "{W}{U}",
+      "typeLine": "Instant",
+      "cmc": 2,
+      "colorIdentity": [
+        "U",
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/5/d/5d6b5054-2224-4f68-9d82-3ed17c5dacc4.jpg?1783933400",
+      "backUrl": null
+    },
+    "war/83": {
+      "scryfallId": "5b1a44f0-1db8-406a-b7d9-f883f947f7bd",
+      "name": "Davriel, Rogue Shadowmage",
+      "manaCost": "{2}{B}",
+      "typeLine": "Legendary Planeswalker — Davriel",
+      "cmc": 3,
+      "colorIdentity": [
+        "B"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/5/b/5b1a44f0-1db8-406a-b7d9-f883f947f7bd.jpg?1783933448",
+      "backUrl": null
+    },
+    "who/67": {
+      "scryfallId": "a4e86622-6f30-41b2-87d0-d345110e2387",
+      "name": "Doomsday Confluence",
+      "manaCost": "{X}{X}{B}",
+      "typeLine": "Sorcery",
+      "cmc": 1,
+      "colorIdentity": [
+        "B"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/a/4/a4e86622-6f30-41b2-87d0-d345110e2387.jpg?1783914657",
+      "backUrl": null
+    },
+    "woe/47": {
+      "scryfallId": "588c6217-c460-417e-98bf-de5475780baf",
+      "name": "Disdainful Stroke",
+      "manaCost": "{1}{U}",
+      "typeLine": "Instant",
+      "cmc": 2,
+      "colorIdentity": [
+        "U"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/5/8/588c6217-c460-417e-98bf-de5475780baf.jpg?1783915121",
+      "backUrl": null
+    },
+    "woe/66": {
+      "scryfallId": "31051436-68f2-457e-8293-2b10ccf7684e",
+      "name": "Sleep-Cursed Faerie",
+      "manaCost": "{U}",
+      "typeLine": "Creature — Faerie Wizard",
+      "cmc": 1,
+      "colorIdentity": [
+        "U"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/3/1/31051436-68f2-457e-8293-2b10ccf7684e.jpg?1783915116",
+      "backUrl": null
+    },
+    "xln/129": {
+      "scryfallId": "bd7550dd-dfc5-43cd-a117-1244ee3086a8",
+      "name": "Vraska's Contempt",
+      "manaCost": "{2}{B}{B}",
+      "typeLine": "Instant",
+      "cmc": 4,
+      "colorIdentity": [
+        "B"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/b/d/bd7550dd-dfc5-43cd-a117-1244ee3086a8.jpg?1783935752",
+      "backUrl": null
+    },
+    "xln/199": {
+      "scryfallId": "06458882-94c8-4d92-a21c-955e9d70f0d4",
+      "name": "Old-Growth Dryads",
+      "manaCost": "{G}",
+      "typeLine": "Creature — Dryad",
+      "cmc": 1,
+      "colorIdentity": [
+        "G"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/0/6/06458882-94c8-4d92-a21c-955e9d70f0d4.jpg?1783935722",
+      "backUrl": null
+    },
+    "znr/207": {
+      "scryfallId": "7a7e4f99-ece4-473e-b712-40e4c53558e8",
+      "name": "Swarm Shambler",
+      "manaCost": "{G}",
+      "typeLine": "Creature — Fungus Beast",
+      "cmc": 1,
+      "colorIdentity": [
+        "G"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/7/a/7a7e4f99-ece4-473e-b712-40e4c53558e8.jpg?1783929330",
+      "backUrl": null
+    }
+  },
+  "basics": {
+    "Forest": {
+      "scryfallId": "dce15387-4114-4b3e-91aa-5b42b45c44ac",
+      "name": "Forest",
+      "manaCost": "",
+      "typeLine": "Basic Land — Forest",
+      "cmc": 0,
+      "colorIdentity": [
+        "G"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/d/c/dce15387-4114-4b3e-91aa-5b42b45c44ac.jpg?1785981675",
+      "backUrl": null
+    },
+    "Island": {
+      "scryfallId": "f3cc07cd-cc79-4745-b0b7-eade60175cc3",
+      "name": "Island",
+      "manaCost": "",
+      "typeLine": "Basic Land — Island",
+      "cmc": 0,
+      "colorIdentity": [
+        "U"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/f/3/f3cc07cd-cc79-4745-b0b7-eade60175cc3.jpg?1785981645",
+      "backUrl": null
+    },
+    "Mountain": {
+      "scryfallId": "2a844b96-6616-4c39-8f4f-5d14a3b2bd55",
+      "name": "Mountain",
+      "manaCost": "",
+      "typeLine": "Basic Land — Mountain",
+      "cmc": 0,
+      "colorIdentity": [
+        "R"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/2/a/2a844b96-6616-4c39-8f4f-5d14a3b2bd55.jpg?1785981666",
+      "backUrl": null
+    },
+    "Plains": {
+      "scryfallId": "8ab0f4c0-b331-4c57-b68f-2e24bb5ba06c",
+      "name": "Plains",
+      "manaCost": "",
+      "typeLine": "Basic Land — Plains",
+      "cmc": 0,
+      "colorIdentity": [
+        "W"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/8/a/8ab0f4c0-b331-4c57-b68f-2e24bb5ba06c.jpg?1785981632",
+      "backUrl": null
+    },
+    "Swamp": {
+      "scryfallId": "b7387103-1df1-4fd0-9e91-1544509792c7",
+      "name": "Swamp",
+      "manaCost": "",
+      "typeLine": "Basic Land — Swamp",
+      "cmc": 0,
+      "colorIdentity": [
+        "B"
+      ],
+      "frontUrl": "https://cards.scryfall.io/normal/front/b/7/b7387103-1df1-4fd0-9e91-1544509792c7.jpg?1785981659",
+      "backUrl": null
+    }
+  }
+}

@@ -72,7 +72,10 @@ function reducer(state: AppState, action: Action): AppState {
         emptyDecks(action.config.decksPerPlayer),
         emptyDecks(action.config.decksPerPlayer),
       ],
-      matchups: createMatchups(action.config.decksPerPlayer),
+      matchups: createMatchups(
+        action.config.decksPerPlayer,
+        MODE_RULES[action.config.mode].randomFirstPlayer
+      ),
       currentMatchup: 0,
     };
   }
