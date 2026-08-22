@@ -311,10 +311,6 @@ export function StartScreen({ onStart, initial }: StartScreenProps) {
         </label>
 
         {startError && <p class="error-text">{startError}</p>}
-        <p class="consequence">
-          {decksPerPlayer} {decksPerPlayer === 1 ? 'deck' : 'decks'} each · {decksPerPlayer}{' '}
-          {decksPerPlayer === 1 ? 'matchup' : 'matchups'}
-        </p>
         <button
           type="button"
           class="primary-button"

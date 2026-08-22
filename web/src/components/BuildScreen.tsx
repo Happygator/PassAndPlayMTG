@@ -87,7 +87,6 @@ export function BuildScreen({
   const [activeDeck, setActiveDeck] = useState(0);
   const [confirming, setConfirming] = useState(false);
   const [cardsPerRow, setCardsPerRow] = useState<CardsPerRow>(loadCardsPerRow);
-  const [basicsOpen, setBasicsOpen] = useState(false);
   const usedPoolCards = new Map<number, { deckIndex: number; slotIndex: number }>();
 
   decks.forEach((deck, deckIndex) => {
@@ -232,46 +231,24 @@ export function BuildScreen({
         </div>
       </section>
 
-      {/* Collapsed by default. An always-open five-card bar costs ~120px of
-          permanent height on every scroll through the pool, to serve a choice
-          a 3-card deck makes at most once. */}
+      {/* All five shown at once rather than behind a disclosure. The five
+          basics are the most recognisable cards in Magic, so they survive
+          being small in a way pool cards do not, and one tap beats two.
+          REVISIT THIS if customisable basic-land printings ship: once a
+          basic can be any of dozens of arts, the row stops being five known
+          objects and becomes a picker, which wants the disclosure back. */}
       {allowBasics && (
         <section class="basics-section">
-          {basicsOpen ? (
-            <div class="basics-open">
-              <div class="basics-bar">
-                {basics.map((card, index) => (
-                  <CardThumbnail
-                    key={`${card.scryfallId}-${index}`}
-                    card={card}
-                    onSelect={() => {
-                      assignCard({ kind: 'basic', index });
-                      setBasicsOpen(false);
-                    }}
-                  />
-                ))}
-              </div>
-              <button
-                type="button"
-                class="basics-toggle"
-                aria-expanded="true"
-                onClick={() => setBasicsOpen(false)}
-              >
-                <span>Close</span>
-                <span class="chev" aria-hidden="true">−</span>
-              </button>
-            </div>
-          ) : (
-            <button
-              type="button"
-              class="basics-toggle"
-              aria-expanded="false"
-              onClick={() => setBasicsOpen(true)}
-            >
-              <span>Add a basic land</span>
-              <span class="chev" aria-hidden="true">+</span>
-            </button>
-          )}
+          <h2>Basic lands</h2>
+          <div class="basics-bar">
+            {basics.map((card, index) => (
+              <CardThumbnail
+                key={`${card.scryfallId}-${index}`}
+                card={card}
+                onSelect={() => assignCard({ kind: 'basic', index })}
+              />
+            ))}
+          </div>
         </section>
       )}
 

@@ -50,7 +50,7 @@ export function HandoffScreen({ name, player, poolSize, deckCount, onReveal }: H
         <span>Hold to reveal</span>
       </button>
       <p class="handoff-status">
-        {poolSize} cards · build {deckCount} {deckCount === 1 ? 'deck' : 'decks'}
+        {poolSize} cards to build {deckCount} {deckCount === 1 ? 'deck' : 'decks'} with
       </p>
     </main>
   );

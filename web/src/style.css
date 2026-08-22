@@ -190,17 +190,6 @@ h1, h2, h3 {
 }
 .player-dot--1 { background: var(--p1); }
 .player-dot--2 { background: var(--p2); }
-/* Deck count is the one setting whose effect is not obvious, so the button is
-   preceded by what pressing it will produce. */
-.consequence {
-  font-family: var(--font-data);
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--muted);
-  text-align: center;
-  font-variant-numeric: tabular-nums;
-}
 .title-block h1, .screen-header h1 {
   font-size: clamp(2rem, 9vw, 3rem);
   text-transform: uppercase;
@@ -432,11 +421,15 @@ h1, h2, h3 {
   border: 1px dashed var(--rule);
   background: transparent;
 }
+/* Five across on one row. At phone width that is ~64px a card, which is
+   below the readable threshold for a pool card but fine for these five —
+   see the note in BuildScreen.tsx for when that stops being true. */
 .basics-bar {
-  display: flex; flex-wrap: wrap; justify-content: center;
-  gap: var(--space-2); padding-bottom: var(--space-1);
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
 }
-.basics-bar .card-thumb { width: 29%; max-width: none; }
+.basics-bar .card-thumb { max-width: none; }
 /* The size control sets a MINIMUM card width, not a column count, so a phone
    lands on 3/2/1 per row while a wide screen simply fits more columns at the
    same readable card size. */
@@ -480,8 +473,20 @@ h1, h2, h3 {
 .card-size button:hover { color: var(--ink); }
 .card-size button.on { border-color: var(--accent); color: var(--accent); }
 
-/* Deck strip: tabs plus the open deck, pinned above the pool. */
-.deck-strip { margin-bottom: var(--space-5); }
+/* Deck strip: tabs plus the open deck, pinned above the pool. Sticky rather
+   than merely first in the DOM — the point is to see what you have built
+   WHILE tapping through a 45-card pool, which means it has to survive the
+   scroll. Opaque ground so pool cards do not show through it, and z-index
+   below .sticky-action (5) so the submit bar still covers it. */
+.deck-strip {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 4;
+  background: var(--ground);
+  padding-top: var(--space-2);
+  padding-bottom: var(--space-3);
+  margin-bottom: var(--space-3);
+}
 .deck-tabs {
   display: flex;
   flex-wrap: nowrap;
@@ -548,38 +553,6 @@ h1, h2, h3 {
   margin: 0 auto;
 }
 
-/* Basic lands: one control, expanding in place rather than into a sheet, so
-   the pool never leaves the screen while a land is being chosen. */
-.basics-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-3);
-  width: 100%;
-  min-height: 46px;
-  padding: 0 var(--space-3);
-  border: 1px dashed var(--rule);
-  border-radius: var(--radius-sm);
-  background: transparent;
-  color: var(--muted);
-  font-size: 0.85rem;
-  transition: color var(--dur-mid) var(--ease-out), border-color var(--dur-mid) var(--ease-out);
-}
-.basics-toggle:hover { color: var(--ink); border-color: var(--ink); }
-.basics-toggle .chev {
-  font-family: var(--font-data);
-  font-size: 0.95rem;
-  color: var(--accent);
-}
-.basics-open {
-  display: grid;
-  gap: var(--space-3);
-  border: 2px solid var(--accent);
-  border-radius: var(--radius-sm);
-  background: var(--surface);
-  padding: var(--space-3);
-}
-.basics-open .basics-toggle { border-style: solid; border-color: var(--rule-soft); }
 
 /* Shown while decks are incomplete, in place of a pinned disabled button. */
 .progress-line {
@@ -784,14 +757,17 @@ h1, h2, h3 {
   margin-top: 3px;
   opacity: 0.9;
 }
+/* The scores carry vulgar fractions (1½–½), which lose their bar and stem
+   long before a digit becomes illegible, so this line needs more size than
+   its supporting-text role would suggest. */
 .res-score {
   font-family: var(--font-data);
   font-weight: 700;
-  font-size: 0.62rem;
-  letter-spacing: 0.04em;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
   font-variant-numeric: tabular-nums;
-  margin-top: 4px;
-  opacity: 0.85;
+  margin-top: 3px;
+  opacity: 0.95;
 }
 .match-screen .versus { margin: var(--space-1) 0; }
 .match-screen .result-buttons { margin-top: var(--space-2); }
@@ -831,11 +807,11 @@ h1, h2, h3 {
   transition: transform 140ms var(--ease-out);
   z-index: 2;
 }
-/* Labels the OPPOSING slot this position will meet, not the deck sitting in
-   it: after a reorder the deck built as "Deck 3" occupies position 1, so a
-   deck-number label would point at a different object than it did one screen
-   earlier. Position is the only thing this row actually determines. */
+/* Excluded from the drag surface (see startDrag): a stable place to rest a
+   thumb while the rest of the row moves. */
 .order-position {
+  touch-action: auto;
+  cursor: default;
   flex: 0 0 auto;
   min-width: 48px;
   font-family: var(--font-data);
@@ -892,8 +868,11 @@ h1, h2, h3 {
 }
 .ledger tr.grouped td { border-bottom: 1px solid var(--rule-soft); }
 .ledger .decks { line-height: 1.4; }
-/* Player one in ink, player two muted, stacked — no repeated "vs" row. */
-.ledger .decks em { font-style: normal; color: var(--muted); }
+/* A hairline rather than a bare line break: two card lists stacked with no
+   divider read as one long list, especially when a deck name wraps. */
+.ledger .deck-line { color: var(--muted); padding: 4px 0; }
+.ledger .deck-line + .deck-line { border-top: 1px solid var(--rule-soft); }
+.ledger .deck-won { color: var(--ink); }
 .ledger .ledger-result { text-align: right; width: 1%; white-space: nowrap; padding-left: var(--space-3); }
 .pairing-outcome {
   min-height: 36px;

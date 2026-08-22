@@ -33,8 +33,11 @@ export function OrderScreen({ name, player, opponentName, decks, pool, basics, o
 
   const startDrag = (index: number, event: JSX.TargetedPointerEvent<HTMLDivElement>) => {
     if (drag) return;
-    // Taps on the arrow buttons are not drag starts.
+    // Taps on the arrow buttons are not drag starts, and neither is the deck
+    // label on the left — dragging is scoped to the card block and everything
+    // right of it, so the label stays a stable place to rest a thumb.
     if ((event.target as HTMLElement).closest('.order-arrows')) return;
+    if ((event.target as HTMLElement).closest('.order-position')) return;
     const list = listRef.current;
     if (!list || decks.length < 2) return;
     const rows = Array.from(list.querySelectorAll<HTMLElement>('.order-row'));
@@ -119,7 +122,7 @@ export function OrderScreen({ name, player, opponentName, decks, pool, basics, o
             onPointerCancel={endDrag}
           >
             <span class="order-position">
-              Plays
+              Deck
               <b>{index + 1}</b>
             </span>
             <div class="order-main">
