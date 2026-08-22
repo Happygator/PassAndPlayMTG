@@ -358,7 +358,7 @@ h1, h2, h3 {
      page-wide `manipulation` value still permits panning, so without this the
      screen scrolls under the finger mid-hold; it is also what lets iOS start a
      text-selection gesture (the magnifier loupe) on tap-then-hold. Same
-     treatment .order-row already uses for its drag rows. */
+     treatment .order-deck already uses for its drag rows. */
   touch-action: none;
 }
 .hold-button::before {
@@ -786,8 +786,45 @@ h1, h2, h3 {
   text-transform: uppercase;
 }
 .order-screen .hint { color: var(--muted); line-height: 1.45; font-size: 0.9rem; }
-.order-list { display: flex; flex-direction: column; gap: var(--space-2); }
-.order-row {
+/* Two columns: a static rail of slot labels, and the deck blocks that move.
+   The labels are laid out as their own grid cells rather than as part of each
+   row, which is what lets a deck block translate past them during a drag while
+   the labels stay put. Because the labels never move, "Deck 2" names the SLOT
+   — the second deck you will play — not whichever block you happened to build
+   second, so the label stays true after a reorder. */
+.order-list {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-2);
+  align-items: stretch;
+}
+/* Static rail. No pointer handlers, no transform, never a drag surface. */
+.order-slot {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  min-width: 84px;
+  padding: var(--space-2);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  font-family: var(--font-data);
+  font-size: 0.58rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  text-align: center;
+}
+.order-slot b {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--ink);
+}
+/* The only thing that moves. */
+.order-deck {
   display: flex; align-items: center; gap: var(--space-3);
   border: 1px solid var(--rule-soft);
   border-radius: var(--radius-md);
@@ -795,44 +832,35 @@ h1, h2, h3 {
   padding: var(--space-2);
   touch-action: none; user-select: none; position: relative;
 }
-.order-list.drag-active .order-row {
+.order-list.drag-active .order-deck {
   transition: transform 140ms var(--ease-out);
 }
-.order-row.dragging {
+.order-deck.dragging {
   border-color: var(--accent);
   background: var(--surface-2);
   transition: none; z-index: 2;
 }
-.order-row.settling {
+.order-deck.settling {
   transition: transform 140ms var(--ease-out);
   z-index: 2;
 }
-/* Excluded from the drag surface (see startDrag): a stable place to rest a
-   thumb while the rest of the row moves. */
-.order-position {
-  touch-action: auto;
-  cursor: default;
-  flex: 0 0 auto;
-  min-width: 48px;
-  font-family: var(--font-data);
-  font-size: 0.56rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--muted);
-  text-align: center;
-  line-height: 1.2;
-}
-.order-position b {
-  display: block;
-  font-family: var(--font-display);
-  font-size: 1.7rem;
-  font-weight: 800;
-  line-height: 1;
-  color: var(--accent);
-}
 .order-cards { display: flex; gap: var(--space-1); min-width: 0; }
 .order-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--space-1); }
-.order-deck-names { margin: 0; font-size: 0.75rem; color: var(--muted); line-height: 1.3; }
+/* Clamped to two lines: the drag maths uses a single row stride measured from
+   the first two blocks, so rows have to be uniform in height. A three-card
+   deck whose names wrap to three lines would desynchronise every swap below
+   it. */
+.order-deck-names {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 .order-cards .card-thumb { flex: 1 1 0; max-width: 64px; }
 .order-arrows { display: flex; flex-direction: column; gap: var(--space-1); }
 .order-arrows button {

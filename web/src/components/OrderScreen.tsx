@@ -1,3 +1,4 @@
+import { Fragment } from 'preact';
 import type { JSX } from 'preact';
 import { useRef, useState } from 'preact/hooks';
 import { cardImageSrc } from '@platform';
@@ -33,15 +34,14 @@ export function OrderScreen({ name, player, opponentName, decks, pool, basics, o
 
   const startDrag = (index: number, event: JSX.TargetedPointerEvent<HTMLDivElement>) => {
     if (drag) return;
-    // Taps on the arrow buttons are not drag starts, and neither is the deck
-    // label on the left — dragging is scoped to the card block and everything
-    // right of it, so the label stays a stable place to rest a thumb.
+    // Taps on the arrow buttons are not drag starts. The slot label needs no
+    // such guard any more: it lives in its own grid cell outside the draggable
+    // element, so it is structurally impossible to start a drag from it.
     if ((event.target as HTMLElement).closest('.order-arrows')) return;
-    if ((event.target as HTMLElement).closest('.order-position')) return;
     const list = listRef.current;
     if (!list || decks.length < 2) return;
-    const rows = Array.from(list.querySelectorAll<HTMLElement>('.order-row'));
-    const rowStride = rows[1].getBoundingClientRect().top - rows[0].getBoundingClientRect().top;
+    const blocks = Array.from(list.querySelectorAll<HTMLElement>('.order-deck'));
+    const rowStride = blocks[1].getBoundingClientRect().top - blocks[0].getBoundingClientRect().top;
     setDrag({ from: index, to: index, startY: event.clientY, offsetY: 0, rowStride, settling: false });
     try {
       event.currentTarget.setPointerCapture(event.pointerId);
@@ -70,8 +70,8 @@ export function OrderScreen({ name, player, opponentName, decks, pool, basics, o
       setDrag(null);
       return;
     }
-    // Settle phase: the dragged row glides from its pointer offset into its
-    // target slot; the shifted rows are already in place and do not move.
+    // Settle phase: the dragged block glides from its pointer offset into its
+    // target slot; the shifted blocks are already in place and do not move.
     // The reorder itself commits only after the glide, in a transition-free
     // render that is pixel-identical, so nothing visibly jumps at commit.
     const { from, to } = drag;
@@ -84,9 +84,12 @@ export function OrderScreen({ name, player, opponentName, decks, pool, basics, o
     }, 150);
   };
 
-  // The dragged row follows the pointer; rows between the origin and the
+  // The dragged block follows the pointer; blocks between the origin and the
   // target slot shift one stride toward the origin to open the target slot.
-  const rowStyle = (index: number): string => {
+  // Only the right-hand column is ever transformed — the slot labels are in a
+  // separate grid cell and never move, which is what makes the label mean "the
+  // deck sitting in position N" rather than "the deck you built third".
+  const blockStyle = (index: number): string => {
     if (!drag) return '';
     if (index === drag.from) {
       const y = drag.settling ? (drag.to - drag.from) * drag.rowStride : drag.offsetY;
@@ -112,58 +115,59 @@ export function OrderScreen({ name, player, opponentName, decks, pool, basics, o
       </p>
       <div class={`order-list${drag ? ' drag-active' : ''}`} ref={listRef}>
         {decks.map((deck, index) => (
-          <div
-            class={`order-row${drag && drag.from === index ? (drag.settling ? ' settling' : ' dragging') : ''}`}
-            style={rowStyle(index)}
-            key={index}
-            onPointerDown={(event) => startDrag(index, event)}
-            onPointerMove={moveDrag}
-            onPointerUp={endDrag}
-            onPointerCancel={endDrag}
-          >
-            <span class="order-position">
+          <Fragment key={index}>
+            <span class="order-slot" aria-hidden="true">
               Deck
               <b>{index + 1}</b>
             </span>
-            <div class="order-main">
-              <div class="order-cards">
-                {deck.map((ref, slot) => {
-                  if (ref === null) return null;
-                  const card = resolveRef(ref, pool, basics);
-                  return (
-                    <div class="card-thumb" key={slot}>
-                      <img src={cardImageSrc(card)} alt={card.name} draggable={false} />
-                    </div>
-                  );
-                })}
+            <div
+              class={`order-deck${drag && drag.from === index ? (drag.settling ? ' settling' : ' dragging') : ''}`}
+              style={blockStyle(index)}
+              onPointerDown={(event) => startDrag(index, event)}
+              onPointerMove={moveDrag}
+              onPointerUp={endDrag}
+              onPointerCancel={endDrag}
+            >
+              <div class="order-main">
+                <div class="order-cards">
+                  {deck.map((ref, slot) => {
+                    if (ref === null) return null;
+                    const card = resolveRef(ref, pool, basics);
+                    return (
+                      <div class="card-thumb" key={slot}>
+                        <img src={cardImageSrc(card)} alt={card.name} draggable={false} />
+                      </div>
+                    );
+                  })}
+                </div>
+                <p class="order-deck-names">{deckNames(deck, pool, basics)}</p>
               </div>
-              <p class="order-deck-names">{deckNames(deck, pool, basics)}</p>
+              <div class="order-arrows">
+                <button
+                  type="button"
+                  aria-label={`Move the deck in position ${index + 1} up`}
+                  aria-disabled={index === 0}
+                  onClick={() => {
+                    if (index === 0) return;
+                    onReorder(index, index - 1);
+                  }}
+                >
+                  ↑
+                </button>
+                <button
+                  type="button"
+                  aria-label={`Move the deck in position ${index + 1} down`}
+                  aria-disabled={index === decks.length - 1}
+                  onClick={() => {
+                    if (index === decks.length - 1) return;
+                    onReorder(index, index + 1);
+                  }}
+                >
+                  ↓
+                </button>
+              </div>
             </div>
-            <div class="order-arrows">
-              <button
-                type="button"
-                aria-label={`Move deck in position ${index + 1} up`}
-                aria-disabled={index === 0}
-                onClick={() => {
-                  if (index === 0) return;
-                  onReorder(index, index - 1);
-                }}
-              >
-                ↑
-              </button>
-              <button
-                type="button"
-                aria-label={`Move deck in position ${index + 1} down`}
-                aria-disabled={index === decks.length - 1}
-                onClick={() => {
-                  if (index === decks.length - 1) return;
-                  onReorder(index, index + 1);
-                }}
-              >
-                ↓
-              </button>
-            </div>
-          </div>
+          </Fragment>
         ))}
       </div>
       <div class="order-actions">
