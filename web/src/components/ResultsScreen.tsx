@@ -1,6 +1,14 @@
 import { useState } from 'preact/hooks';
 import { cardImageSrc } from '@platform';
-import { deckNames, formatPoints, resolveRef, resultLabel, resultSide, tally } from '../game';
+import {
+  deckNames,
+  formatPoints,
+  isDecisive,
+  resolveRef,
+  resultPillLabel,
+  resultSide,
+  tally,
+} from '../game';
 import type { CardData, DeckSlots, GameState, MatchResult } from '../types';
 
 interface ResultsScreenProps {
@@ -88,38 +96,51 @@ export function ResultsScreen({ state, onNewGame }: ResultsScreenProps) {
       </button>
 
       <section class="results-section">
-        <h2>Pairing results</h2>
-        <div class="pairing-results">
-          {state.matchups.map((matchup, i) => {
-            const result = matchup.result!;
-            return (
-              <div class="pairing-result" key={i}>
-                <h3 class="pairing-title">Match {i + 1}</h3>
-                <div class="pairing-body">
-                  <span class="pairing-deck">
+        {/* One ruled block per match rather than a bordered card each: the
+            number is a centred band, which stops it competing with the first
+            card name for the start of the line, and gives the first-player
+            note somewhere to live at no extra height. */}
+        <table class="ledger">
+          <tbody>
+            {state.matchups.flatMap((matchup, i) => {
+              const result = matchup.result!;
+              return [
+                <tr class="mrow" key={`band-${i}`}>
+                  <td colSpan={2}>
+                    Match {i + 1}
+                    {matchup.onPlay !== undefined && (
+                      <>
+                        {' · '}
+                        <span class={matchup.onPlay === 0 ? 'p1-text' : 'p2-text'}>
+                          {state.config.playerNames[matchup.onPlay]}
+                        </span>
+                        {' went first'}
+                      </>
+                    )}
+                  </td>
+                </tr>,
+                <tr class="grouped" key={`row-${i}`}>
+                  <td class="decks">
                     {deckNames(state.decks[0][matchup.p1Deck], state.pools[0], state.cube.basics)}
-                  </span>
-                  <span class="pairing-vs">vs.</span>
-                  <span class="pairing-deck">
-                    {deckNames(state.decks[1][matchup.p2Deck], state.pools[1], state.cube.basics)}
-                  </span>
-                  {matchup.onPlay !== undefined && (
-                    <span class="pairing-first">
-                      {state.config.playerNames[matchup.onPlay]} went first
-                    </span>
-                  )}
-                </div>
-                <button
-                  type="button"
-                  class={`pairing-outcome ${outcomeClass(result)}`}
-                  onClick={() => setSelectedPairing({ p1Deck: i, p2Deck: i })}
-                >
-                  {resultLabel(result)}
-                </button>
-              </div>
-            );
-          })}
-        </div>
+                    <br />
+                    <em>
+                      {deckNames(state.decks[1][matchup.p2Deck], state.pools[1], state.cube.basics)}
+                    </em>
+                  </td>
+                  <td class="ledger-result">
+                    <button
+                      type="button"
+                      class={`pairing-outcome ${outcomeClass(result)}${isDecisive(result) ? '' : ' outcome-edge'}`}
+                      onClick={() => setSelectedPairing({ p1Deck: i, p2Deck: i })}
+                    >
+                      {resultPillLabel(result, state.config.playerNames)}
+                    </button>
+                  </td>
+                </tr>,
+              ];
+            })}
+          </tbody>
+        </table>
       </section>
 
       {selectedPairing && selectedMatchup && (

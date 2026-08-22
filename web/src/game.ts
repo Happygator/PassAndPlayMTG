@@ -230,6 +230,38 @@ export function resultSide(result: MatchResult): 'p1' | 'even' | 'p2' {
   return 'even';
 }
 
+/**
+ * Ledger label: the favoured player's name plus the score from THEIR side, so
+ * a win always shows the larger figure first.
+ *
+ * The name alone is not enough once a mode has five results — "Alice" means
+ * 2–0 in one match and 1½–½ in another — so the figure is part of the label
+ * rather than decoration.
+ */
+export function resultPillLabel(result: MatchResult, names: [string, string]): string {
+  const [first, second] = gamePoints(result);
+  const side = resultSide(result);
+  if (side === 'even') return `${resultButtonLabel(result, names)} ${resultLabel(result)}`;
+  if (side === 'p1') return `${names[0]} ${formatPoints(first)}–${formatPoints(second)}`;
+  return `${names[1]} ${formatPoints(second)}–${formatPoints(first)}`;
+}
+
+/**
+ * Whether a result was won outright rather than edged. This is the SECOND
+ * channel the ledger encodes: hue still means player, and fill weight means
+ * how decisively — solid for a sweep, outlined for one win and one draw. That
+ * distinguishes all five 3CB results using three hues, and survives red-green
+ * colour blindness and greyscale, because fill is not a colour cue.
+ */
+export function isDecisive(result: MatchResult): boolean {
+  return (
+    result === 'p1-sweep' ||
+    result === 'p2-sweep' ||
+    result === 'p1-win' ||
+    result === 'p2-win'
+  );
+}
+
 export function resolveRef(ref: CardRef, pool: readonly CardData[], basics: readonly CardData[]): CardData {
   return ref.kind === 'pool' ? pool[ref.index] : basics[ref.index];
 }
@@ -242,7 +274,11 @@ export function deckNames(
 ): string {
   return deck
     .map((ref) => (ref === null ? '?' : resolveRef(ref, pool, basics).name.split(' // ')[0]))
-    .join(', ');
+    // A comma cannot separate these: six cards in the 3CB cube have one in
+    // their own name ("Boseiju, Who Endures"), so ", " produced a list you
+    // could not parse. The bar is also heavy enough to survive next to the
+    // "//" already present in split-card names.
+    .join(' | ');
 }
 
 export function deckComplete(deck: DeckSlots): boolean {

@@ -877,43 +877,46 @@ h1, h2, h3 {
   margin: 0 auto var(--space-5);
   text-align: center;
 }
-.pairing-results { display: flex; flex-direction: column; gap: var(--space-2); }
-.pairing-result {
-  display: grid;
-  gap: var(--space-2);
-  border: 1px solid var(--rule-soft);
-  border-radius: var(--radius-md);
-  background: var(--surface);
-  padding: var(--space-3);
+.ledger { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.ledger td { padding: var(--space-2) 0; vertical-align: middle; }
+/* The match number is a full-width centred band, so it never competes with a
+   card name for the start of the line. */
+.ledger .mrow td {
   text-align: center;
-}
-.pairing-title {
-  color: var(--muted);
   font-family: var(--font-data);
   font-size: 0.64rem;
-  font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  padding-bottom: var(--space-1);
-  border-bottom: 1px solid var(--rule-soft);
+  color: var(--muted);
+  padding: var(--space-3) 0 var(--space-1);
 }
-.pairing-body { display: grid; gap: 3px; }
-.pairing-deck { font-size: 0.9rem; }
-.pairing-vs { color: var(--muted); font-size: 0.8rem; }
+.ledger tr.grouped td { border-bottom: 1px solid var(--rule-soft); }
+.ledger .decks { line-height: 1.4; }
+/* Player one in ink, player two muted, stacked — no repeated "vs" row. */
+.ledger .decks em { font-style: normal; color: var(--muted); }
+.ledger .ledger-result { text-align: right; width: 1%; white-space: nowrap; padding-left: var(--space-3); }
 .pairing-outcome {
-  justify-self: center;
-  min-width: 96px;
-  min-height: 40px;
+  min-height: 36px;
   border: 0;
   border-radius: 999px;
+  padding: 0 var(--space-3);
   background: var(--side);
   color: var(--deep);
   font-family: var(--font-data);
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+/* Second channel: hue means player, fill weight means how decisively. Solid
+   is a sweep, outlined is one win and one draw — five distinguishable results
+   from three hues, and legible without colour at all. */
+.outcome-edge {
+  background: transparent;
+  color: var(--side);
+  border: 2px solid var(--side);
 }
 .pwa-banner {
   display: flex;
