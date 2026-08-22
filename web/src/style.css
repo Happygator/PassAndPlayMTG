@@ -761,11 +761,37 @@ h1, h2, h3 {
   gap: 6px;
 }
 .match-card-row .card-thumb {
-  /* Viewport-relative: three cards must fit the row width and two card rows
-     plus header/buttons/Previous must fit the height. */
+  /* Take the width that is there. Three cards plus two gaps is all the row
+     allows, and the height budget is covered by the flex column above; the
+     dvh cap keeps two rows plus the buttons on screen on short devices. */
   width: 100%;
-  max-width: min(30vw, 18dvh);
+  max-width: min(33vw, 22dvh);
   justify-self: center;
+}
+/* margin-top: auto parks the rule and everything below it at the bottom, so
+   the space that remains reads as deliberate margin rather than a layout that
+   ran out of content. */
+.match-rule {
+  height: 1px;
+  background: var(--rule-soft);
+  margin-top: auto;
+}
+.result-buttons button > span { display: block; }
+.res-note {
+  font-weight: 400;
+  font-size: 0.62rem;
+  line-height: 1.2;
+  margin-top: 3px;
+  opacity: 0.9;
+}
+.res-score {
+  font-family: var(--font-data);
+  font-weight: 700;
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  margin-top: 4px;
+  opacity: 0.85;
 }
 .match-screen .versus { margin: var(--space-1) 0; }
 .match-screen .result-buttons { margin-top: var(--space-2); }

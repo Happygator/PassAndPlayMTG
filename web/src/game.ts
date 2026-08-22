@@ -192,18 +192,35 @@ export function resultLabel(result: MatchResult): string {
   return `${formatPoints(a)}–${formatPoints(b)}`;
 }
 
-/** Button label for a result, e.g. "Alice wins both" (3CB) or "Alice wins" (Pai Gow). */
+/**
+ * Button label for a result, e.g. "Alice wins both" (3CB) or "Alice wins"
+ * (Pai Gow).
+ *
+ * A 3CB matchup is TWO games — each player on the play once — so a result is a
+ * pair of outcomes, and a label naming only one of them is ambiguous. The old
+ * "wins on the play" described a single game and left the other unstated, even
+ * though gamePoints scores it [1.5, 0.5], i.e. a win plus a draw.
+ */
 export function resultButtonLabel(result: MatchResult, names: [string, string]): string {
   switch (result) {
     case 'p1-sweep': return `${names[0]} wins both`;
-    case 'p1-play': return `${names[0]} wins on the play`;
+    case 'p1-play': return `${names[0]} wins one, draws one`;
     case 'even': return 'Even';
-    case 'p2-play': return `${names[1]} wins on the play`;
+    case 'p2-play': return `${names[1]} wins one, draws one`;
     case 'p2-sweep': return `${names[1]} wins both`;
     case 'p1-win': return `${names[0]} wins`;
     case 'draw': return 'Draw';
     case 'p2-win': return `${names[1]} wins`;
   }
+}
+
+/**
+ * Secondary line for results whose name does not fully describe them. Only
+ * 'even' needs one: gamePoints scores it [1, 1], which covers BOTH one game
+ * each and both games drawn — two different things the word "Even" hides.
+ */
+export function resultNote(result: MatchResult): string | null {
+  return result === 'even' ? 'one each, or both drawn' : null;
 }
 
 /** Which side a result favors; drives the p1/even/p2 color classes. */
