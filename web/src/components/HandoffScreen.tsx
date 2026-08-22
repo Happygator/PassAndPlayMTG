@@ -38,6 +38,9 @@ export function HandoffScreen({ name, onReveal }: HandoffScreenProps) {
         onPointerUp={stopHolding}
         onPointerLeave={stopHolding}
         onPointerCancel={stopHolding}
+        // Belt to the CSS braces: iOS raises the callout/magnifier from the
+        // long-press gesture, which surfaces here as a contextmenu event.
+        onContextMenu={(event) => event.preventDefault()}
       >
         <span>Hold to reveal</span>
       </button>

@@ -13,6 +13,21 @@ export interface CardData {
   colorIdentity: string[];
 }
 
+/** Start-screen starting values a cube can specify for one mode. */
+export interface CubeModeDefaults {
+  poolSize: number;
+  decksPerPlayer: number;
+  allowRepeats: boolean;
+}
+
+/**
+ * Optional per-cube start-screen defaults, overriding the mode-wide values in
+ * MODE_RULES. Keyed by mode because a cube playable in several modes wants
+ * different numbers in each; any mode left out falls back to MODE_RULES.
+ * Always clamped by the cube's own size at the point of use.
+ */
+export type CubeDefaults = Partial<Record<GameMode, CubeModeDefaults>>;
+
 export interface CubeIndexEntry {
   id: string;
   name: string;
@@ -20,6 +35,7 @@ export interface CubeIndexEntry {
   cardCount: number;
   /** Game modes this cube may be played in (at least one). */
   modes: GameMode[];
+  defaults?: CubeDefaults;
 }
 
 export interface CubeData {
@@ -28,6 +44,7 @@ export interface CubeData {
   description: string;
   /** Game modes this cube may be played in (at least one). */
   modes: GameMode[];
+  defaults?: CubeDefaults;
   basics: CardData[];
   cards: CardData[];
 }

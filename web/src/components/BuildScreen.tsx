@@ -1,4 +1,5 @@
 import { useState } from 'preact/hooks';
+import { cardImageSrc } from '../cardImage';
 import { deckComplete, resolveRef } from '../game';
 import type { CardData, CardRef, DeckSlots } from '../types';
 
@@ -40,7 +41,7 @@ function CardThumbnail({
           : undefined
       }
     >
-      <img src={`./${card.imagePath}`} alt={card.name} />
+      <img src={cardImageSrc(card)} alt={card.name} draggable={false} />
       {badge && <span class="deck-badge">{badge}</span>}
     </div>
   );

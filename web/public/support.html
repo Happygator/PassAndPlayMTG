@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Support &mdash; Sealed Pass-and-Play</title>
+    <style>
+      :root {
+        --bg: #14181f;
+        --panel: #1e242e;
+        --text: #e8e6e3;
+        --muted: #9aa3b2;
+        --accent: #d8b45a;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: system-ui, sans-serif;
+        line-height: 1.6;
+      }
+      main { width: min(100%, 720px); margin: 0 auto; padding: 32px 16px 64px; }
+      h1 { color: var(--accent); font-size: clamp(1.7rem, 8vw, 2.5rem); margin-bottom: 8px; }
+      h2 { color: var(--accent); font-size: 1.15rem; margin: 28px 0 8px; }
+      p, li { color: var(--text); margin-bottom: 10px; }
+      .lede { color: var(--muted); margin-bottom: 24px; }
+      ul, ol { padding-left: 22px; }
+      a { color: var(--accent); }
+      .panel {
+        border: 1px solid #303846;
+        border-radius: 12px;
+        background: var(--panel);
+        padding: 16px;
+        margin-top: 24px;
+      }
+      footer {
+        color: var(--muted);
+        font-size: 0.85rem;
+        margin-top: 40px;
+        border-top: 1px solid #303846;
+        padding-top: 16px;
+      }
+      footer p { color: var(--muted); }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Support</h1>
+      <p class="lede">
+        Sealed Pass-and-Play is a two-player Magic: The Gathering sealed game for a single
+        shared device. One phone, two players, passed back and forth.
+      </p>
+
+      <h2>Getting started</h2>
+      <ol>
+        <li>Pick a mode: 3-Card Blind or Pai Gow MTG.</li>
+        <li>Pick a cube and set the pool size and number of decks per player.</li>
+        <li>Hand the device to player one, who holds the reveal button to see their sealed pool
+          and builds their decks.</li>
+        <li>Pass the device to player two and repeat.</li>
+        <li>Play the matches and record each result. The app tallies the outcome.</li>
+      </ol>
+
+      <h2>Common questions</h2>
+      <p><strong>Does it need an internet connection?</strong> No. Every card image is stored on
+        the device, so play works fully offline.</p>
+      <p><strong>Where did my game go?</strong> Starting a new game clears the previous one.
+        Results are not saved between games.</p>
+      <p><strong>A card image is missing or wrong.</strong> Card data comes from Scryfall. Please
+        report it using the link below and name the card.</p>
+      <p><strong>Can I use my own cube?</strong> The web version ships with fixed cubes. Adding
+        your own cube list is supported in the app version.</p>
+
+      <h2>Report a problem or request a feature</h2>
+      <div class="panel">
+        <p>
+          Please open an issue at
+          <a href="https://github.com/Happygator/PassAndPlayMTG/issues">github.com/Happygator/PassAndPlayMTG/issues</a>.
+        </p>
+        <p>
+          Include your device and operating system version, what you expected to happen, and what
+          happened instead. Screenshots help.
+        </p>
+      </div>
+
+      <footer>
+        <p><a href="./index.html">Back to the app</a> &middot; <a href="./privacy.html">Privacy policy</a></p>
+        <p>
+          Sealed Pass-and-Play is unofficial Fan Content permitted under the Wizards of the Coast
+          Fan Content Policy. Not approved or endorsed by Wizards. Portions of the materials used
+          are property of Wizards of the Coast. &copy; Wizards of the Coast LLC.
+        </p>
+        <p>Card data and images courtesy of Scryfall.</p>
+      </footer>
+    </main>
+  </body>
+</html>

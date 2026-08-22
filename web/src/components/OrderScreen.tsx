@@ -1,5 +1,6 @@
 import type { JSX } from 'preact';
 import { useRef, useState } from 'preact/hooks';
+import { cardImageSrc } from '../cardImage';
 import { deckNames, resolveRef } from '../game';
 import type { CardData, DeckSlots } from '../types';
 
@@ -121,7 +122,7 @@ export function OrderScreen({ name, decks, pool, basics, onReorder, onBack, onCo
                   const card = resolveRef(ref, pool, basics);
                   return (
                     <div class="card-thumb" key={slot}>
-                      <img src={`./${card.imagePath}`} alt={card.name} draggable={false} />
+                      <img src={cardImageSrc(card)} alt={card.name} draggable={false} />
                     </div>
                   );
                 })}

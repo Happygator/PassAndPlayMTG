@@ -21,7 +21,10 @@ button,
 body { background: var(--bg); color: var(--text); font-family: system-ui, sans-serif; }
 /* No text selection anywhere (a finger drifting during hold-to-reveal would
    otherwise start highlighting the build screen that appears under it);
-   form fields keep normal selection. */
+   form fields keep normal selection. Set on the root element as well as body:
+   iOS can still begin a selection gesture in a document whose root permits it,
+   even when body does not. */
+html,
 body {
   -webkit-user-select: none;
   user-select: none;
@@ -44,9 +47,21 @@ img,
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   user-select: none;
+  /* And no drag "lift": the callout property above suppresses the share sheet
+     but NOT WebKit's drag-and-drop gesture, which is what raises a blurred,
+     draggable ghost of a card when the reveal hold carries over onto the pool. */
+  -webkit-user-drag: none;
 }
 .app-shell { min-height: 100vh; }
-.screen { width: min(100%, 720px); min-height: 100vh; margin: 0 auto; padding: 20px 16px 96px; }
+/* Vertical padding carries the device safe-area insets: the PWA declares
+   viewport-fit=cover and a translucent status bar, and the iOS app shell draws
+   edge to edge, so without these the header sits under the notch. */
+.screen {
+  width: min(100%, 720px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: calc(20px + env(safe-area-inset-top)) 16px calc(96px + env(safe-area-inset-bottom));
+}
 .centered-screen {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 32px; text-align: center;
@@ -96,6 +111,12 @@ img,
   position: relative; width: min(100%, 420px); min-height: 72px; overflow: hidden;
   border: 2px solid var(--accent); border-radius: 14px; background: var(--panel);
   font-size: 1.2rem; font-weight: 800;
+  /* Opt out of ALL browser touch gestures for the duration of the hold. The
+     page-wide `manipulation` value still permits panning, so without this the
+     screen scrolls under the finger mid-hold; it is also what lets iOS start a
+     text-selection gesture (the magnifier loupe) on tap-then-hold. Same
+     treatment .order-row already uses for its drag rows. */
+  touch-action: none;
 }
 .hold-button::before {
   position: absolute; inset: 0; width: 0; background: var(--accent); content: "";
@@ -150,7 +171,9 @@ img,
 .sticky-action {
   position: fixed; z-index: 5; right: 0; bottom: 0; left: 0;
   border-top: 1px solid #343d49; background: rgb(20 24 31 / 96%);
-  padding: 12px max(16px, calc((100vw - 688px) / 2));
+  /* Bottom padding clears the home indicator; without it the primary action
+     button on the build/order/match screens sits underneath it. */
+  padding: 12px max(16px, calc((100vw - 688px) / 2)) calc(12px + env(safe-area-inset-bottom));
 }
 .match-deck { display: grid; gap: 8px; }
 .match-deck h2, .match-deck h3 { text-align: center; font-size: 1rem; }

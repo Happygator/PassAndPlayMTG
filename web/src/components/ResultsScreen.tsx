@@ -1,4 +1,5 @@
 import { useState } from 'preact/hooks';
+import { cardImageSrc } from '../cardImage';
 import { deckNames, formatPoints, resolveRef, resultLabel, resultSide, tally } from '../game';
 import type { CardData, DeckSlots, GameState, MatchResult } from '../types';
 
@@ -29,7 +30,7 @@ function ReadOnlyDeck({ label, deck, pool, basics }: ReadOnlyDeckProps) {
           const card = resolveRef(ref, pool, basics);
           return (
             <div class="card-thumb" key={index}>
-              <img src={`./${card.imagePath}`} alt={card.name} />
+              <img src={cardImageSrc(card)} alt={card.name} draggable={false} />
             </div>
           );
         })}
@@ -151,7 +152,7 @@ export function ResultsScreen({ state, onNewGame }: ResultsScreenProps) {
                 const deckIndex = playerOneUsage.get(index);
                 return (
                   <div class="card-thumb" key={`${card.scryfallId}-${index}`}>
-                    <img src={`./${card.imagePath}`} alt={card.name} />
+                    <img src={cardImageSrc(card)} alt={card.name} draggable={false} />
                     {deckIndex !== undefined && (
                       <span class="deck-badge">Deck {deckIndex + 1}</span>
                     )}
@@ -167,7 +168,7 @@ export function ResultsScreen({ state, onNewGame }: ResultsScreenProps) {
                 const deckIndex = playerTwoUsage.get(index);
                 return (
                   <div class="card-thumb" key={`${card.scryfallId}-${index}`}>
-                    <img src={`./${card.imagePath}`} alt={card.name} />
+                    <img src={cardImageSrc(card)} alt={card.name} draggable={false} />
                     {deckIndex !== undefined && (
                       <span class="deck-badge">Deck {deckIndex + 1}</span>
                     )}

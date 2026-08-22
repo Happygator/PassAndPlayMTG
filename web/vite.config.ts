@@ -33,6 +33,10 @@ export default defineConfig({
         // states, no text fallbacks).
         globPatterns: ['**/*.{js,css,html,json,png,jpg,webmanifest}'],
         maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
+        // The standalone support/privacy pages are real documents, not app
+        // routes: without this the SPA navigation fallback would serve
+        // index.html in their place once the service worker is active.
+        navigateFallbackDenylist: [/\/(support|privacy)\.html$/],
       },
     }),
   ],

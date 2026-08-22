@@ -93,6 +93,11 @@ async function syncSources() {
       name: source.name ?? source.id,
       description: source.description ?? '',
       modes: Array.isArray(source.modes) && source.modes.length > 0 ? source.modes : ['3cb'],
+      // Optional per-mode start-screen defaults (see CubeDefaults in src/types.ts);
+      // passed through verbatim, and omitted entirely when a source has none so
+      // the app falls back to its mode-wide MODE_RULES values.
+      defaults:
+        source.defaults && typeof source.defaults === 'object' ? source.defaults : null,
     };
     if (!source.moxfield) continue;
     const txtPath = join(CUBES_DIR, `${source.id}.txt`);
@@ -256,7 +261,7 @@ async function main() {
 
   for (const file of cubeFiles) {
     const id = basename(file, '.txt');
-    const meta = sourceMeta[id] ?? { name: id, description: '', modes: ['3cb'] };
+    const meta = sourceMeta[id] ?? { name: id, description: '', modes: ['3cb'], defaults: null };
     const lines = readFileSync(join(CUBES_DIR, file), 'utf8')
       .split(/\r?\n/)
       .map((l) => l.trim())
@@ -293,14 +298,17 @@ async function main() {
       basics,
       cards,
     };
+    if (meta.defaults) cube.defaults = meta.defaults;
     writeFileSync(join(OUT_CUBES, `${id}.json`), JSON.stringify(cube, null, 2));
-    index.push({
+    const indexEntry = {
       id,
       name: meta.name,
       description: meta.description,
       modes: meta.modes,
       cardCount: cards.length,
-    });
+    };
+    if (meta.defaults) indexEntry.defaults = meta.defaults;
+    index.push(indexEntry);
   }
 
   writeFileSync(join(OUT_CUBES, 'index.json'), JSON.stringify(index, null, 2));

@@ -27,13 +27,20 @@ export function StartScreen({ onStart, initial }: StartScreenProps) {
     repeats ? cube.cardCount : Math.floor(cube.cardCount / 2);
 
   const applyMode = (nextMode: GameMode, cube: CubeIndexEntry) => {
+    // A cube may carry its own starting numbers for this mode (imported cubes
+    // always will); anything it leaves out falls back to the mode-wide value.
     const rules = MODE_RULES[nextMode];
-    const maximumPool = poolCap(cube, allowRepeats);
+    const cubeDefaults = cube.defaults?.[nextMode];
+    const nextRepeats = cubeDefaults?.allowRepeats ?? allowRepeats;
+    const maximumPool = poolCap(cube, nextRepeats);
     const supportedDecks = Math.max(1, Math.floor(maximumPool / 3));
-    const nextDeckCount = Math.max(1, Math.min(rules.defaultDecksPerPlayer, supportedDecks));
+    const wantedDecks = cubeDefaults?.decksPerPlayer ?? rules.defaultDecksPerPlayer;
+    const wantedPool = cubeDefaults?.poolSize ?? rules.defaultPoolSize;
+    const nextDeckCount = Math.max(1, Math.min(wantedDecks, supportedDecks));
     setMode(nextMode);
+    setAllowRepeats(nextRepeats);
     setDecksPerPlayer(nextDeckCount);
-    setPoolSize(Math.max(3 * nextDeckCount, Math.min(rules.defaultPoolSize, maximumPool)));
+    setPoolSize(Math.max(3 * nextDeckCount, Math.min(wantedPool, maximumPool)));
     setStartError('');
   };
 

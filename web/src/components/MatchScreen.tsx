@@ -1,4 +1,5 @@
 import { useState } from 'preact/hooks';
+import { cardImageSrc } from '../cardImage';
 import { MODE_RULES, resolveRef, resultButtonLabel, resultSide } from '../game';
 import type { CardData, DeckSlots, GameState, MatchResult } from '../types';
 
@@ -126,7 +127,7 @@ function MatchDeck({
         const card = resolveRef(ref, pool, basics);
         return (
           <div class="card-thumb" key={index}>
-            <img src={`./${card.imagePath}`} alt={card.name} />
+            <img src={cardImageSrc(card)} alt={card.name} draggable={false} />
           </div>
         );
       })}
