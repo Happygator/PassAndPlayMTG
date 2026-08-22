@@ -2,10 +2,14 @@ import { useRef, useState } from 'preact/hooks';
 
 interface HandoffScreenProps {
   name: string;
+  /** Whose screen this is: drives the player tint (0 = player 1). */
+  player: 0 | 1;
+  poolSize: number;
+  deckCount: number;
   onReveal: () => void;
 }
 
-export function HandoffScreen({ name, onReveal }: HandoffScreenProps) {
+export function HandoffScreen({ name, player, poolSize, deckCount, onReveal }: HandoffScreenProps) {
   const timer = useRef<number | null>(null);
   const [holding, setHolding] = useState(false);
 
@@ -26,10 +30,11 @@ export function HandoffScreen({ name, onReveal }: HandoffScreenProps) {
   };
 
   return (
-    <main class="screen centered-screen handoff-screen">
+    <main class={`screen centered-screen handoff-screen player-${player + 1}`}>
       <div>
-        <h1>Pass the device to <strong>{name}</strong></h1>
-        <p>{name}: hold the button below to reveal your pool.</p>
+        <p class="kicker">Pass the device to</p>
+        <h1>{name}</h1>
+        <p>Hold the bar until it fills to reveal your sealed pool.</p>
       </div>
       <button
         type="button"
@@ -44,6 +49,9 @@ export function HandoffScreen({ name, onReveal }: HandoffScreenProps) {
       >
         <span>Hold to reveal</span>
       </button>
+      <p class="handoff-status">
+        {poolSize} cards · build {deckCount} {deckCount === 1 ? 'deck' : 'decks'}
+      </p>
     </main>
   );
 }

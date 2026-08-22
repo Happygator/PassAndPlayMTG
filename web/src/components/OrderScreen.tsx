@@ -6,6 +6,9 @@ import type { CardData, DeckSlots } from '../types';
 
 interface OrderScreenProps {
   name: string;
+  /** Whose screen this is: drives the player tint (0 = player 1). */
+  player: 0 | 1;
+  opponentName: string;
   decks: DeckSlots[];
   pool: CardData[];
   basics: CardData[];
@@ -23,7 +26,7 @@ interface DragState {
   settling: boolean;
 }
 
-export function OrderScreen({ name, decks, pool, basics, onReorder, onBack, onConfirm }: OrderScreenProps) {
+export function OrderScreen({ name, player, opponentName, decks, pool, basics, onReorder, onBack, onConfirm }: OrderScreenProps) {
   const [drag, setDrag] = useState<DragState | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const settleTimer = useRef<number | null>(null);
@@ -96,12 +99,13 @@ export function OrderScreen({ name, decks, pool, basics, onReorder, onBack, onCo
   };
 
   return (
-    <div class="order-screen">
-      <h2>{name} -- set your deck order</h2>
+    <div class={`order-screen player-${player + 1}`}>
+      <p class="kicker">Set your deck order</p>
+      <h2>{name}</h2>
       <p class="hint">
-        Your deck in position 1 plays the opponent's deck 1, position 2 plays their deck 2,
-        and so on. Drag a deck (or use the arrows) to reorder. Your opponent won't see
-        this order until the match.
+        Your deck in position 1 plays {opponentName}’s deck 1, position 2 plays their deck 2,
+        and so on. Drag a deck (or use the arrows) to reorder. {opponentName} won’t see this
+        order until the match.
       </p>
       <div class={`order-list${drag ? ' drag-active' : ''}`} ref={listRef}>
         {decks.map((deck, index) => (
@@ -114,7 +118,10 @@ export function OrderScreen({ name, decks, pool, basics, onReorder, onBack, onCo
             onPointerUp={endDrag}
             onPointerCancel={endDrag}
           >
-            <span class="order-position">Deck {index + 1}</span>
+            <span class="order-position">
+              Plays
+              <b>{index + 1}</b>
+            </span>
             <div class="order-main">
               <div class="order-cards">
                 {deck.map((ref, slot) => {
@@ -158,10 +165,10 @@ export function OrderScreen({ name, decks, pool, basics, onReorder, onBack, onCo
       </div>
       <div class="order-actions">
         <button type="button" class="secondary-button" onClick={onBack}>
-          Back to deckbuilding
+          Back
         </button>
         <button type="button" class="primary-button" onClick={onConfirm}>
-          Lock in order
+          Submit order
         </button>
       </div>
     </div>

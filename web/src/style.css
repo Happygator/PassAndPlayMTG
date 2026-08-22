@@ -169,6 +169,38 @@ h1, h2, h3 {
   padding: var(--space-4);
 }
 .title-block, .screen-header { margin-bottom: var(--space-5); }
+/* The quiet line above a screen's title: names the context, so the title
+   itself can be the task rather than a restatement of the app's name. */
+.kicker {
+  font-family: var(--font-data);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  margin-bottom: var(--space-1);
+}
+.name-label { display: inline-flex; align-items: center; gap: var(--space-2); }
+/* Player colour is introduced here, beside the name field, so the mapping is
+   learned before it starts carrying meaning on later screens. */
+.player-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  flex: 0 0 auto;
+}
+.player-dot--1 { background: var(--p1); }
+.player-dot--2 { background: var(--p2); }
+/* Deck count is the one setting whose effect is not obvious, so the button is
+   preceded by what pressing it will produce. */
+.consequence {
+  font-family: var(--font-data);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
 .title-block h1, .screen-header h1 {
   font-size: clamp(2rem, 9vw, 3rem);
   text-transform: uppercase;
@@ -298,6 +330,25 @@ h1, h2, h3 {
 }
 .secondary-button:hover { background: var(--surface); }
 .error-card, .error-text { color: var(--danger); }
+/* Colour arrives as a shift in HUE, not brightness. A full-strength player
+   fill measured 39x the luminance of the app ground — a flashbang when the
+   device changes hands in a dim room. This tint is 1.45x. */
+.handoff-screen { background: var(--tint); }
+.handoff-screen.player-1 { --tint: var(--p1-tint); }
+.handoff-screen.player-2 { --tint: var(--p2-tint); }
+.handoff-screen h1 { color: var(--accent); }
+.handoff-status {
+  font-family: var(--font-data);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  border-top: 1px solid var(--rule-soft);
+  padding-top: var(--space-3);
+  width: min(100%, 420px);
+  text-align: center;
+}
 .handoff-screen h1 {
   font-size: clamp(2.4rem, 14vw, 4.5rem);
   text-transform: uppercase;
@@ -602,15 +653,28 @@ h1, h2, h3 {
   transition: transform 140ms var(--ease-out);
   z-index: 2;
 }
+/* Labels the OPPOSING slot this position will meet, not the deck sitting in
+   it: after a reorder the deck built as "Deck 3" occupies position 1, so a
+   deck-number label would point at a different object than it did one screen
+   earlier. Position is the only thing this row actually determines. */
 .order-position {
   flex: 0 0 auto;
-  min-width: 56px;
+  min-width: 48px;
   font-family: var(--font-data);
-  font-size: 0.62rem;
+  font-size: 0.56rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--muted);
   text-align: center;
+  line-height: 1.2;
+}
+.order-position b {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--accent);
 }
 .order-cards { display: flex; gap: var(--space-1); min-width: 0; }
 .order-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--space-1); }

@@ -184,6 +184,9 @@ export function App() {
         screen = (
           <HandoffScreen
             name={state.config.playerNames[state.phase.player]}
+            player={state.phase.player}
+            poolSize={state.config.poolSize}
+            deckCount={state.config.decksPerPlayer}
             onReveal={() => dispatch({ type: 'reveal' })}
           />
         );
@@ -211,6 +214,8 @@ export function App() {
         screen = (
           <OrderScreen
             name={state.config.playerNames[player]}
+            player={player}
+            opponentName={state.config.playerNames[player === 0 ? 1 : 0]}
             decks={state.decks[player]}
             pool={state.pools[player]}
             basics={state.cube.basics}

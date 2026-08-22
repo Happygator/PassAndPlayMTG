@@ -91,14 +91,14 @@ export function StartScreen({ onStart, initial }: StartScreenProps) {
   }, []);
 
   if (loading) {
-    return <main class="screen centered-screen">Loading cubes...</main>;
+    return <main class="screen centered-screen">Loading cubes…</main>;
   }
 
   if (indexError || cubes.length === 0) {
     return (
       <main class="screen centered-screen">
         <div class="panel error-card">
-          {'No cube data found -- run `npm run cube` and rebuild.'}
+          {'No cube data found — run `npm run cube` and rebuild.'}
         </div>
       </main>
     );
@@ -164,7 +164,8 @@ export function StartScreen({ onStart, initial }: StartScreenProps) {
   return (
     <main class="screen start-screen">
       <header class="title-block">
-        <h1>Sealed Pass-and-Play</h1>
+        <p class="kicker">Sealed Pass-and-Play</p>
+        <h1>New game</h1>
       </header>
 
       <section class="panel setup-form">
@@ -293,7 +294,7 @@ export function StartScreen({ onStart, initial }: StartScreenProps) {
         </div>
 
         <label>
-          Player 1 name
+          <span class="name-label"><span class="player-dot player-dot--1" />Player 1 name</span>
           <input
             value={playerOne}
             placeholder="Player 1"
@@ -301,7 +302,7 @@ export function StartScreen({ onStart, initial }: StartScreenProps) {
           />
         </label>
         <label>
-          Player 2 name
+          <span class="name-label"><span class="player-dot player-dot--2" />Player 2 name</span>
           <input
             value={playerTwo}
             placeholder="Player 2"
@@ -310,6 +311,10 @@ export function StartScreen({ onStart, initial }: StartScreenProps) {
         </label>
 
         {startError && <p class="error-text">{startError}</p>}
+        <p class="consequence">
+          {decksPerPlayer} {decksPerPlayer === 1 ? 'deck' : 'decks'} each · {decksPerPlayer}{' '}
+          {decksPerPlayer === 1 ? 'matchup' : 'matchups'}
+        </p>
         <button
           type="button"
           class="primary-button"
@@ -319,7 +324,7 @@ export function StartScreen({ onStart, initial }: StartScreenProps) {
             startGame();
           }}
         >
-          {starting ? 'Loading cube...' : 'Start game'}
+          {starting ? 'Dealing…' : 'Deal pools'}
         </button>
       </section>
     </main>
