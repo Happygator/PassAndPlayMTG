@@ -437,10 +437,162 @@ h1, h2, h3 {
   gap: var(--space-2); padding-bottom: var(--space-1);
 }
 .basics-bar .card-thumb { width: 29%; max-width: none; }
+/* The size control sets a MINIMUM card width, not a column count, so a phone
+   lands on 3/2/1 per row while a wide screen simply fits more columns at the
+   same readable card size. */
 .pool-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(88px, 1fr)); gap: 7px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--card-min, 88px), 100%), 1fr));
+  gap: 7px;
 }
+.pool-grid--3 { --card-min: 88px; }
+.pool-grid--2 { --card-min: 140px; }
+.pool-grid--1 { --card-min: 240px; }
 .pool-grid .card-thumb { max-width: none; }
+.pool-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+.pool-head h2 { margin-bottom: 0; }
+.card-size { display: flex; align-items: center; gap: var(--space-1); }
+.card-size-label {
+  font-family: var(--font-data);
+  font-size: 0.58rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-right: 2px;
+}
+.card-size button {
+  min-width: 30px;
+  min-height: 30px;
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--font-data);
+  font-size: 0.72rem;
+  transition: border-color var(--dur-mid) var(--ease-out), color var(--dur-mid) var(--ease-out);
+}
+.card-size button:hover { color: var(--ink); }
+.card-size button.on { border-color: var(--accent); color: var(--accent); }
+
+/* Deck strip: tabs plus the open deck, pinned above the pool. */
+.deck-strip { margin-bottom: var(--space-5); }
+.deck-tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+}
+.deck-tabs::-webkit-scrollbar { display: none; }
+/* Fixed width with a scrolling strip rather than equal division: the cube
+   allows up to floor(cubeSize / 6) decks (15 for the 90-card cube), and equal
+   tabs drop under the 44px touch minimum at eight. */
+.dtab {
+  flex: 1 0 104px;
+  min-height: 46px;
+  scroll-snap-align: start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  border-bottom: 0;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--font-data);
+  font-size: 0.8rem;
+  transition: color var(--dur-mid) var(--ease-out);
+}
+.dtab:hover { color: var(--ink); }
+.dtab b { font-weight: 700; line-height: 1; }
+.dtab.on {
+  border-color: var(--accent);
+  border-width: 2px;
+  border-bottom: 0;
+  background: var(--surface);
+  color: var(--accent);
+}
+.pips { display: flex; gap: 3px; }
+.pips i {
+  display: block;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  opacity: 0.5;
+}
+.pips i.f { background: currentColor; opacity: 1; }
+.deck-pane {
+  border: 2px solid var(--accent);
+  border-top: 0;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  background: var(--surface);
+  padding: var(--space-3);
+}
+.deck-pane--solo { border-top: 2px solid var(--accent); border-radius: var(--radius-md); }
+/* Smaller than pool cards: a card already in a deck only has to be
+   recognisable, a card in the pool is one you are still reading. */
+.deck-slots--pinned {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+/* Basic lands: one control, expanding in place rather than into a sheet, so
+   the pool never leaves the screen while a land is being chosen. */
+.basics-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 46px;
+  padding: 0 var(--space-3);
+  border: 1px dashed var(--rule);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.85rem;
+  transition: color var(--dur-mid) var(--ease-out), border-color var(--dur-mid) var(--ease-out);
+}
+.basics-toggle:hover { color: var(--ink); border-color: var(--ink); }
+.basics-toggle .chev {
+  font-family: var(--font-data);
+  font-size: 0.95rem;
+  color: var(--accent);
+}
+.basics-open {
+  display: grid;
+  gap: var(--space-3);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  padding: var(--space-3);
+}
+.basics-open .basics-toggle { border-style: solid; border-color: var(--rule-soft); }
+
+/* Shown while decks are incomplete, in place of a pinned disabled button. */
+.progress-line {
+  border-top: 1px solid var(--rule-soft);
+  padding-top: var(--space-3);
+  text-align: center;
+  font-family: var(--font-data);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
 .used-card img { opacity: 0.3; }
 /* A solid caption bar rather than a pill floating over the art: card art is
    light in places, and a translucent pill is unreadable over half of it. */

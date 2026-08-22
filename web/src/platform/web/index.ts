@@ -4,7 +4,10 @@ import type { CardData } from '../../types';
 import type { PlatformCapabilities } from '../types';
 
 export const capabilities = {
-  cardSizeControl: false,
+  // Pinch-zoom and the size control do different jobs: zoom magnifies ONE card
+  // and then you pan back out, while the size control reflows the grid and
+  // stays. Scanning a 45-card pool wants the second. Both are available here.
+  cardSizeControl: true,
   pinchZoom: true,
   cubeLibrary: false,
   messaging: false,

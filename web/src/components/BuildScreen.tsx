@@ -1,5 +1,5 @@
 import { useState } from 'preact/hooks';
-import { cardImageSrc } from '@platform';
+import { cardImageSrc, capabilities } from '@platform';
 import { deckComplete, resolveRef } from '../game';
 import type { CardData, CardRef, DeckSlots } from '../types';
 
@@ -12,6 +12,33 @@ interface BuildScreenProps {
   decks: DeckSlots[];
   onSetSlot: (deck: number, slot: number, ref: CardRef | null) => void;
   onSubmit: () => void;
+}
+
+/**
+ * How many cards fill a row at phone width. 3 is recognisable if you already
+ * know the card, 2 makes rules text readable, 1 is comfortable reading. The
+ * value sets a MINIMUM card width rather than a literal column count, so wider
+ * screens simply fit more columns at the same card size.
+ */
+type CardsPerRow = 1 | 2 | 3;
+const CARDS_PER_ROW_KEY = 'sealed:cards-per-row';
+
+function loadCardsPerRow(): CardsPerRow {
+  try {
+    const stored = Number(window.localStorage.getItem(CARDS_PER_ROW_KEY));
+    if (stored === 1 || stored === 2 || stored === 3) return stored;
+  } catch {
+    // Storage disabled (private browsing, embedded webview): use the default.
+  }
+  return 3;
+}
+
+function saveCardsPerRow(value: CardsPerRow) {
+  try {
+    window.localStorage.setItem(CARDS_PER_ROW_KEY, String(value));
+  } catch {
+    // Not worth surfacing: the setting simply does not persist.
+  }
 }
 
 interface CardThumbnailProps {
@@ -59,6 +86,8 @@ export function BuildScreen({
 }: BuildScreenProps) {
   const [activeDeck, setActiveDeck] = useState(0);
   const [confirming, setConfirming] = useState(false);
+  const [cardsPerRow, setCardsPerRow] = useState<CardsPerRow>(loadCardsPerRow);
+  const [basicsOpen, setBasicsOpen] = useState(false);
   const usedPoolCards = new Map<number, { deckIndex: number; slotIndex: number }>();
 
   decks.forEach((deck, deckIndex) => {
@@ -91,21 +120,96 @@ export function BuildScreen({
     }
   };
 
-  const allComplete = decks.every(deckComplete);
+  const chooseCardsPerRow = (value: CardsPerRow) => {
+    setCardsPerRow(value);
+    saveCardsPerRow(value);
+  };
+
+  const completeCount = decks.filter(deckComplete).length;
+  const allComplete = completeCount === decks.length;
+  const multiDeck = decks.length > 1;
+  const submitLabel = multiDeck
+    ? 'Next: order decks'
+    : confirming
+      ? 'Really submit? You can’t edit after passing the device.'
+      : 'Submit decks';
 
   return (
     <main class={`screen build-screen player-${player + 1}`}>
       <header class="screen-header">
-        <h1>{name} -- build {decks.length} {decks.length === 1 ? 'deck' : 'decks'}</h1>
-        <p>
-          Tap a card to add it to the highlighted deck. Tap it again to remove it.
-          Pinch to zoom.
+        <p class="kicker">
+          Build {decks.length} {decks.length === 1 ? 'deck' : 'decks'}
         </p>
+        <h1>{name}</h1>
       </header>
 
+      {/* Pinned above the pool: with a 45-card pool the old layout put the deck
+          rows below everything, so you could not see what you had built while
+          tapping. */}
+      <section class="deck-strip">
+        {multiDeck && (
+          <div class="deck-tabs" role="tablist" aria-label="Decks">
+            {decks.map((deck, deckIndex) => (
+              <button
+                type="button"
+                role="tab"
+                key={deckIndex}
+                class={`dtab${deckIndex === activeDeck ? ' on' : ''}`}
+                aria-selected={deckIndex === activeDeck}
+                aria-label={`Deck ${deckIndex + 1}, ${deck.filter((slot) => slot !== null).length} of 3 cards`}
+                onClick={() => setActiveDeck(deckIndex)}
+              >
+                <b>{deckIndex + 1}</b>
+                <span class="pips" aria-hidden="true">
+                  {deck.map((slot, slotIndex) => (
+                    <i class={slot === null ? '' : 'f'} key={slotIndex} />
+                  ))}
+                </span>
+              </button>
+            ))}
+          </div>
+        )}
+        <div class={`deck-pane${multiDeck ? '' : ' deck-pane--solo'}`}>
+          <div class="deck-slots deck-slots--pinned">
+            {decks[activeDeck].map((ref, slotIndex) => {
+              if (ref === null) {
+                return <div class="empty-slot" key={slotIndex} />;
+              }
+              const card = resolveRef(ref, pool, basics);
+              return (
+                <CardThumbnail
+                  key={slotIndex}
+                  card={card}
+                  onSelect={() => changeSlot(activeDeck, slotIndex, null)}
+                />
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       <section class="pool-section">
-        <h2>Your pool</h2>
-        <div class="pool-grid">
+        <div class="pool-head">
+          <h2>Your pool · {pool.length}</h2>
+          {capabilities.cardSizeControl && (
+            <div class="card-size" role="group" aria-label="Card size">
+              <span class="card-size-label">Card size</span>
+              {([3, 2, 1] as CardsPerRow[]).map((value) => (
+                <button
+                  type="button"
+                  key={value}
+                  class={cardsPerRow === value ? 'on' : ''}
+                  aria-pressed={cardsPerRow === value}
+                  aria-label={`${value} per row`}
+                  onClick={() => chooseCardsPerRow(value)}
+                >
+                  {value}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+        <div class={`pool-grid pool-grid--${cardsPerRow}`}>
           {pool.map((card, index) => {
             const used = usedPoolCards.get(index);
             return (
@@ -128,67 +232,71 @@ export function BuildScreen({
         </div>
       </section>
 
+      {/* Collapsed by default. An always-open five-card bar costs ~120px of
+          permanent height on every scroll through the pool, to serve a choice
+          a 3-card deck makes at most once. */}
       {allowBasics && (
         <section class="basics-section">
-          <h2>Basic lands</h2>
-          <div class="basics-bar">
-            {basics.map((card, index) => (
-              <CardThumbnail
-                key={`${card.scryfallId}-${index}`}
-                card={card}
-                onSelect={() => assignCard({ kind: 'basic', index })}
-              />
-            ))}
-          </div>
+          {basicsOpen ? (
+            <div class="basics-open">
+              <div class="basics-bar">
+                {basics.map((card, index) => (
+                  <CardThumbnail
+                    key={`${card.scryfallId}-${index}`}
+                    card={card}
+                    onSelect={() => {
+                      assignCard({ kind: 'basic', index });
+                      setBasicsOpen(false);
+                    }}
+                  />
+                ))}
+              </div>
+              <button
+                type="button"
+                class="basics-toggle"
+                aria-expanded="true"
+                onClick={() => setBasicsOpen(false)}
+              >
+                <span>Close</span>
+                <span class="chev" aria-hidden="true">−</span>
+              </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              class="basics-toggle"
+              aria-expanded="false"
+              onClick={() => setBasicsOpen(true)}
+            >
+              <span>Add a basic land</span>
+              <span class="chev" aria-hidden="true">+</span>
+            </button>
+          )}
         </section>
       )}
 
-      <section class="deck-list">
-        {decks.map((deck, deckIndex) => (
-          <div
-            class={`deck-row${deckIndex === activeDeck ? ' active-deck' : ''}`}
-            key={deckIndex}
-            onClick={() => setActiveDeck(deckIndex)}
+      {/* The bar appears only once it works. A pinned disabled button costs ~76px
+          of a phone screen for the whole session to advertise something you
+          cannot do yet; the count answers the only question it was answering. */}
+      {allComplete ? (
+        <div class="sticky-action">
+          <button
+            type="button"
+            class="submit-button"
+            onClick={() => {
+              if (multiDeck) onSubmit();
+              else if (confirming) onSubmit();
+              else setConfirming(true);
+            }}
           >
-            <h2>Deck {deckIndex + 1}</h2>
-            <div class="deck-slots">
-              {deck.map((ref, slotIndex) => {
-                if (ref === null) {
-                  return <div class="empty-slot" key={slotIndex} />;
-                }
-                const card = resolveRef(ref, pool, basics);
-                return (
-                  <CardThumbnail
-                    key={slotIndex}
-                    card={card}
-                    onSelect={() => changeSlot(deckIndex, slotIndex, null)}
-                  />
-                );
-              })}
-            </div>
-          </div>
-        ))}
-      </section>
-
-      <div class="sticky-action">
-        <button
-          type="button"
-          class="submit-button"
-          aria-disabled={!allComplete}
-          onClick={() => {
-            if (!allComplete) return;
-            if (decks.length > 1) onSubmit();
-            else if (confirming) onSubmit();
-            else setConfirming(true);
-          }}
-        >
-          {decks.length > 1
-            ? 'Next: order decks'
-            : confirming
-              ? "Really submit? You can't edit after passing the device."
-              : 'Submit decks'}
-        </button>
-      </div>
+            {submitLabel}
+          </button>
+        </div>
+      ) : (
+        <p class="progress-line" role="status">
+          {completeCount} of {decks.length} {decks.length === 1 ? 'deck' : 'decks'} complete
+        </p>
+      )}
     </main>
   );
 }
