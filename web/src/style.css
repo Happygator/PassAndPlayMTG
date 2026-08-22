@@ -898,9 +898,25 @@ h1, h2, h3 {
 .ledger .decks { line-height: 1.4; }
 /* A hairline rather than a bare line break: two card lists stacked with no
    divider read as one long list, especially when a deck name wraps. */
-.ledger .deck-line { color: var(--muted); padding: 4px 0; }
+/* The winner is marked twice over: ink instead of muted, and a left edge in
+   its owner's colour. The edge is what carries player identity here — the
+   TEXT deliberately does not take the player colour, because these lines are
+   long strings of small wrapping type and the palette's blue and red measure
+   6.0:1 and 5.6:1 on this ground, both BELOW the 7.4:1 of the muted grey used
+   for the loser. Colouring the text would make the winning line fainter than
+   the losing one and invert the emphasis. A 3px bar has no such problem: as a
+   UI boundary it only needs 3:1, and both clear it comfortably.
+   The transparent border on every line keeps the text indent identical
+   whether a deck won or lost, so nothing shifts sideways between rows. */
+.ledger .deck-line {
+  color: var(--muted);
+  padding: 4px 0 4px var(--space-3);
+  border-left: 3px solid transparent;
+}
 .ledger .deck-line + .deck-line { border-top: 1px solid var(--rule-soft); }
-.ledger .deck-won { color: var(--ink); }
+.ledger .deck-line--p1 { --side: var(--p1); }
+.ledger .deck-line--p2 { --side: var(--p2); }
+.ledger .deck-won { color: var(--ink); border-left-color: var(--side); }
 .ledger .ledger-result { text-align: right; width: 1%; white-space: nowrap; padding-left: var(--space-3); }
 .pairing-outcome {
   min-height: 36px;

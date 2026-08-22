@@ -121,14 +121,17 @@ export function ResultsScreen({ state, onNewGame }: ResultsScreenProps) {
                 </tr>,
                 <tr class="grouped" key={`row-${i}`}>
                   <td class="decks">
-                    {/* The winning deck takes the ink and the loser stays
-                        muted, so the outcome is legible from the deck list
-                        alone; a draw leaves both muted rather than picking
-                        an arbitrary winner. */}
-                    <div class={`deck-line${resultSide(result) === 'p1' ? ' deck-won' : ''}`}>
+                    {/* The winning deck takes the ink and a left edge in its
+                        owner's colour; the loser stays muted with a
+                        transparent edge. A draw leaves both muted rather than
+                        picking an arbitrary winner, so neither edge lights up.
+                        The p1/p2 class is positional and always present — it
+                        only says which colour the edge WOULD be, and
+                        .deck-won is what turns it on. */}
+                    <div class={`deck-line deck-line--p1${resultSide(result) === 'p1' ? ' deck-won' : ''}`}>
                       {deckNames(state.decks[0][matchup.p1Deck], state.pools[0], state.cube.basics)}
                     </div>
-                    <div class={`deck-line${resultSide(result) === 'p2' ? ' deck-won' : ''}`}>
+                    <div class={`deck-line deck-line--p2${resultSide(result) === 'p2' ? ' deck-won' : ''}`}>
                       {deckNames(state.decks[1][matchup.p2Deck], state.pools[1], state.cube.basics)}
                     </div>
                   </td>
