@@ -1,5 +1,5 @@
 import { useState } from 'preact/hooks';
-import { cardImageSrc } from '../cardImage';
+import { cardImageSrc } from '@platform';
 import { deckNames, formatPoints, resolveRef, resultLabel, resultSide, tally } from '../game';
 import type { CardData, DeckSlots, GameState, MatchResult } from '../types';
 

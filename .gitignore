@@ -11,9 +11,10 @@ web/public/icons/
 
 # --- Dependencies and build output ----------------------------------------------
 node_modules/
+# One project, three build channels (APP-MIGRATION.md section 3).
 dist/
-app/node_modules/
-app/dist/
+web/dist-app/
+web/dist-imsg/
 
 # --- Planning documents (kept locally, not part of the repository) -------------
 DESIGN.md
@@ -31,4 +32,4 @@ Thumbs.db
 desktop.ini
 .vscode/
 .idea/
-app/README.md
+/design

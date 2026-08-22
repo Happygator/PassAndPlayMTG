@@ -1,0 +1,9 @@
+/* Web channel. Allows panning and pinch-zoom but disables double-tap zoom, so
+   rapid taps anywhere (buttons, steppers, nearby whitespace) never zoom.
+   Descendants can still restrict further: .hold-button and .order-row both use
+   touch-action: none. */
+html,
+button,
+.card-thumb {
+  touch-action: manipulation;
+}

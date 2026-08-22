@@ -10,14 +10,9 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0 }
-/* Page-wide: allows panning and pinch-zoom but disables double-tap zoom,
-   so rapid taps anywhere (buttons, steppers, nearby whitespace) never zoom.
-   Descendants can still restrict further (.order-row uses touch-action: none). */
-html,
-button,
-.card-thumb {
-  touch-action: manipulation;
-}
+/* The page-wide touch-action rule lives in the platform CSS instead: the web
+   channel allows pinch-zoom, the native channels replace it with an in-app
+   card-size control (APP-MIGRATION.md §4). */
 body { background: var(--bg); color: var(--text); font-family: system-ui, sans-serif; }
 /* No text selection anywhere (a finger drifting during hold-to-reveal would
    otherwise start highlighting the build screen that appears under it);

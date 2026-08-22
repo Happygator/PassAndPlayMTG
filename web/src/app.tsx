@@ -4,7 +4,7 @@ import { BuildScreen } from './components/BuildScreen';
 import { HandoffScreen } from './components/HandoffScreen';
 import { MatchScreen } from './components/MatchScreen';
 import { OrderScreen } from './components/OrderScreen';
-import { PwaBanner } from './components/PwaBanner';
+import { InstallBanner } from '@platform';
 import { ResultsScreen } from './components/ResultsScreen';
 import { StartScreen } from './components/StartScreen';
 import { MODE_RULES, createMatchups, dealPools, emptyDecks } from './game';
@@ -171,7 +171,7 @@ export function App() {
   if (!isActive(state)) {
     screen = (
       <>
-        <PwaBanner />
+        <InstallBanner />
         <StartScreen
           initial={state.lastConfig}
           onStart={(config, cube) => dispatch({ type: 'start', config, cube })}

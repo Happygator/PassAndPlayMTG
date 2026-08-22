@@ -1,0 +1,10 @@
+/* Both native channels. Panning only: pinch-zoom is deliberately unavailable,
+   because card thumbnails are resized with the in-app size control instead
+   (capabilities.cardSizeControl). Double-tap zoom is excluded too, so rapid
+   taps never zoom. Descendants can still restrict further: .hold-button and
+   .order-row both use touch-action: none. */
+html,
+button,
+.card-thumb {
+  touch-action: pan-x pan-y;
+}

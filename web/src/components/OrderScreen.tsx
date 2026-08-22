@@ -1,6 +1,6 @@
 import type { JSX } from 'preact';
 import { useRef, useState } from 'preact/hooks';
-import { cardImageSrc } from '../cardImage';
+import { cardImageSrc } from '@platform';
 import { deckNames, resolveRef } from '../game';
 import type { CardData, DeckSlots } from '../types';
 

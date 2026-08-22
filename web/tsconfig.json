@@ -15,7 +15,14 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    // Mirrors the `@platform` alias in vite.config.ts. tsc always type-checks
+    // against the WEB channel; the other two are still checked as ordinary
+    // files under `include`, just not as the alias target.
+    "paths": {
+      "@platform": ["./src/platform/web/index.ts"],
+      "@platform/*": ["./src/platform/web/*"]
+    }
   },
   "include": ["src"]
 }
