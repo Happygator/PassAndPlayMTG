@@ -194,17 +194,12 @@ h1, h2, h3 {
   color: var(--muted);
   margin-bottom: var(--space-1);
 }
-.name-label { display: inline-flex; align-items: center; gap: var(--space-2); }
-/* Player colour is introduced here, beside the name field, so the mapping is
-   learned before it starts carrying meaning on later screens. */
-.player-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  flex: 0 0 auto;
-}
-.player-dot--1 { background: var(--p1); }
-.player-dot--2 { background: var(--p2); }
+/* The player colours are introduced here, on the only screen where the
+   mapping still has to be learned. A left edge on the field itself costs no
+   vertical space, where a labelled row per player cost ~41px. */
+.setup-form .player-input { border-left-width: 4px; }
+.setup-form .player-input--p1 { border-left-color: var(--p1); }
+.setup-form .player-input--p2 { border-left-color: var(--p2); }
 .title-block h1, .screen-header h1 {
   font-size: clamp(2rem, 9vw, 3rem);
   text-transform: uppercase;
@@ -231,17 +226,17 @@ h1, h2, h3 {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-2);
   cursor: pointer;
   text-transform: none;
   letter-spacing: 0;
   font-family: var(--font-body);
-  font-size: 1rem;
-  color: var(--ink);
+  font-size: 0.9rem;
+  color: var(--muted);
 }
 .setup-form .checkbox-row input[type='checkbox'] {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   min-height: 0;
   margin: 0;
   accent-color: var(--accent);
