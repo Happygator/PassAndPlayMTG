@@ -221,7 +221,10 @@ export function StartScreen({ onStart, initial }: StartScreenProps) {
         </div>
 
         <div class="field-group">
-          <span>Pool size</span>
+          <div class="field-head">
+            <span>Pool size</span>
+            <small>min {minimumPool} · max {maximumPool}</small>
+          </div>
           <div class="stepper">
             <button
               type="button"
@@ -265,11 +268,13 @@ export function StartScreen({ onStart, initial }: StartScreenProps) {
               +5
             </button>
           </div>
-          <small>Minimum {minimumPool}; maximum {maximumPool} for this cube.</small>
         </div>
 
         <div class="field-group">
-          <span>Decks per player</span>
+          <div class="field-head">
+            <span>Decks per player</span>
+            <small>1–{maximumDecks}</small>
+          </div>
           <div class="stepper">
             <button
               type="button"
@@ -296,7 +301,6 @@ export function StartScreen({ onStart, initial }: StartScreenProps) {
               +1
             </button>
           </div>
-          <small>Range 1-{maximumDecks} for this cube.</small>
         </div>
 
         {/* One heading over both fields. The coloured left edge does what the
