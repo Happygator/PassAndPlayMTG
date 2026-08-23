@@ -1,19 +1,98 @@
+/* ---------------------------------------------------------------------------
+   Sealed Pass-and-Play — design tokens and shared styles.
+   Palette is OKLCH: perceptually uniform, so the neutrals keep one warm hue
+   bias and the two player colours sit at matched lightness. Every colour in
+   this file is a token; no literal colour appears outside :root.
+   --------------------------------------------------------------------------- */
+
+@font-face {
+  font-family: 'Big Shoulders Display';
+  src: url('/fonts/big-shoulders-display.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  src: url('/fonts/ibm-plex-sans.woff2') format('woff2-variations');
+  font-weight: 100 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/fonts/jetbrains-mono.woff2') format('woff2-variations');
+  font-weight: 100 800;
+  font-display: swap;
+}
+
 :root {
-  --bg: #14181f;
-  --panel: #1e242e;
-  --text: #e8e6e3;
-  --muted: #9aa3b2;
-  --accent: #d8b45a;
-  --p1: #4f8fd6;
-  --p2: #d6604f;
-  --even: #7a8494;
+  /* Surfaces and ink. Warm-biased neutrals (hue 70-80) so the chrome reads as
+     a table rather than a screen, and does not tint the card art. */
+  --ground:    oklch(19% 0.006 70);
+  --surface:   oklch(24% 0.007 70);
+  --surface-2: oklch(29% 0.008 70);
+  --rule:      oklch(54% 0.009 70);
+  --rule-soft: oklch(34% 0.008 70);
+  --ink:       oklch(94% 0.006 80);
+  --muted:     oklch(72% 0.008 75);
+  --deep:      oklch(17% 0.010 70);
+
+  /* Player identity. Matched lightness so neither side reads as louder.
+     p1 measures 6.0:1 on --ground, p2 5.6:1; dark ink on either fill is >5:1. */
+  --p1:      oklch(66% 0.13 245);
+  --p2:      oklch(66% 0.15 32);
+  --p1-tint: oklch(22% 0.045 245);
+  --p2-tint: oklch(22% 0.045 32);
+  --even:    oklch(68% 0.015 75);
+
+  /* Reserved for focus rings and the active-deck marker ONLY. If this colour
+     starts appearing as a fill, the player colours have lost their meaning. */
+  --signal: oklch(80% 0.14 80);
+
+  /* Rebound per screen to the player who is holding the device: see
+     .player-1 / .player-2 below. Neutral screens keep the ochre. */
+  --accent: var(--signal);
+
+  --danger: oklch(72% 0.15 25);
+
+  --font-display: 'Big Shoulders Display', 'Arial Narrow', sans-serif;
+  --font-body:    'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-data:    'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+
+  /* 4pt scale. */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+
+  --radius-sm: 5px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-short: 120ms;
+  --dur-mid:   180ms;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0 }
 /* The page-wide touch-action rule lives in the platform CSS instead: the web
    channel allows pinch-zoom, the native channels replace it with an in-app
    card-size control (APP-MIGRATION.md §4). */
-body { background: var(--bg); color: var(--text); font-family: system-ui, sans-serif; }
+body {
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
 /* No text selection anywhere (a finger drifting during hold-to-reveal would
    otherwise start highlighting the build screen that appears under it);
    form fields keep normal selection. Set on the root element as well as body:
@@ -47,146 +126,532 @@ img,
      draggable ghost of a card when the reveal hold carries over onto the pool. */
   -webkit-user-drag: none;
 }
-.app-shell { min-height: 100vh; }
+
+/* Focus is never animated: a ring that fades in reads as lag on a keyboard
+   or switch-control user, who needs to know where they are instantly. */
+:focus-visible {
+  outline: 3px solid var(--signal);
+  outline-offset: 2px;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  text-wrap: balance;
+}
+
+/* dvh, not vh: on a mobile browser 100vh is the LARGE viewport — the height
+   with the URL bar retracted — so a 100vh screen is taller than what is
+   actually visible, and its last ~15% sits under the browser chrome. That is
+   what put the start screen's primary button out of reach. dvh tracks the
+   real visible height. The vh line stays first as a fallback. */
+.app-shell {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
 /* Vertical padding carries the device safe-area insets: the PWA declares
    viewport-fit=cover and a translucent status bar, and the iOS app shell draws
    edge to edge, so without these the header sits under the notch. */
 .screen {
   width: min(100%, 720px);
   min-height: 100vh;
+  min-height: 100dvh;
   margin: 0 auto;
-  padding: calc(20px + env(safe-area-inset-top)) 16px calc(96px + env(safe-area-inset-bottom));
+  padding: calc(20px + env(safe-area-inset-top)) var(--space-4) calc(var(--space-6) + env(safe-area-inset-bottom));
 }
+/* Only the build screen floats a fixed action bar over its content, so only
+   the build screen needs to reserve room for one. Every other screen was
+   carrying 96px of dead space at the bottom for a bar it never shows. */
+.build-screen {
+  padding-bottom: calc(96px + env(safe-area-inset-bottom));
+}
+/* Player-tinted screens: the accent becomes whoever is holding the device, so
+   the active deck, the focus ring and the primary action all say "this is
+   yours" without a label. Neutral screens keep the ochre signal. */
+.player-1 { --accent: var(--p1); }
+.player-2 { --accent: var(--p2); }
 .centered-screen {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 32px; text-align: center;
+  gap: var(--space-6); text-align: center;
 }
-.panel { border: 1px solid #303846; border-radius: 12px; background: var(--panel); padding: 16px; }
-.title-block, .screen-header { margin-bottom: 20px; }
-.title-block h1, .screen-header h1 { color: var(--accent); font-size: clamp(1.7rem, 8vw, 2.5rem); }
-.title-block p, .screen-header p, .handoff-screen p { color: var(--muted); margin-top: 8px; }
-.setup-form { display: grid; gap: 18px; }
-.setup-form label, .field-group { display: grid; gap: 7px; font-weight: 650; }
+.panel {
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  padding: var(--space-3);
+}
+.title-block, .screen-header { margin-bottom: var(--space-3); }
+/* The quiet line above a screen's title: names the context, so the title
+   itself can be the task rather than a restatement of the app's name. */
+.kicker {
+  font-family: var(--font-data);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  margin-bottom: var(--space-1);
+}
+/* The player colours are introduced here, on the only screen where the
+   mapping still has to be learned. A left edge on the field itself costs no
+   vertical space, where a labelled row per player cost ~41px. */
+.setup-form .player-input { border-left-width: 4px; }
+.setup-form .player-input--p1 { border-left-color: var(--p1); }
+.setup-form .player-input--p2 { border-left-color: var(--p2); }
+.title-block h1, .screen-header h1 {
+  font-size: clamp(2rem, 9vw, 3rem);
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+.title-block p, .screen-header p, .handoff-screen p {
+  color: var(--muted);
+  margin-top: var(--space-2);
+}
+/* 16px between fields, not 24. With the cube controls and the name fields
+   now grouped, the form has fewer, larger blocks, and 24px between them read
+   as drift rather than separation. */
+.setup-form { display: grid; gap: var(--space-3); }
+.setup-form label, .field-group { display: grid; gap: var(--space-2); }
+/* Field labels are the mono register: small, letterspaced, quiet. */
+/* Label and its constraint share one row. The constraint was a full line plus
+   its margin under each stepper — 25px per field — for a fragment short
+   enough to sit beside the label instead. */
+.field-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.field-head small { white-space: nowrap; }
+.setup-form label,
+.field-group > span:first-child,
+.field-head > span:first-child {
+  font-family: var(--font-data);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  font-weight: 400;
+}
 .setup-form .checkbox-row {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-2);
   cursor: pointer;
+  text-transform: none;
+  letter-spacing: 0;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--muted);
 }
 .setup-form .checkbox-row input[type='checkbox'] {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   min-height: 0;
   margin: 0;
   accent-color: var(--accent);
 }
 .setup-form input, .setup-form select {
-  width: 100%; min-height: 46px; border: 1px solid #434d5c; border-radius: 8px;
-  background: var(--bg); padding: 10px 12px;
+  width: 100%; min-height: 46px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  padding: 10px var(--space-3);
+  font-family: var(--font-body);
+  /* >= 16px: iOS does not auto-zoom the page on focus. */
+  font-size: 16px;
+  transition: border-color var(--dur-mid) var(--ease-out);
 }
-.muted, .field-group small { color: var(--muted); font-weight: 400; }
-.mode-switch { display: flex; gap: 8px; }
-.mode-option { flex: 1; min-height: 46px; border: 1px solid var(--accent); border-radius: 8px; background: transparent; font-weight: 700; color: inherit; }
-.mode-option.selected { background: var(--accent); color: #17130a; }
-.stepper { display: flex; align-items: center; gap: 8px; }
+.setup-form input:hover, .setup-form select:hover { border-color: var(--ink); }
+.muted, .field-group small {
+  color: var(--muted);
+  font-weight: 400;
+  font-family: var(--font-data);
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+}
+.mode-switch { display: flex; gap: var(--space-2); }
+.mode-option {
+  flex: 1; min-height: 46px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: background-color var(--dur-mid) var(--ease-out), color var(--dur-mid) var(--ease-out);
+}
+.mode-option:hover { background: var(--surface); color: var(--ink); }
+.mode-option.selected {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--deep);
+  font-weight: 800;
+}
+.stepper { display: flex; align-items: center; gap: var(--space-2); }
 .stepper button {
-  flex: 0 0 auto; min-height: 44px; min-width: 44px; padding: 0 6px;
-  border: 1px solid var(--accent); border-radius: 8px;
-  background: transparent; font-size: 1.2rem;
+  flex: 0 0 auto; min-height: 44px; min-width: 44px; padding: 0 var(--space-2);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-family: var(--font-data);
+  font-size: 0.9rem;
+  transition: background-color var(--dur-mid) var(--ease-out);
 }
-.stepper output { flex: 1; text-align: center; font-size: 1.2rem; }
+.stepper button:hover { background: var(--surface); }
+.stepper button:active { background: var(--surface-2); }
+.stepper output {
+  flex: 1;
+  text-align: center;
+  font-family: var(--font-data);
+  font-size: 1.6rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
 .primary-button, .submit-button {
-  width: 100%; min-height: 52px; border: 0; border-radius: 10px;
-  background: var(--accent); color: #17130a; padding: 12px 16px; font-weight: 800;
+  width: 100%; min-height: 54px; border: 0;
+  border-radius: var(--radius-sm);
+  background: var(--ink);
+  color: var(--deep);
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  transition: transform var(--dur-short) var(--ease-out);
 }
-.error-card, .error-text { color: #ffb3a8; }
-.handoff-screen h1 { font-size: clamp(1.7rem, 8vw, 2.4rem); }
+.primary-button:active, .submit-button:active { transform: translateY(1px); }
+.secondary-button {
+  width: 100%; min-height: 54px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--ink);
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  transition: background-color var(--dur-mid) var(--ease-out);
+}
+.secondary-button:hover { background: var(--surface); }
+.error-card, .error-text { color: var(--danger); }
+/* Colour arrives as a shift in HUE, not brightness. A full-strength player
+   fill measured 39x the luminance of the app ground — a flashbang when the
+   device changes hands in a dim room. This tint is 1.45x. */
+.handoff-screen { background: var(--tint); }
+.handoff-screen.player-1 { --tint: var(--p1-tint); }
+.handoff-screen.player-2 { --tint: var(--p2-tint); }
+.handoff-screen h1 { color: var(--accent); }
+.handoff-status {
+  font-family: var(--font-data);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  border-top: 1px solid var(--rule-soft);
+  padding-top: var(--space-3);
+  width: min(100%, 420px);
+  text-align: center;
+}
+.handoff-screen h1 {
+  font-size: clamp(2.4rem, 14vw, 4.5rem);
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
 .hold-button {
   position: relative; width: min(100%, 420px); min-height: 72px; overflow: hidden;
-  border: 2px solid var(--accent); border-radius: 14px; background: var(--panel);
-  font-size: 1.2rem; font-weight: 800;
+  border: 2px solid var(--accent);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
   /* Opt out of ALL browser touch gestures for the duration of the hold. The
      page-wide `manipulation` value still permits panning, so without this the
      screen scrolls under the finger mid-hold; it is also what lets iOS start a
      text-selection gesture (the magnifier loupe) on tap-then-hold. Same
-     treatment .order-row already uses for its drag rows. */
+     treatment .order-deck already uses for its drag rows. */
   touch-action: none;
 }
 .hold-button::before {
   position: absolute; inset: 0; width: 0; background: var(--accent); content: "";
-  opacity: 0.35; transition: width 0s;
+  opacity: 0.22; transition: width 0s;
 }
 .hold-button.holding::before { width: 100%; transition: width 600ms linear; }
 .hold-button span { position: relative; z-index: 1; }
 .deck-list, .basics-section, .pool-section, .results-section, .full-pools {
-  display: grid; gap: 12px; margin-bottom: 22px;
+  display: grid; gap: var(--space-3); margin-bottom: var(--space-5);
 }
 .deck-row {
-  border: 2px solid #37404d; border-radius: 12px; background: var(--panel); padding: 10px;
+  border: 2px solid var(--rule-soft);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  padding: var(--space-3);
+  transition: border-color var(--dur-mid) var(--ease-out);
 }
 .deck-row h2, .basics-section h2, .pool-section h2, .results-section h2, .full-pools h2 {
-  margin-bottom: 9px; font-size: 1.05rem;
+  margin-bottom: var(--space-2);
+  font-family: var(--font-data);
+  font-size: 0.7rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
 }
-.active-deck { border-color: var(--accent); box-shadow: 0 0 0 2px rgb(216 180 90 / 18%); }
+/* Elevation by lightness, not by glow: a coloured halo on a dark surface is
+   the most reliable "generated" tell there is. */
+.active-deck { border-color: var(--accent); background: var(--surface-2); }
 .deck-slots, .match-card-row {
   display: grid; grid-template-columns: repeat(3, minmax(0, 140px));
-  gap: 8px; justify-content: center;
+  gap: var(--space-2); justify-content: center;
 }
 .card-thumb, .empty-slot {
-  position: relative; width: 100%; max-width: 140px; aspect-ratio: 63 / 88; border-radius: 4.5%;
+  position: relative; width: 100%; max-width: 140px; aspect-ratio: 63 / 88; border-radius: 4.6%;
 }
-.card-thumb { overflow: hidden; background: #0b0e13; }
+.card-thumb { overflow: hidden; background: var(--deep); }
 .card-back {
-  background: repeating-linear-gradient(45deg, #2a3242, #2a3242 6px, #1e242e 6px, #1e242e 12px);
+  background: repeating-linear-gradient(
+    45deg,
+    var(--surface-2),
+    var(--surface-2) 6px,
+    var(--surface) 6px,
+    var(--surface) 12px
+  );
   border: 2px solid var(--accent);
   color: var(--accent);
-  font-weight: 800;
+  font-family: var(--font-data);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
 }
 .card-thumb img { height: 100%; object-fit: cover; }
-.empty-slot { border: 2px dashed var(--muted); background: rgb(255 255 255 / 3%); }
+.empty-slot {
+  border: 1px dashed var(--rule);
+  background: transparent;
+}
+/* Five across on one row. At phone width that is ~64px a card, which is
+   below the readable threshold for a pool card but fine for these five —
+   see the note in BuildScreen.tsx for when that stops being true. */
 .basics-bar {
-  display: flex; flex-wrap: wrap; justify-content: center;
-  gap: 10px; padding-bottom: 6px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
 }
-.basics-bar .card-thumb { width: 29%; max-width: none; }
+.basics-bar .card-thumb { max-width: none; }
+/* The size control sets a MINIMUM card width, not a column count, so a phone
+   lands on 3/2/1 per row while a wide screen simply fits more columns at the
+   same readable card size. */
 .pool-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(88px, 1fr)); gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--card-min, 88px), 100%), 1fr));
+  gap: 7px;
 }
+.pool-grid--3 { --card-min: 88px; }
+.pool-grid--2 { --card-min: 140px; }
+.pool-grid--1 { --card-min: 240px; }
 .pool-grid .card-thumb { max-width: none; }
-.used-card { opacity: 0.38; }
+.pool-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+.pool-head h2 { margin-bottom: 0; }
+.card-size { display: flex; align-items: center; gap: var(--space-1); }
+.card-size-label {
+  font-family: var(--font-data);
+  font-size: 0.58rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-right: 2px;
+}
+.card-size button {
+  min-width: 30px;
+  min-height: 30px;
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--font-data);
+  font-size: 0.72rem;
+  transition: border-color var(--dur-mid) var(--ease-out), color var(--dur-mid) var(--ease-out);
+}
+.card-size button:hover { color: var(--ink); }
+.card-size button.on { border-color: var(--accent); color: var(--accent); }
+
+/* Deck strip: tabs plus the open deck, pinned above the pool. Sticky rather
+   than merely first in the DOM — the point is to see what you have built
+   WHILE tapping through a 45-card pool, which means it has to survive the
+   scroll. Opaque ground so pool cards do not show through it, and z-index
+   below .sticky-action (5) so the submit bar still covers it. */
+.deck-strip {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 4;
+  background: var(--ground);
+  padding-top: var(--space-2);
+  padding-bottom: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+.deck-tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+}
+.deck-tabs::-webkit-scrollbar { display: none; }
+/* Fixed width with a scrolling strip rather than equal division: the cube
+   allows up to floor(cubeSize / 6) decks (15 for the 90-card cube), and equal
+   tabs drop under the 44px touch minimum at eight. */
+.dtab {
+  flex: 1 0 104px;
+  min-height: 46px;
+  scroll-snap-align: start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  border-bottom: 0;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--font-data);
+  font-size: 0.8rem;
+  transition: color var(--dur-mid) var(--ease-out);
+}
+.dtab:hover { color: var(--ink); }
+.dtab b { font-weight: 700; line-height: 1; }
+.dtab.on {
+  border-color: var(--accent);
+  border-width: 2px;
+  border-bottom: 0;
+  background: var(--surface);
+  color: var(--accent);
+}
+.pips { display: flex; gap: 3px; }
+.pips i {
+  display: block;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  opacity: 0.5;
+}
+.pips i.f { background: currentColor; opacity: 1; }
+.deck-pane {
+  border: 2px solid var(--accent);
+  border-top: 0;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  background: var(--surface);
+  padding: var(--space-3);
+}
+.deck-pane--solo { border-top: 2px solid var(--accent); border-radius: var(--radius-md); }
+/* Smaller than pool cards: a card already in a deck only has to be
+   recognisable, a card in the pool is one you are still reading. */
+.deck-slots--pinned {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+
+/* Shown while decks are incomplete, in place of a pinned disabled button. */
+.progress-line {
+  border-top: 1px solid var(--rule-soft);
+  padding-top: var(--space-3);
+  text-align: center;
+  font-family: var(--font-data);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.used-card img { opacity: 0.3; }
+/* A solid caption bar rather than a pill floating over the art: card art is
+   light in places, and a translucent pill is unreadable over half of it. */
 .deck-badge {
-  position: absolute; right: 4px; bottom: 4px; border-radius: 999px;
-  background: rgb(10 13 18 / 88%); padding: 3px 7px; font-size: 0.72rem; font-weight: 800;
+  position: absolute; inset: auto 0 0 0;
+  background: var(--accent);
+  color: var(--deep);
+  font-family: var(--font-data);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-align: center;
+  padding: 2px 0;
 }
 .sticky-action {
   position: fixed; z-index: 5; right: 0; bottom: 0; left: 0;
-  border-top: 1px solid #343d49; background: rgb(20 24 31 / 96%);
+  border-top: 1px solid var(--rule-soft);
+  background: var(--ground);
   /* Bottom padding clears the home indicator; without it the primary action
      button on the build/order/match screens sits underneath it. */
-  padding: 12px max(16px, calc((100vw - 688px) / 2)) calc(12px + env(safe-area-inset-bottom));
+  padding: var(--space-3) max(var(--space-4), calc((100% - 688px) / 2)) calc(var(--space-3) + env(safe-area-inset-bottom));
 }
-.match-deck { display: grid; gap: 8px; }
-.match-deck h2, .match-deck h3 { text-align: center; font-size: 1rem; }
-.versus { color: var(--muted); margin: 9px 0; text-align: center; font-weight: 800; }
-.running-tally { font-weight: 700; }
+.match-deck { display: grid; gap: var(--space-2); }
+.match-deck h2, .match-deck h3 {
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  text-transform: uppercase;
+}
+.versus {
+  color: var(--muted);
+  margin: var(--space-2) 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.running-tally { font-family: var(--font-data); font-variant-numeric: tabular-nums; }
 .result-buttons {
   display: grid;
-  grid-template-columns: 1fr 1fr 0.8fr;
+  grid-template-columns: 1fr 1fr 0.75fr;
   grid-template-areas:
     'p1s p1p even'
     'p2s p2p even';
-  gap: 8px;
-  margin-top: 14px;
+  gap: 7px;
+  margin-top: var(--space-3);
 }
+/* Outlined chips that fill only when chosen. The old white-on-blue measured
+   3.37:1 at 13.6px bold, under the 4.5:1 floor; dark ink on the filled chip
+   measures 6.2:1. */
 .result-buttons button {
-  width: 100%; border: 2px solid transparent; border-radius: 9px;
-  color: white; font-weight: 750;
-  min-height: 52px; padding: 8px 6px; font-size: 0.85rem; white-space: normal;
+  width: 100%;
+  border: 2px solid var(--side);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--side);
+  font-family: var(--font-body);
+  font-weight: 600;
+  min-height: 52px; padding: var(--space-2) 6px;
+  font-size: 0.78rem; line-height: 1.15;
+  white-space: normal;
+  transition: background-color var(--dur-mid) var(--ease-out), color var(--dur-mid) var(--ease-out);
 }
 .result-buttons button:nth-child(1) { grid-area: p1s; }
 .result-buttons button:nth-child(2) { grid-area: p1p; }
@@ -200,168 +665,345 @@ img,
 .result-buttons.results-3 button:nth-child(1) { grid-area: p1s; }
 .result-buttons.results-3 button:nth-child(2) { grid-area: even; }
 .result-buttons.results-3 button:nth-child(3) { grid-area: p2s; }
-.p1-result, .p1-favored { background: var(--p1); }
-.p2-result, .p2-favored { background: var(--p2); }
-.even-result, .even-favored { background: var(--even); }
-.result-buttons .selected-result { border-color: var(--accent); box-shadow: 0 0 0 2px var(--bg); }
+.p1-result, .p1-favored { --side: var(--p1); }
+.p2-result, .p2-favored { --side: var(--p2); }
+.even-result, .even-favored { --side: var(--even); }
+.result-buttons button:hover { background: color-mix(in oklch, var(--side) 18%, transparent); }
+.result-buttons .selected-result { background: var(--side); color: var(--deep); }
 .text-button {
-  border: 0; background: transparent; color: var(--accent); margin-top: 16px; padding: 12px 0;
+  border: 0; background: transparent; color: var(--muted);
+  margin-top: var(--space-4); padding: var(--space-3) 0;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  transition: color var(--dur-mid) var(--ease-out);
 }
-.matchup-summary { display: grid; gap: 5px; }
+.text-button:hover { color: var(--ink); }
+.matchup-summary { display: grid; gap: var(--space-1); }
 .matchup-summary button {
-  min-height: 42px; border: 0; border-bottom: 1px solid #39424f;
+  min-height: 42px; border: 0; border-bottom: 1px solid var(--rule-soft);
   background: transparent; text-align: left;
 }
-.confirm-results { margin-top: 18px; }
-.play-again { margin: 4px 0 12px; }
+.confirm-results { margin-top: var(--space-4); }
+.play-again { margin: var(--space-1) 0 var(--space-3); }
 .winner-banner {
-  border: 2px solid var(--accent); border-radius: 14px; background: rgb(216 180 90 / 12%);
-  margin-bottom: 24px; padding: 22px 12px; text-align: center;
+  border-top: 3px solid var(--accent);
+  border-bottom: 3px solid var(--accent);
+  margin-bottom: var(--space-5);
+  padding: var(--space-4) 0;
+  text-align: center;
+}
+.winner-banner h1 {
+  font-size: clamp(1.8rem, 8vw, 2.6rem);
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
 }
 .table-scroll { overflow-x: auto; }
 .results-matrix {
-  width: 100%; border-collapse: separate; border-spacing: 4px; text-align: center;
+  width: 100%; border-collapse: separate; border-spacing: var(--space-1); text-align: center;
+  font-variant-numeric: tabular-nums;
 }
-.results-matrix th { color: var(--muted); padding: 7px; }
+.results-matrix th {
+  color: var(--muted);
+  padding: 7px;
+  font-family: var(--font-data);
+  font-size: 0.62rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
 .results-matrix button {
-  min-width: 58px; min-height: 46px; border: 0; border-radius: 7px;
-  color: white; font-weight: 800;
+  min-width: 58px; min-height: 46px; border: 0;
+  border-radius: var(--radius-sm);
+  background: var(--side);
+  color: var(--deep);
+  font-family: var(--font-data);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
 }
-.pairing-detail { display: grid; gap: 16px; margin-bottom: 24px; }
-.pool-reveal { display: grid; gap: 9px; margin-bottom: 14px; }
+.pairing-detail { display: grid; gap: var(--space-4); margin-bottom: var(--space-5); }
+.pool-reveal { display: grid; gap: var(--space-2); margin-bottom: var(--space-3); }
+/* These paddings MUST carry the safe-area insets themselves. `.screen` sets
+   them, but this rule overrides the whole padding-top/bottom, so writing a
+   bare value here silently discards env(safe-area-inset-top) and slides the
+   matchup header up under the camera cutout. */
 .match-screen {
-  padding-top: 14px;
-  padding-bottom: 14px;
+  padding-top: calc(var(--space-3) + env(safe-area-inset-top));
+  padding-bottom: calc(var(--space-3) + env(safe-area-inset-bottom));
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
 }
-.match-screen .screen-header { margin-bottom: 10px; text-align: center; }
-.match-screen .screen-header h1 { font-size: 1.05rem; margin-bottom: 2px; }
-.match-screen .first-player { font-size: 1.2rem; font-weight: 800; margin-top: 4px; text-align: center; }
+.match-screen .screen-header { margin-bottom: var(--space-2); text-align: center; }
+.match-screen .screen-header h1 {
+  font-size: 2rem;
+  margin-bottom: 2px;
+  font-variant-numeric: tabular-nums;
+}
+.match-screen .first-player {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-top: var(--space-1);
+  text-align: center;
+}
 .match-screen .match-deck {
-  gap: 5px;
+  gap: var(--space-1);
   flex: 1;
   align-content: center;
 }
-.match-screen .match-deck h2 { font-size: 0.9rem; margin-bottom: 2px; }
+.match-screen .match-deck h2 { font-size: 1.35rem; margin-bottom: 2px; }
 .match-screen .match-card-row {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
 }
 .match-card-row .card-thumb {
-  /* Viewport-relative: three cards must fit the row width (30vw) and two
-     card rows plus header/buttons/Previous must fit the height (16dvh).
-     Was 30% of a 140px grid track, which rendered ~42px cards. */
-  width: min(30vw, 16vh);
-  width: min(30vw, 16dvh);
-  max-width: 140px;
+  /* Take the width that is there. Three cards plus two gaps is all the row
+     allows, and the height budget is covered by the flex column above; the
+     dvh cap keeps two rows plus the buttons on screen on short devices. */
+  width: 100%;
+  max-width: min(33vw, 22dvh);
+  justify-self: center;
 }
-.match-screen .versus { margin: 4px 0; }
-.match-screen .result-buttons { margin-top: 10px; }
-.match-screen .text-button { margin-top: 8px; padding: 8px 0; }
+/* margin-top: auto parks the rule and everything below it at the bottom, so
+   the space that remains reads as deliberate margin rather than a layout that
+   ran out of content. */
+.match-rule {
+  height: 1px;
+  background: var(--rule-soft);
+  margin-top: auto;
+}
+.result-buttons button > span { display: block; }
+.res-note {
+  font-weight: 400;
+  font-size: 0.62rem;
+  line-height: 1.2;
+  margin-top: 3px;
+  opacity: 0.9;
+}
+/* The scores carry vulgar fractions (1½–½), which lose their bar and stem
+   long before a digit becomes illegible, so this line needs more size than
+   its supporting-text role would suggest. */
+.res-score {
+  font-family: var(--font-data);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  margin-top: 3px;
+  opacity: 0.95;
+}
+.match-screen .versus { margin: var(--space-1) 0; }
+.match-screen .result-buttons { margin-top: var(--space-2); }
+.match-screen .text-button { margin-top: var(--space-2); padding: var(--space-2) 0; }
 @media (min-width: 600px) {
-  .screen { padding-right: 24px; padding-left: 24px; }
+  .screen { padding-right: var(--space-5); padding-left: var(--space-5); }
 }
 
 .order-screen {
-  display: flex; flex-direction: column; gap: 18px; width: min(100%, 720px);
-  min-height: 100vh; margin: 0 auto; padding: 20px 16px 36px;
+  display: flex; flex-direction: column; gap: var(--space-4); width: min(100%, 720px);
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: calc(20px + env(safe-area-inset-top)) var(--space-4) calc(var(--space-5) + env(safe-area-inset-bottom));
 }
-.order-screen h2 { color: var(--accent); }
-.order-screen .hint { color: var(--muted); line-height: 1.45; }
-.order-list { display: flex; flex-direction: column; gap: 10px; }
-.order-row {
-  display: flex; align-items: center; gap: 10px; border: 1px solid #303846;
-  border-radius: 12px; background: var(--panel); padding: 10px;
+.order-screen h2 {
+  font-size: clamp(1.6rem, 7vw, 2.2rem);
+  text-transform: uppercase;
+}
+.order-screen .hint { color: var(--muted); line-height: 1.45; font-size: 0.9rem; }
+/* Two columns: a static rail of slot labels, and the deck blocks that move.
+   The labels are laid out as their own grid cells rather than as part of each
+   row, which is what lets a deck block translate past them during a drag while
+   the labels stay put. Because the labels never move, "Deck 2" names the SLOT
+   — the second deck you will play — not whichever block you happened to build
+   second, so the label stays true after a reorder. */
+.order-list {
+  display: grid;
+  /* min-content: the rail collapses to the widest label across all rows and
+     not one pixel more, handing everything else to the cards. */
+  grid-template-columns: min-content minmax(0, 1fr);
+  /* Every row as tall as the tallest. Without this, rows size to their own
+     content, so a deck whose names wrap to one line makes a shorter row than
+     one that wraps to two — and swapping them changes both rows' heights,
+     which resizes the rail boxes and makes the supposedly-static column jump.
+     It also keeps the drag stride honest: the maths derives a single stride
+     from the first two blocks and assumes every row matches it. */
+  grid-auto-rows: 1fr;
+  gap: var(--space-2);
+  align-items: stretch;
+}
+/* Static rail. No pointer handlers, no transform, never a drag surface. */
+.order-slot {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  min-width: 0;
+  /* nowrap so min-content sizing measures "Deck" as one word rather than
+     letting the column collapse to the width of a single character. */
+  white-space: nowrap;
+  padding: var(--space-2) 7px;
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  font-family: var(--font-data);
+  font-size: 0.58rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  text-align: center;
+}
+.order-slot b {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--ink);
+}
+/* The only thing that moves. */
+.order-deck {
+  display: flex; align-items: center; gap: var(--space-3);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  padding: var(--space-2);
   touch-action: none; user-select: none; position: relative;
 }
-.order-list.drag-active .order-row {
-  transition: transform 140ms ease;
+.order-list.drag-active .order-deck {
+  transition: transform 140ms var(--ease-out);
 }
-.order-row.dragging {
-  border-color: var(--accent); box-shadow: 0 8px 20px rgb(0 0 0 / 32%);
+.order-deck.dragging {
+  border-color: var(--accent);
+  background: var(--surface-2);
   transition: none; z-index: 2;
 }
-.order-row.settling {
-  transition: transform 140ms ease;
+.order-deck.settling {
+  transition: transform 140ms var(--ease-out);
   z-index: 2;
 }
-.order-position { min-width: 62px; font-weight: 800; }
-.order-cards { display: flex; gap: 6px; min-width: 0; }
-.order-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
-.order-deck-names { margin: 0; font-size: 0.85rem; color: var(--muted); }
-.order-cards .card-thumb { width: 56px; flex: 0 1 56px; }
-.order-arrows { display: flex; flex-direction: column; gap: 4px; }
+.order-cards { display: flex; gap: var(--space-1); min-width: 0; }
+.order-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--space-1); }
+/* Clamped to two lines: the drag maths uses a single row stride measured from
+   the first two blocks, so rows have to be uniform in height. A three-card
+   deck whose names wrap to three lines would desynchronise every swap below
+   it. */
+.order-deck-names {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.order-cards .card-thumb { flex: 1 1 0; max-width: 64px; }
+.order-arrows { display: flex; flex-direction: column; gap: var(--space-1); }
 .order-arrows button {
-  width: 36px; min-height: 32px; border: 1px solid #434d5c; border-radius: 7px;
-  background: var(--bg); color: var(--accent); font-weight: 800;
+  width: 34px; min-height: 30px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--accent);
+  font-weight: 700;
 }
-.order-arrows button[aria-disabled='true'] { opacity: 0.35; }
-.order-actions { display: flex; gap: 10px; }
+.order-arrows button[aria-disabled='true'] { opacity: 0.4; color: var(--muted); }
+.order-actions { display: flex; gap: var(--space-2); margin-top: auto; }
 .order-actions button { flex: 1; }
-.secondary-button {
-  width: 100%; min-height: 52px; border: 1px solid var(--accent); border-radius: 10px;
-  background: var(--panel); color: var(--accent); padding: 12px 16px; font-weight: 800;
-}
 .show-pools {
   display: block;
   width: 100%;
   min-height: 48px;
-  margin: 0 auto 22px;
+  margin: 0 auto var(--space-5);
   text-align: center;
 }
-.pairing-results { display: flex; flex-direction: column; gap: 8px; }
-.pairing-result {
-  display: grid;
-  gap: 8px;
-  border: 1px solid #303846;
-  border-radius: 12px;
-  background: var(--panel);
-  padding: 10px 12px;
+.ledger { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.ledger td { padding: var(--space-2) 0; vertical-align: middle; }
+/* The match number is a full-width centred band, so it never competes with a
+   card name for the start of the line. */
+.ledger .mrow td {
   text-align: center;
+  font-family: var(--font-data);
+  font-size: 0.64rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  padding: var(--space-3) 0 var(--space-1);
 }
-.pairing-title {
-  color: var(--text);
-  font-size: 1rem;
-  padding-bottom: 6px;
-  border-bottom: 1px solid #303846;
+.ledger tr.grouped td { border-bottom: 1px solid var(--rule-soft); }
+.ledger .decks { line-height: 1.4; }
+/* A hairline rather than a bare line break: two card lists stacked with no
+   divider read as one long list, especially when a deck name wraps. */
+/* The winner is marked twice over: ink instead of muted, and a left edge in
+   its owner's colour. The edge is what carries player identity here — the
+   TEXT deliberately does not take the player colour, because these lines are
+   long strings of small wrapping type and the palette's blue and red measure
+   6.0:1 and 5.6:1 on this ground, both BELOW the 7.4:1 of the muted grey used
+   for the loser. Colouring the text would make the winning line fainter than
+   the losing one and invert the emphasis. A 3px bar has no such problem: as a
+   UI boundary it only needs 3:1, and both clear it comfortably.
+   The transparent border on every line keeps the text indent identical
+   whether a deck won or lost, so nothing shifts sideways between rows. */
+.ledger .deck-line {
+  color: var(--muted);
+  padding: 4px 0 4px var(--space-3);
+  border-left: 3px solid transparent;
 }
-.pairing-body { display: grid; gap: 3px; }
-.pairing-deck { font-size: 0.92rem; }
-.pairing-vs { color: var(--muted); font-size: 0.85rem; font-weight: 700; }
+.ledger .deck-line + .deck-line { border-top: 1px solid var(--rule-soft); }
+.ledger .deck-line--p1 { --side: var(--p1); }
+.ledger .deck-line--p2 { --side: var(--p2); }
+.ledger .deck-won { color: var(--ink); border-left-color: var(--side); }
+.ledger .ledger-result { text-align: right; width: 1%; white-space: nowrap; padding-left: var(--space-3); }
 .pairing-outcome {
-  justify-self: center;
-  min-width: 96px;
-  min-height: 40px;
+  min-height: 36px;
   border: 0;
-  border-radius: 8px;
-  color: white;
-  font-weight: 800;
+  border-radius: 999px;
+  padding: 0 var(--space-3);
+  background: var(--side);
+  color: var(--deep);
+  font-family: var(--font-data);
+  font-size: 0.66rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+/* Second channel: hue means player, fill weight means how decisively. Solid
+   is a sweep, outlined is one win and one draw — five distinguishable results
+   from three hues, and legible without colour at all. */
+.outcome-edge {
+  background: transparent;
+  color: var(--side);
+  border: 2px solid var(--side);
 }
 .pwa-banner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: var(--space-3);
   width: min(100%, 720px);
   margin: 0 auto;
-  padding: 10px 16px;
-  background: var(--panel);
-  border-bottom: 1px solid #303846;
+  padding: var(--space-2) var(--space-4);
+  background: var(--surface);
+  border-bottom: 1px solid var(--rule-soft);
   font-size: 0.9rem;
 }
 .pwa-action {
   flex: 0 0 auto;
   min-height: 38px;
-  padding: 0 14px;
-  border: 1px solid var(--accent);
-  border-radius: 8px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
   background: transparent;
-  color: var(--accent);
-  font-weight: 700;
+  color: var(--ink);
+  font-weight: 600;
 }
 
 /* Pai Gow: play-a-card-by-name field inline with each deck header */
@@ -369,7 +1011,7 @@ img,
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: var(--space-2);
 }
 .match-deck-header h2 {
   flex: 0 1 auto;
@@ -386,27 +1028,27 @@ img,
   flex: 1;
   min-width: 0;
   min-height: 36px;
-  padding: 4px 8px;
-  border: 1px solid #434d5c;
-  border-radius: 8px;
-  background: var(--bg);
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
   font-size: 16px; /* >= 16px: iOS does not auto-zoom the page on focus */
 }
 .play-card button {
   flex: 0 0 auto;
   min-height: 36px;
-  padding: 0 10px;
-  border: 1px solid var(--accent);
-  border-radius: 8px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
   background: transparent;
-  color: var(--accent);
-  font-weight: 700;
-  font-size: 0.85rem;
+  color: var(--ink);
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 .play-card-miss {
   margin: 0;
-  color: #ffb3a8;
-  font-size: 0.8rem;
+  color: var(--danger);
+  font-size: 0.78rem;
   text-align: center;
 }
 
@@ -419,5 +1061,17 @@ img,
 .p2-text { color: var(--p2); }
 .pairing-first {
   color: var(--muted);
-  font-size: 0.8rem;
+  font-family: var(--font-data);
+  font-size: 0.68rem;
+}
+
+/* Spatial motion collapses to nothing; the hold-to-reveal fill stays, because
+   it is not decoration — it is the progress indicator for a timed gesture. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  .hold-button.holding::before { transition: width 600ms linear; }
 }

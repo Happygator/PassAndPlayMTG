@@ -192,13 +192,21 @@ export function resultLabel(result: MatchResult): string {
   return `${formatPoints(a)}–${formatPoints(b)}`;
 }
 
-/** Button label for a result, e.g. "Alice wins both" (3CB) or "Alice wins" (Pai Gow). */
+/**
+ * Button label for a result, e.g. "Alice wins both" (3CB) or "Alice wins"
+ * (Pai Gow).
+ *
+ * A 3CB matchup is TWO games — each player on the play once — so a result is a
+ * pair of outcomes, and a label naming only one of them is ambiguous. The old
+ * "wins on the play" described a single game and left the other unstated, even
+ * though gamePoints scores it [1.5, 0.5], i.e. a win plus a draw.
+ */
 export function resultButtonLabel(result: MatchResult, names: [string, string]): string {
   switch (result) {
     case 'p1-sweep': return `${names[0]} wins both`;
-    case 'p1-play': return `${names[0]} wins on the play`;
+    case 'p1-play': return `${names[0]} wins one, draws one`;
     case 'even': return 'Even';
-    case 'p2-play': return `${names[1]} wins on the play`;
+    case 'p2-play': return `${names[1]} wins one, draws one`;
     case 'p2-sweep': return `${names[1]} wins both`;
     case 'p1-win': return `${names[0]} wins`;
     case 'draw': return 'Draw';
@@ -206,11 +214,52 @@ export function resultButtonLabel(result: MatchResult, names: [string, string]):
   }
 }
 
+/**
+ * Secondary line for results whose name does not fully describe them. Only
+ * 'even' needs one: gamePoints scores it [1, 1], which covers BOTH one game
+ * each and both games drawn — two different things the word "Even" hides.
+ */
+export function resultNote(result: MatchResult): string | null {
+  return result === 'even' ? 'one each, or both drawn' : null;
+}
+
 /** Which side a result favors; drives the p1/even/p2 color classes. */
 export function resultSide(result: MatchResult): 'p1' | 'even' | 'p2' {
   if (result === 'p1-sweep' || result === 'p1-play' || result === 'p1-win') return 'p1';
   if (result === 'p2-sweep' || result === 'p2-play' || result === 'p2-win') return 'p2';
   return 'even';
+}
+
+/**
+ * Ledger label: the favoured player's name plus the score from THEIR side, so
+ * a win always shows the larger figure first.
+ *
+ * The name alone is not enough once a mode has five results — "Alice" means
+ * 2–0 in one match and 1½–½ in another — so the figure is part of the label
+ * rather than decoration.
+ */
+export function resultPillLabel(result: MatchResult, names: [string, string]): string {
+  const [first, second] = gamePoints(result);
+  const side = resultSide(result);
+  if (side === 'even') return `${resultButtonLabel(result, names)} ${resultLabel(result)}`;
+  if (side === 'p1') return `${names[0]} ${formatPoints(first)}–${formatPoints(second)}`;
+  return `${names[1]} ${formatPoints(second)}–${formatPoints(first)}`;
+}
+
+/**
+ * Whether a result was won outright rather than edged. This is the SECOND
+ * channel the ledger encodes: hue still means player, and fill weight means
+ * how decisively — solid for a sweep, outlined for one win and one draw. That
+ * distinguishes all five 3CB results using three hues, and survives red-green
+ * colour blindness and greyscale, because fill is not a colour cue.
+ */
+export function isDecisive(result: MatchResult): boolean {
+  return (
+    result === 'p1-sweep' ||
+    result === 'p2-sweep' ||
+    result === 'p1-win' ||
+    result === 'p2-win'
+  );
 }
 
 export function resolveRef(ref: CardRef, pool: readonly CardData[], basics: readonly CardData[]): CardData {
@@ -225,7 +274,11 @@ export function deckNames(
 ): string {
   return deck
     .map((ref) => (ref === null ? '?' : resolveRef(ref, pool, basics).name.split(' // ')[0]))
-    .join(', ');
+    // A comma cannot separate these: six cards in the 3CB cube have one in
+    // their own name ("Boseiju, Who Endures"), so ", " produced a list you
+    // could not parse. The bar is also heavy enough to survive next to the
+    // "//" already present in split-card names.
+    .join(' | ');
 }
 
 export function deckComplete(deck: DeckSlots): boolean {

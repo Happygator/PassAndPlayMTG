@@ -43,8 +43,8 @@ export default defineConfig(({ mode }) => {
                 description: 'Pass-and-play Magic: The Gathering sealed micro-formats on one shared device.',
                 display: 'standalone',
                 orientation: 'portrait',
-                background_color: '#14181f',
-                theme_color: '#14181f',
+                background_color: '#161311',
+                theme_color: '#161311',
                 icons: [
                   { src: 'icons/icon-192.png', sizes: '192x192', type: 'image/png' },
                   { src: 'icons/icon-512.png', sizes: '512x512', type: 'image/png' },
@@ -55,7 +55,7 @@ export default defineConfig(({ mode }) => {
                 // Precache EVERYTHING, card images included: the app must be fully
                 // offline from the moment install completes (DESIGN.md §4, no partial
                 // states, no text fallbacks).
-                globPatterns: ['**/*.{js,css,html,json,png,jpg,webmanifest}'],
+                globPatterns: ['**/*.{js,css,html,json,png,jpg,woff2,webmanifest}'],
                 maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
                 // The standalone support/privacy pages are real documents, not app
                 // routes: without this the SPA navigation fallback would serve

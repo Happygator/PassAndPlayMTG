@@ -1,6 +1,13 @@
 import { useState } from 'preact/hooks';
 import { cardImageSrc } from '@platform';
-import { MODE_RULES, resolveRef, resultButtonLabel, resultSide } from '../game';
+import {
+  MODE_RULES,
+  resolveRef,
+  resultButtonLabel,
+  resultLabel,
+  resultNote,
+  resultSide,
+} from '../game';
 import type { CardData, DeckSlots, GameState, MatchResult } from '../types';
 
 interface MatchScreenProps {
@@ -72,7 +79,7 @@ function MatchDeck({
   const header = (
     <div class="match-deck-header">
       <h2>
-        <span class={playerClass}>{name}</span> -- Deck {deckNumber}
+        <span class={playerClass}>{name}</span>
       </h2>
       {hidden && (
         <form
@@ -165,13 +172,21 @@ export function MatchScreen({ state, onRecord, onGoto }: MatchScreenProps) {
   const cubeNames = new Set(nameOptions.map((name) => name.toLowerCase()));
 
   const matchup = state.matchups[state.currentMatchup];
-  const resultChoices = rules.results.map((result) => ({ result, label: resultButtonLabel(result, [playerOneName, playerTwoName] as [string, string]), className: `${resultSide(result)}-result` }));
+  const resultChoices = rules.results.map((result) => ({
+    result,
+    label: resultButtonLabel(result, [playerOneName, playerTwoName] as [string, string]),
+    note: resultNote(result),
+    // The same notation the results screen uses, so the button teaches the
+    // vocabulary the ledger will show rather than introducing a second one.
+    score: resultLabel(result),
+    className: `${resultSide(result)}-result`,
+  }));
   const reveal = (key: string) => setRevealed((prev) => new Set(prev).add(key));
 
   return (
     <main class="screen match-screen">
       <header class="screen-header match-header">
-        <h1>Matchup {state.currentMatchup + 1} of {state.matchups.length}</h1>
+        <h1>Match {state.currentMatchup + 1} of {state.matchups.length}</h1>
         {matchup.onPlay !== undefined && (
           <p class="first-player">
             <span class={matchup.onPlay === 0 ? 'p1-text' : 'p2-text'}>
@@ -220,6 +235,10 @@ export function MatchScreen({ state, onRecord, onGoto }: MatchScreenProps) {
         labelBelow={true}
       />
 
+      {/* A hairline doing the separation that was previously done by ~85px of
+          empty space, which let the cards grow to fill the width instead. */}
+      <div class="match-rule" />
+
       <div class={`result-buttons results-${rules.results.length}`}>
         {resultChoices.map((choice) => (
           <button
@@ -228,7 +247,9 @@ export function MatchScreen({ state, onRecord, onGoto }: MatchScreenProps) {
             class={`${choice.className}${matchup.result === choice.result ? ' selected-result' : ''}`}
             onClick={() => onRecord(choice.result)}
           >
-            {choice.label}
+            <span>{choice.label}</span>
+            {choice.note && <span class="res-note">{choice.note}</span>}
+            <span class="res-score">{choice.score}</span>
           </button>
         ))}
       </div>
@@ -242,7 +263,7 @@ export function MatchScreen({ state, onRecord, onGoto }: MatchScreenProps) {
           onGoto(state.currentMatchup - 1);
         }}
       >
-        Previous
+        Previous match
       </button>
     </main>
   );

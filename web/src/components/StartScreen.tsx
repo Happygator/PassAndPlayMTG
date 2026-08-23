@@ -91,14 +91,14 @@ export function StartScreen({ onStart, initial }: StartScreenProps) {
   }, []);
 
   if (loading) {
-    return <main class="screen centered-screen">Loading cubes...</main>;
+    return <main class="screen centered-screen">Loading cubes…</main>;
   }
 
   if (indexError || cubes.length === 0) {
     return (
       <main class="screen centered-screen">
         <div class="panel error-card">
-          {'No cube data found -- run `npm run cube` and rebuild.'}
+          {'No cube data found — run `npm run cube` and rebuild.'}
         </div>
       </main>
     );
@@ -164,7 +164,8 @@ export function StartScreen({ onStart, initial }: StartScreenProps) {
   return (
     <main class="screen start-screen">
       <header class="title-block">
-        <h1>Sealed Pass-and-Play</h1>
+        <p class="kicker">Sealed Pass-and-Play</p>
+        <h1>New game</h1>
       </header>
 
       <section class="panel setup-form">
@@ -190,31 +191,40 @@ export function StartScreen({ onStart, initial }: StartScreenProps) {
           <p class="muted">{MODE_RULES[mode].blurb}</p>
         </div>
 
-        <label>
-          Cube
-          <select
-            value={selectedCube.id}
-            onChange={(event) => chooseCube((event.currentTarget as HTMLSelectElement).value)}
-          >
-            {cubesFor(mode).map((cube) => (
-              <option value={cube.id} key={cube.id}>
-                {cube.name} ({cube.cardCount})
-              </option>
-            ))}
-          </select>
-        </label>
-        <p class="muted">{selectedCube.description}</p>
-        <label class="checkbox-row">
-          <input
-            type="checkbox"
-            checked={allowRepeats}
-            onChange={(event) => toggleRepeats((event.currentTarget as HTMLInputElement).checked)}
-          />
-          Allow repeats between pools
-        </label>
+        {/* One group, not three form rows. The description and the repeats
+            toggle both belong to the cube above them, so they sit inside its
+            group at the group's 8px rhythm instead of each claiming a full
+            24px form gap of their own. */}
+        <div class="field-group">
+          <label>
+            Cube
+            <select
+              value={selectedCube.id}
+              onChange={(event) => chooseCube((event.currentTarget as HTMLSelectElement).value)}
+            >
+              {cubesFor(mode).map((cube) => (
+                <option value={cube.id} key={cube.id}>
+                  {cube.name} ({cube.cardCount})
+                </option>
+              ))}
+            </select>
+          </label>
+          <p class="muted">{selectedCube.description}</p>
+          <label class="checkbox-row">
+            <input
+              type="checkbox"
+              checked={allowRepeats}
+              onChange={(event) => toggleRepeats((event.currentTarget as HTMLInputElement).checked)}
+            />
+            Allow repeats between pools
+          </label>
+        </div>
 
         <div class="field-group">
-          <span>Pool size</span>
+          <div class="field-head">
+            <span>Pool size</span>
+            <small>min {minimumPool} · max {maximumPool}</small>
+          </div>
           <div class="stepper">
             <button
               type="button"
@@ -258,11 +268,13 @@ export function StartScreen({ onStart, initial }: StartScreenProps) {
               +5
             </button>
           </div>
-          <small>Minimum {minimumPool}; maximum {maximumPool} for this cube.</small>
         </div>
 
         <div class="field-group">
-          <span>Decks per player</span>
+          <div class="field-head">
+            <span>Decks per player</span>
+            <small>1–{maximumDecks}</small>
+          </div>
           <div class="stepper">
             <button
               type="button"
@@ -289,25 +301,30 @@ export function StartScreen({ onStart, initial }: StartScreenProps) {
               +1
             </button>
           </div>
-          <small>Range 1-{maximumDecks} for this cube.</small>
         </div>
 
-        <label>
-          Player 1 name
+        {/* One heading over both fields. The coloured left edge does what the
+            two separate "Player N name" labels were doing, in no vertical
+            space at all — and it introduces the player colours on the only
+            screen where the mapping still has to be learned. The visible
+            label is gone, so each input carries its own aria-label. */}
+        <div class="field-group">
+          <span>Player names</span>
           <input
+            class="player-input player-input--p1"
+            aria-label="Player 1 name"
             value={playerOne}
             placeholder="Player 1"
             onInput={(event) => setPlayerOne((event.currentTarget as HTMLInputElement).value)}
           />
-        </label>
-        <label>
-          Player 2 name
           <input
+            class="player-input player-input--p2"
+            aria-label="Player 2 name"
             value={playerTwo}
             placeholder="Player 2"
             onInput={(event) => setPlayerTwo((event.currentTarget as HTMLInputElement).value)}
           />
-        </label>
+        </div>
 
         {startError && <p class="error-text">{startError}</p>}
         <button
@@ -319,7 +336,7 @@ export function StartScreen({ onStart, initial }: StartScreenProps) {
             startGame();
           }}
         >
-          {starting ? 'Loading cube...' : 'Start game'}
+          {starting ? 'Dealing…' : 'Deal pools'}
         </button>
       </section>
     </main>
