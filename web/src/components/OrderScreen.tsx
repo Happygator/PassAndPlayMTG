@@ -18,6 +18,13 @@ interface OrderScreenProps {
   onConfirm: () => void;
 }
 
+/** Stable per-deck identity derived from its slots; survives reordering. */
+function deckKey(deck: DeckSlots, index: number): string {
+  const filled = deck.filter((ref) => ref !== null);
+  if (filled.length === 0) return `empty-${index}`;
+  return filled.map((ref) => `${ref!.kind}${ref!.index}`).join('-');
+}
+
 interface DragState {
   from: number;
   to: number;
@@ -115,7 +122,20 @@ export function OrderScreen({ name, player, opponentName, decks, pool, basics, o
       </p>
       <div class={`order-list${drag ? ' drag-active' : ''}`} ref={listRef}>
         {decks.map((deck, index) => (
-          <Fragment key={index}>
+          // Keyed by CONTENT, not by array position. With a positional key a
+          // reorder keeps every DOM node where it is and rewrites its <img
+          // src>, so the browser drops and re-decodes all six card images on
+          // every swap — and until the new bitmap is ready each <img> keeps
+          // painting the OLD one, which is the flash of the other deck's card
+          // in the same slot. A content key makes the reorder a MOVE instead:
+          // the existing subtree travels with its deck, no src ever changes,
+          // and nothing decodes.
+          //
+          // Two decks with identical contents would collide on this key. That
+          // needs both to be all-basics and identical, and swapping two
+          // identical decks is a visual no-op, so the fallback (Preact pairing
+          // them positionally, i.e. today's behaviour) is harmless here.
+          <Fragment key={deckKey(deck, index)}>
             <span class="order-slot" aria-hidden="true">
               Deck
               <b>{index + 1}</b>
@@ -130,11 +150,11 @@ export function OrderScreen({ name, player, opponentName, decks, pool, basics, o
             >
               <div class="order-main">
                 <div class="order-cards">
-                  {deck.map((ref, slot) => {
+                  {deck.map((ref, _slot) => {
                     if (ref === null) return null;
                     const card = resolveRef(ref, pool, basics);
                     return (
-                      <div class="card-thumb" key={slot}>
+                      <div class="card-thumb" key={`${ref.kind}${ref.index}`}>
                         <img src={cardImageSrc(card)} alt={card.name} draggable={false} />
                       </div>
                     );

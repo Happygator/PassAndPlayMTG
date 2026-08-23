@@ -143,15 +143,30 @@ h1, h2, h3 {
   text-wrap: balance;
 }
 
-.app-shell { min-height: 100vh; }
+/* dvh, not vh: on a mobile browser 100vh is the LARGE viewport — the height
+   with the URL bar retracted — so a 100vh screen is taller than what is
+   actually visible, and its last ~15% sits under the browser chrome. That is
+   what put the start screen's primary button out of reach. dvh tracks the
+   real visible height. The vh line stays first as a fallback. */
+.app-shell {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
 /* Vertical padding carries the device safe-area insets: the PWA declares
    viewport-fit=cover and a translucent status bar, and the iOS app shell draws
    edge to edge, so without these the header sits under the notch. */
 .screen {
   width: min(100%, 720px);
   min-height: 100vh;
+  min-height: 100dvh;
   margin: 0 auto;
-  padding: calc(20px + env(safe-area-inset-top)) var(--space-4) calc(96px + env(safe-area-inset-bottom));
+  padding: calc(20px + env(safe-area-inset-top)) var(--space-4) calc(var(--space-6) + env(safe-area-inset-bottom));
+}
+/* Only the build screen floats a fixed action bar over its content, so only
+   the build screen needs to reserve room for one. Every other screen was
+   carrying 96px of dead space at the bottom for a bar it never shows. */
+.build-screen {
+  padding-bottom: calc(96px + env(safe-area-inset-bottom));
 }
 /* Player-tinted screens: the accent becomes whoever is holding the device, so
    the active deck, the focus ring and the primary action all say "this is
@@ -700,9 +715,13 @@ h1, h2, h3 {
 }
 .pairing-detail { display: grid; gap: var(--space-4); margin-bottom: var(--space-5); }
 .pool-reveal { display: grid; gap: var(--space-2); margin-bottom: var(--space-3); }
+/* These paddings MUST carry the safe-area insets themselves. `.screen` sets
+   them, but this rule overrides the whole padding-top/bottom, so writing a
+   bare value here silently discards env(safe-area-inset-top) and slides the
+   matchup header up under the camera cutout. */
 .match-screen {
-  padding-top: var(--space-3);
-  padding-bottom: var(--space-3);
+  padding-top: calc(var(--space-3) + env(safe-area-inset-top));
+  padding-bottom: calc(var(--space-3) + env(safe-area-inset-bottom));
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
@@ -778,8 +797,10 @@ h1, h2, h3 {
 
 .order-screen {
   display: flex; flex-direction: column; gap: var(--space-4); width: min(100%, 720px);
-  min-height: 100vh; margin: 0 auto;
-  padding: calc(20px + env(safe-area-inset-top)) var(--space-4) calc(36px + env(safe-area-inset-bottom));
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: calc(20px + env(safe-area-inset-top)) var(--space-4) calc(var(--space-5) + env(safe-area-inset-bottom));
 }
 .order-screen h2 {
   font-size: clamp(1.6rem, 7vw, 2.2rem);
@@ -794,7 +815,16 @@ h1, h2, h3 {
    second, so the label stays true after a reorder. */
 .order-list {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
+  /* min-content: the rail collapses to the widest label across all rows and
+     not one pixel more, handing everything else to the cards. */
+  grid-template-columns: min-content minmax(0, 1fr);
+  /* Every row as tall as the tallest. Without this, rows size to their own
+     content, so a deck whose names wrap to one line makes a shorter row than
+     one that wraps to two — and swapping them changes both rows' heights,
+     which resizes the rail boxes and makes the supposedly-static column jump.
+     It also keeps the drag stride honest: the maths derives a single stride
+     from the first two blocks and assumes every row matches it. */
+  grid-auto-rows: 1fr;
   gap: var(--space-2);
   align-items: stretch;
 }
@@ -803,8 +833,11 @@ h1, h2, h3 {
   display: grid;
   place-items: center;
   align-content: center;
-  min-width: 84px;
-  padding: var(--space-2);
+  min-width: 0;
+  /* nowrap so min-content sizing measures "Deck" as one word rather than
+     letting the column collapse to the width of a single character. */
+  white-space: nowrap;
+  padding: var(--space-2) 7px;
   border: 1px solid var(--rule-soft);
   border-radius: var(--radius-md);
   background: var(--surface);
