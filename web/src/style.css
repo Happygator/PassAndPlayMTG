@@ -1075,3 +1075,511 @@ h1, h2, h3 {
   }
   .hold-button.holding::before { transition: width 600ms linear; }
 }
+
+/* Constructed mode (3cb-real): name search + suggestions, banlist notice.
+   Reuses existing tokens only — no new colours or fonts. */
+.search-field {
+  margin: var(--space-4) 0 var(--space-2);
+}
+.name-input {
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 16px; /* >= 16px: iOS does not auto-zoom the page on focus */
+}
+.name-input[aria-disabled='true'] {
+  opacity: 0.5;
+}
+.sugg {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+.sugg-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+  text-align: left;
+}
+.sugg-row.ban {
+  color: var(--muted);
+}
+.sugg-row.ban .sr-name {
+  text-decoration: line-through;
+  color: var(--muted);
+}
+.sr-top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.sr-name {
+  flex: 1;
+  min-width: 0;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.sr-cost {
+  flex: 0 0 auto;
+  font-family: var(--font-data);
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.sr-sub {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.bantag {
+  flex: 0 0 auto;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-sm);
+  background: var(--danger);
+  color: var(--deep);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.hint-line {
+  margin: var(--space-2) 0 var(--space-4);
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-align: center;
+}
+.handoff-terms {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin: var(--space-3) 0;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-size: 0.82rem;
+}
+.handoff-terms b {
+  font-family: var(--font-data);
+}
+.handoff-terms span {
+  color: var(--muted);
+}
+
+/* Banlist viewer (StartScreen / ConstructedBuildScreen). */
+.banlist-screen .banlist-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+.banlist-screen .ban-count {
+  font-family: var(--font-data);
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+.banlist-screen .card-size {
+  margin: var(--space-3) 0;
+}
+.banlist-screen .name-input {
+  margin-bottom: var(--space-3);
+}
+.name-list div {
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--rule-soft);
+  line-height: 1.5;
+  font-family: var(--font-data);
+}
+
+/* Constructed mode (3cb-real) stage 3b: full-screen search sheet, Scryfall
+   search, and the quick-lookup land-cycle browser. OKLCH tokens only. */
+.search-sheet {
+  display: flex;
+  flex-direction: column;
+}
+.sheet-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+.search-field--button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 16px;
+}
+.search-field--button .placeholder {
+  color: var(--muted);
+}
+.search-field--button[aria-disabled='true'] {
+  opacity: 0.5;
+}
+.row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+  margin: var(--space-2) 0;
+}
+.query-field {
+  flex: 1;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 var(--space-3);
+}
+.chips .act {
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--muted);
+  font-family: var(--font-data);
+  font-size: 0.78rem;
+}
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin: var(--space-3) 0;
+  font-family: var(--font-data);
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.pager .text-button[aria-disabled='true'] {
+  opacity: 0.4;
+}
+.banned-card {
+  position: relative;
+}
+.banned-card img {
+  opacity: 0.22;
+  filter: grayscale(1);
+}
+.banned-flag {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 2px var(--space-2);
+  background: var(--danger);
+  color: var(--deep);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+}
+.browse {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: var(--space-3) 0;
+}
+.browse-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+  text-align: left;
+}
+.browse-row .n {
+  font-family: var(--font-data);
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.cycle-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+.cycle-note {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-bottom: var(--space-3);
+}
+
+/* Custom banlists (stage 3c) */
+.base-card {
+  margin: var(--space-3) 0;
+  padding: var(--space-3);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+.base-card .muted { margin-top: var(--space-1); }
+.ban-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: 44px;
+  padding-left: var(--space-3);
+  border-bottom: 1px solid var(--rule-soft);
+  border-left: 3px solid var(--rule);
+}
+.ban-row.added { border-left-color: var(--danger); }
+.ban-row.removed { border-left-color: var(--even); }
+.ban-row .x {
+  flex: 0 0 44px;
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+}
+.act-ban,
+.act-unban {
+  align-self: flex-end;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid currentColor;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-family: var(--font-data);
+  font-weight: 700;
+}
+.act-ban { color: var(--danger); }
+.act-unban { color: var(--even); }
+.paste-box {
+  width: 100%;
+  min-height: 180px;
+  padding: var(--space-3);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-data);
+  font-size: 16px;
+  resize: vertical;
+}
+.import-summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-top: var(--space-3);
+  font-family: var(--font-data);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+}
+.import-summary .ok { color: var(--even); }
+.import-summary .bad { color: var(--danger); }
+.err-head {
+  margin-bottom: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--danger);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+.err-list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--rule-soft);
+}
+.err-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-1) var(--space-3);
+  align-items: center;
+  min-height: 44px;
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.err-row .ln {
+  color: var(--danger);
+  font-family: var(--font-data);
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+}
+.err-row .txt {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-family: var(--font-data);
+}
+.err-row .why {
+  grid-column: 2;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+.digest {
+  margin: var(--space-4) 0;
+  border-top: 1px solid var(--rule-soft);
+}
+.digest-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: 44px;
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.digest-row.add { border-left: 3px solid var(--danger); padding-left: var(--space-3); }
+.digest-row.remove { border-left: 3px solid var(--even); padding-left: var(--space-3); }
+.digest-row .what {
+  flex: 0 0 auto;
+  font-family: var(--font-data);
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+.digest-row.add .what { color: var(--danger); }
+.digest-row.remove .what { color: var(--even); }
+.affects {
+  margin-bottom: var(--space-4);
+  padding: var(--space-3);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+.affects p + p {
+  margin-top: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--rule-soft);
+}
+.unbanned-mark {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: var(--surface-2);
+  color: var(--even);
+  font-family: var(--font-data);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+.unbanned-mark span {
+  padding: var(--space-2);
+  border: 1px solid var(--even);
+  border-radius: var(--radius-sm);
+}
+
+/* UI refinements: lookup grids, banlist editing, and card rules text. */
+.basics-section {
+  margin-top: var(--space-5);
+}
+.search-field {
+  position: relative;
+}
+.search-field .name-input {
+  padding-right: var(--space-7);
+}
+.field-clear {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: var(--space-7);
+  min-height: 44px;
+  margin: auto 0;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+}
+.diff-group + .diff-group {
+  border-top: 1px solid var(--rule-soft);
+  padding-top: var(--space-4);
+  margin-top: var(--space-4);
+}
+.callout {
+  margin: var(--space-3) 0;
+  padding: var(--space-3);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+.sr-sub {
+  -webkit-line-clamp: 4;
+}
+
+.hint-line {
+  color: var(--muted);
+  font-size: 0.7rem;
+  margin: 0 0 0.5rem;
+}
+
+/* Real-3CB deviations screen + Scryfall syntax help */
+.deviations-intro {
+  margin-bottom: var(--space-5);
+}
+.scryfall-search-screen .name-list {
+  display: grid;
+  gap: var(--space-2);
+  margin: var(--space-4) 0;
+}
+
+/* Constructed build screen: SearchSheet's search input must stay mounted in
+   the DOM at all times (never torn down and recreated) so the build screen's
+   "Name a card" button can call inputRef.current?.focus() synchronously
+   inside its onClick, before setSearching(true) runs. iOS/WebKit only raises
+   the software keyboard for a focus call that happens synchronously inside a
+   user-gesture handler; a .focus() from a useEffect after the state update
+   and re-render does not count, which is why the field used to need two taps.
+   The idle (not-in-use) sheet must therefore stay focusable while hidden, so
+   it CANNOT be hidden with display:none, visibility:hidden, the `hidden`
+   attribute, or `inert` -- all four make descendant elements unfocusable and
+   would silently break this fix. Position + opacity + pointer-events hide it
+   instead, without touching focusability. */
+.search-sheet--idle {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
+  pointer-events: none;
+}
+
+
+/* ---------------------------------------------------------------------------
+   Start screen: one button position for every mode.
+   Constructed 3CB has fewer controls than the two sealed modes (no cube, no
+   pool size), so the panel was shorter and the primary button jumped whenever
+   the mode changed. The height difference is NOT a constant -- it is 48px at
+   375px wide but only 3px at 320px, because the mode blurbs and the cube
+   description wrap differently -- so a fixed spacer would overshoot on small
+   phones and make constructed the taller panel instead. Reserving a floor for
+   the panel and letting an auto margin absorb whatever is left over holds at
+   any width, and grows gracefully if a future cube description wraps further.
+   --------------------------------------------------------------------------- */
+.start-screen .setup-form {
+  /* Floor covers the tallest variant at the narrowest width we support: Pai
+     Gow at 320px, whose blurb wraps to an extra line (654px measured). Below
+     that the panel simply grows and the button moves, which is correct --
+     content must never be clipped to keep a button still. */
+  min-height: 41rem;
+}
+.start-screen .setup-form .primary-button {
+  margin-top: auto;
+}

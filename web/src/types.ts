@@ -1,4 +1,4 @@
-export type GameMode = '3cb' | 'paigow';
+export type GameMode = '3cb-real' | '3cb' | 'paigow';
 
 export interface CardData {
   scryfallId: string;
@@ -51,6 +51,8 @@ export interface CubeData {
 
 export interface GameConfig {
   mode: GameMode;
+  /** Banlist the game was started with; real-3CB only. */
+  banlistId?: string;
   cubeId: string;
   poolSize: number;
   decksPerPlayer: number;

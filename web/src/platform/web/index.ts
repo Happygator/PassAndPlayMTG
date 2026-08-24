@@ -17,4 +17,7 @@ export const capabilities = {
 export const InstallBanner: FunctionComponent = PwaBanner;
 
 /** Bundle-relative: every card ships inside the deployed site. */
-export const cardImageSrc = (card: CardData): string => `./${card.imagePath}`;
+// Cube cards ship in the bundle; constructed-mode cards are fetched from
+// Scryfall at runtime, so their imagePath is already absolute.
+export const cardImageSrc = (card: CardData): string =>
+  /^https?:\/\//.test(card.imagePath) ? card.imagePath : `./${card.imagePath}`;

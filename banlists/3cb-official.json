@@ -1,0 +1,1320 @@
+{
+  "source": "https://www.3cardblind.com/format-info/banlist",
+  "fetchedAt": "2026-08-24",
+  "categories": [
+    {
+      "query": "banned:vintage",
+      "resolved": null,
+      "note": "satisfied by the app's own legal:vintage pool filter — a vintage-banned card can never appear"
+    },
+    {
+      "query": "(o:\"venture into\" or o:\"take the initiative\") f:vintage",
+      "resolved": 61,
+      "note": ""
+    }
+  ],
+  "cards": [
+    {
+      "name": "Aarakocra Sneak",
+      "oracleId": "c1882cb4-f69e-441e-8871-743ed636cad0",
+      "scryfallId": "2a83882c-3e03-4e85-aaac-97fa1d08a772",
+      "set": "clb",
+      "collector": "54"
+    },
+    {
+      "name": "Acererak the Archlich",
+      "oracleId": "31b4e85d-89fc-4712-8f05-7ec097b1d3b6",
+      "scryfallId": "dd52d0bd-3abd-401c-9f56-ee911613da3b",
+      "set": "afr",
+      "collector": "87"
+    },
+    {
+      "name": "Ajani, Nacatl Pariah // Ajani, Nacatl Avenger",
+      "oracleId": "2588f348-d7a3-46c8-9ace-dca53ed5ef99",
+      "scryfallId": "0d16e8e0-31b2-4389-afd6-783c501f6fa0",
+      "set": "mh3",
+      "collector": "237"
+    },
+    {
+      "name": "Alpine Moon",
+      "oracleId": "8b46b50c-f824-4c4e-86de-38065c6f9a64",
+      "scryfallId": "2435c810-2baf-4e3b-80ce-542b94694901",
+      "set": "m19",
+      "collector": "128"
+    },
+    {
+      "name": "Angel of Sanctions",
+      "oracleId": "3c49e98d-d33b-47fa-8b07-b38b367de2c7",
+      "scryfallId": "f3f7f258-7ac0-4149-9d8c-712b5ea7f0a8",
+      "set": "c19",
+      "collector": "61"
+    },
+    {
+      "name": "Anointed Peacekeeper",
+      "oracleId": "a67f78be-8fbe-414a-9574-bb11ac50e1a5",
+      "scryfallId": "5b8127b5-3a65-411a-84bc-54e5c1be1477",
+      "set": "dmu",
+      "collector": "2"
+    },
+    {
+      "name": "Anvil of Bogardan",
+      "oracleId": "9deb2a0b-f40c-4d13-8321-41dc41448d24",
+      "scryfallId": "7ff965dd-54b4-4f21-a52f-81c0dd1e691e",
+      "set": "vis",
+      "collector": "141"
+    },
+    {
+      "name": "Assassin's Trophy",
+      "oracleId": "ac10d218-f9a6-4058-9cda-a15ca1b0b7b5",
+      "scryfallId": "932efc19-9bfd-4501-a623-ff6765a356d8",
+      "set": "tmc",
+      "collector": "55"
+    },
+    {
+      "name": "Avenging Hunter",
+      "oracleId": "e0aa5e3d-17c0-4ac7-9d76-9ce579d1eb2b",
+      "scryfallId": "f4072640-0f9b-4f0a-84cc-eda415cc92e7",
+      "set": "clb",
+      "collector": "215"
+    },
+    {
+      "name": "Ba Sing Se",
+      "oracleId": "de1ae205-ca5b-4d26-8194-ca85f1406e53",
+      "scryfallId": "bdf3b2be-d0cd-4a3c-a10e-82d32c12d3bd",
+      "set": "tla",
+      "collector": "266"
+    },
+    {
+      "name": "Balance",
+      "oracleId": "17fa98cd-ed8f-483f-9525-7e989a82ebb2",
+      "scryfallId": "ce648aa3-098b-4af0-a433-fd290bc85904",
+      "set": "ema",
+      "collector": "2"
+    },
+    {
+      "name": "Bandit's Talent",
+      "oracleId": "bcbe879a-4609-4493-bd7d-47c26d27e83c",
+      "scryfallId": "485dc8d8-9e44-4a0f-9ff6-fa448e232290",
+      "set": "blb",
+      "collector": "83"
+    },
+    {
+      "name": "Bar the Gate",
+      "oracleId": "11f55ec5-b9a3-4670-8afb-31d29478fb59",
+      "scryfallId": "b9b1e53f-1384-4860-9944-e68922afc65c",
+      "set": "afr",
+      "collector": "47"
+    },
+    {
+      "name": "Barrowin of Clan Undurr",
+      "oracleId": "c16d5daf-4995-4342-815c-a6b29d594f26",
+      "scryfallId": "6896c311-5593-4437-b945-43ade9665e43",
+      "set": "afr",
+      "collector": "218"
+    },
+    {
+      "name": "Basri, Tomorrow's Champion",
+      "oracleId": "d8e1e9ba-708c-4f54-abc3-817004a2f2ac",
+      "scryfallId": "991270fa-a391-4c2e-bd9a-19151386fb67",
+      "set": "dft",
+      "collector": "3"
+    },
+    {
+      "name": "Bitterbloom Bearer",
+      "oracleId": "5effb651-f9e0-4c14-8192-bd0e132b8d5d",
+      "scryfallId": "7127164d-f2a3-4d79-b6db-93507ff5ab47",
+      "set": "ecl",
+      "collector": "88"
+    },
+    {
+      "name": "Bitterblossom",
+      "oracleId": "fb868840-09fa-49b1-85cb-b08ad065e972",
+      "scryfallId": "b9640cbf-b016-410e-9eff-e8924883517b",
+      "set": "2x2",
+      "collector": "69"
+    },
+    {
+      "name": "Black Lotus",
+      "oracleId": "5089ec1a-f881-4d55-af14-5d996171203b",
+      "scryfallId": "bd8fa327-dd41-4737-8f19-2cf5eb1f7cdd",
+      "set": "vma",
+      "collector": "4"
+    },
+    {
+      "name": "Blackmail",
+      "oracleId": "2dc6da5d-c4d1-4f2c-8f46-11a935bc0044",
+      "scryfallId": "053e7c76-16b7-44eb-9612-a6800ffb35f8",
+      "set": "9ed",
+      "collector": "115"
+    },
+    {
+      "name": "Bloodboil Sorcerer",
+      "oracleId": "acdcffa0-87e5-48a2-93d2-572febfc9d52",
+      "scryfallId": "0bdf1222-2fc5-4dae-a7a5-6ba774b02843",
+      "set": "clb",
+      "collector": "164"
+    },
+    {
+      "name": "Bloodhall Ooze",
+      "oracleId": "79591c18-0065-49bb-a77a-734d4af87a3c",
+      "scryfallId": "e8b7208e-aa64-43fa-b7f8-8d40d7005358",
+      "set": "con",
+      "collector": "59"
+    },
+    {
+      "name": "Boseiju, Who Endures",
+      "oracleId": "bf1341dd-41a3-49f6-87ec-63170dde4324",
+      "scryfallId": "2135ac5a-187b-4dc9-8f82-34e8d1603416",
+      "set": "neo",
+      "collector": "266"
+    },
+    {
+      "name": "Brain Maggot",
+      "oracleId": "419b5b4f-cac7-44bf-b1e2-655b5a5d37b1",
+      "scryfallId": "acdc31d5-6726-453e-94e0-69d2fe9447af",
+      "set": "jou",
+      "collector": "62"
+    },
+    {
+      "name": "Burning Inquiry",
+      "oracleId": "af98156b-3064-4f16-940e-10039241f2b0",
+      "scryfallId": "a448bc9e-f5db-4507-ac40-7d8ee3598585",
+      "set": "m10",
+      "collector": "128"
+    },
+    {
+      "name": "Cabal Therapy",
+      "oracleId": "018107d1-ebf7-4657-bc91-c8374af55cc5",
+      "scryfallId": "2f5b12f0-986f-43d0-a81b-64111e7f17e6",
+      "set": "ema",
+      "collector": "83"
+    },
+    {
+      "name": "Caves of Chaos Adventurer",
+      "oracleId": "e4d2dcbb-9910-482e-9e46-dfed2097509b",
+      "scryfallId": "09abb6df-2aa1-4999-b550-db2892faa8c7",
+      "set": "clb",
+      "collector": "167"
+    },
+    {
+      "name": "Cecil, Dark Knight // Cecil, Redeemed Paladin",
+      "oracleId": "e4719557-d94e-490f-8a56-c1867a01d2ef",
+      "scryfallId": "026e7167-d665-43d0-a51e-8df2d68cdb5e",
+      "set": "fin",
+      "collector": "91"
+    },
+    {
+      "name": "Chain of Smog",
+      "oracleId": "ea14c26b-bf2f-48b4-b879-6e63069ded1f",
+      "scryfallId": "6bfe64f9-8b03-41f6-a47b-fade397ad9d1",
+      "set": "ons",
+      "collector": "132"
+    },
+    {
+      "name": "Chancellor of the Annex",
+      "oracleId": "85c0a376-da6f-4f69-853c-a093708d0952",
+      "scryfallId": "be1b482a-badb-4b9a-ab63-2e7944826aa0",
+      "set": "nph",
+      "collector": "6"
+    },
+    {
+      "name": "Chancellor of the Forge",
+      "oracleId": "0aedf049-db6b-420e-80e7-591ed38d4fba",
+      "scryfallId": "dd3520a7-a55f-4c00-b4f1-c1c154adfc8f",
+      "set": "nph",
+      "collector": "81"
+    },
+    {
+      "name": "Channel",
+      "oracleId": "d1b815d1-2848-40d4-a555-66822d1becbc",
+      "scryfallId": "ce54c7c1-3401-4414-8da0-5846cb0ae1b4",
+      "set": "ima",
+      "collector": "157"
+    },
+    {
+      "name": "Chronomaton",
+      "oracleId": "610f25b0-770f-457a-b0eb-6deb832f71d4",
+      "scryfallId": "787b6916-3fce-41dd-ab52-f17546fd04ed",
+      "set": "ddm",
+      "collector": "2"
+    },
+    {
+      "name": "City of Traitors",
+      "oracleId": "f161111d-9747-47b3-bb10-3c8bded32e21",
+      "scryfallId": "71624139-a255-48be-93ca-594a4beba487",
+      "set": "tpr",
+      "collector": "237"
+    },
+    {
+      "name": "Clattering Skeletons",
+      "oracleId": "9e107382-f683-44ed-ada1-775d3ac79dd0",
+      "scryfallId": "09ac0b2b-d4d3-4977-b241-7788239362de",
+      "set": "afr",
+      "collector": "93"
+    },
+    {
+      "name": "Cloister Gargoyle",
+      "oracleId": "e1e84b14-c521-4eb7-92ed-bde1131e8662",
+      "scryfallId": "297bf274-d13d-4b75-b251-2d004b16b431",
+      "set": "afr",
+      "collector": "7"
+    },
+    {
+      "name": "Crashing Footfalls",
+      "oracleId": "2b166d97-c2c1-4642-b151-9bb1ad32e362",
+      "scryfallId": "a8cca2a2-69e3-4136-936c-7a2774c19351",
+      "set": "mh1",
+      "collector": "160"
+    },
+    {
+      "name": "Curse of Silence",
+      "oracleId": "36e267c5-ea98-4e26-b2b4-3faa05493eb4",
+      "scryfallId": "9e7819d5-12a9-4719-91b2-8dd1ba6f3800",
+      "set": "mid",
+      "collector": "15"
+    },
+    {
+      "name": "Dai Li Indoctrination",
+      "oracleId": "5591efbc-1b2c-489a-b4f3-935c9b6bd71a",
+      "scryfallId": "eca652b8-44f1-4bd9-b4bf-036eeead13aa",
+      "set": "tla",
+      "collector": "93"
+    },
+    {
+      "name": "Dark Depths",
+      "oracleId": "c9b82110-7dfd-4617-9399-9510be449043",
+      "scryfallId": "3a8b11ad-d077-40b6-988c-0462e118fe3d",
+      "set": "dmr",
+      "collector": "244"
+    },
+    {
+      "name": "Death's Shadow",
+      "oracleId": "e08722b3-0f79-4c82-b298-603e04a37857",
+      "scryfallId": "5526ff6e-c079-4ad4-ac8d-5e26ecacf50d",
+      "set": "2xm",
+      "collector": "82"
+    },
+    {
+      "name": "Deep-Cavern Bat",
+      "oracleId": "e46f6644-6bf1-47b1-817c-906bd3eca99f",
+      "scryfallId": "69c68c95-b788-43b1-9f22-1b22c5a00b25",
+      "set": "lci",
+      "collector": "102"
+    },
+    {
+      "name": "Delver's Torch",
+      "oracleId": "a1c8b833-8c74-4f95-8a47-1dd41ef99361",
+      "scryfallId": "53df7b80-71bf-4013-ad44-f76eae8ac81b",
+      "set": "afr",
+      "collector": "10"
+    },
+    {
+      "name": "Displacer Beast",
+      "oracleId": "7f24c0b7-1d39-48b6-969f-ee97fdf99305",
+      "scryfallId": "95d5c36c-bcc8-459c-9f4b-b265ccdb1f06",
+      "set": "afr",
+      "collector": "54"
+    },
+    {
+      "name": "Disruptor Flute",
+      "oracleId": "d6c46906-1339-4440-8cd0-2bb9890d4975",
+      "scryfallId": "5cad8671-4761-4014-a8a3-af45627e6e79",
+      "set": "mh3",
+      "collector": "209"
+    },
+    {
+      "name": "Doctor Doom, Unrivaled",
+      "oracleId": "cb3dd50b-ce78-4727-b174-06f99fc5ec74",
+      "scryfallId": "2973e855-fe93-41a1-a62e-4699ef2c3d1d",
+      "set": "msc",
+      "collector": "654"
+    },
+    {
+      "name": "Dreams of Steel and Oil",
+      "oracleId": "8c308ebf-df5e-4f47-9b97-5c31944fe91c",
+      "scryfallId": "261ac92e-c61a-4c11-aa6a-9ae1cb703e5c",
+      "set": "bro",
+      "collector": "92"
+    },
+    {
+      "name": "Dungeon Descent",
+      "oracleId": "f086a63c-0c62-4674-bd27-82e7aed12b1a",
+      "scryfallId": "f4cccdbc-f4f4-42b6-9747-6ef703ff949a",
+      "set": "afr",
+      "collector": "255"
+    },
+    {
+      "name": "Dungeon Map",
+      "oracleId": "20f1bba5-d398-4d6e-a76a-75e29df42aec",
+      "scryfallId": "028506ad-ad36-44e5-b488-d038e2d2445f",
+      "set": "afr",
+      "collector": "242"
+    },
+    {
+      "name": "Dungeoneer's Pack",
+      "oracleId": "c66976d3-57f1-4c48-ada0-d74081f1699a",
+      "scryfallId": "aa74e656-480a-4c1b-963d-1b207075c27f",
+      "set": "clb",
+      "collector": "312"
+    },
+    {
+      "name": "Eccentric Apprentice",
+      "oracleId": "27dbe95e-6274-416a-a45b-a2a0a64d5403",
+      "scryfallId": "3baa08ac-9a94-4e22-91bb-c6966cd0a0de",
+      "set": "afr",
+      "collector": "57"
+    },
+    {
+      "name": "Elite Spellbinder",
+      "oracleId": "8c4d7cbc-9cfc-4f0a-8844-e458ab806056",
+      "scryfallId": "9d3a7998-ccac-45ad-a4e9-3a2cb057f63b",
+      "set": "stx",
+      "collector": "17"
+    },
+    {
+      "name": "Ellywick Tumblestrum",
+      "oracleId": "d0375311-b0ea-4870-bc2c-4894da088dc3",
+      "scryfallId": "bab81bc0-0369-469e-9296-6d9681697b21",
+      "set": "afr",
+      "collector": "181"
+    },
+    {
+      "name": "Encroach",
+      "oracleId": "b9959d63-5489-4ed1-a04e-9d6ba4a5f68e",
+      "scryfallId": "fbd48dac-0a1a-49c4-8daf-11972b990454",
+      "set": "uds",
+      "collector": "59"
+    },
+    {
+      "name": "Energy Field",
+      "oracleId": "fbf7a7f4-9915-4a53-84b3-e55e9f487323",
+      "scryfallId": "81ff5770-b207-41e1-97b7-b9347c72b407",
+      "set": "usg",
+      "collector": "73"
+    },
+    {
+      "name": "Eumidian Hatchery",
+      "oracleId": "5b6d933e-2830-4f5a-b244-a421aa9615dc",
+      "scryfallId": "25b57aaf-04fa-463d-8516-40fccd24d6ed",
+      "set": "eoc",
+      "collector": "20"
+    },
+    {
+      "name": "Explore the Underdark",
+      "oracleId": "13bad22a-6ba3-4197-8658-e47049a1cf1f",
+      "scryfallId": "0cbf06f5-d1c7-474c-8f09-72f5ad0c8120",
+      "set": "clb",
+      "collector": "232"
+    },
+    {
+      "name": "Fates' Reversal",
+      "oracleId": "8cd88e87-6585-437a-bcad-b494fffc0544",
+      "scryfallId": "19ff3d76-e985-4d8d-837e-89360cc23824",
+      "set": "afr",
+      "collector": "102"
+    },
+    {
+      "name": "Feywild Caretaker",
+      "oracleId": "f319b671-0388-48e8-ba98-04161a3e7f1a",
+      "scryfallId": "c959ab97-0727-4589-bfd9-d78dd8ebd86b",
+      "set": "clb",
+      "collector": "69"
+    },
+    {
+      "name": "Fifty Feet of Rope",
+      "oracleId": "66aa6905-86f9-4800-988d-ffebafd4a9dc",
+      "scryfallId": "ba7ebe7b-732f-4245-a194-e087c3878f61",
+      "set": "afr",
+      "collector": "244"
+    },
+    {
+      "name": "Find the Path",
+      "oracleId": "860eb9eb-c318-4eae-9b54-088f667115ec",
+      "scryfallId": "5afe37a0-ccc3-467a-b787-304465b38355",
+      "set": "afr",
+      "collector": "183"
+    },
+    {
+      "name": "Flash",
+      "oracleId": "3e057471-e415-4105-9064-8236a0a5047d",
+      "scryfallId": "d31459c2-9656-4e9a-bb72-71a910e8570b",
+      "set": "a25",
+      "collector": "57"
+    },
+    {
+      "name": "Fly",
+      "oracleId": "da1b633f-82b5-4f3e-884c-58c2fe4fcb0f",
+      "scryfallId": "f1a91cc6-67e1-4f1b-86e2-eb388a75d6ad",
+      "set": "afr",
+      "collector": "59"
+    },
+    {
+      "name": "Foil",
+      "oracleId": "7dde4eb6-e9d7-4259-abc2-3af738e0f00f",
+      "scryfallId": "e8b39fd6-9240-4f76-b12c-e7d9aa88f061",
+      "set": "uma",
+      "collector": "55"
+    },
+    {
+      "name": "Force of Negation",
+      "oracleId": "ac2173f9-f223-440a-9231-fd98762bdc6f",
+      "scryfallId": "1825a719-1b2a-4af9-9cd2-7cb497cd0317",
+      "set": "2x2",
+      "collector": "50"
+    },
+    {
+      "name": "Force of Will",
+      "oracleId": "956381ba-6d37-4a8a-846c-bad79222dbee",
+      "scryfallId": "dd60b291-0a88-4e8e-bef8-76cdfd6c8183",
+      "set": "2xm",
+      "collector": "51"
+    },
+    {
+      "name": "From the Catacombs",
+      "oracleId": "cc21b29f-2d1a-4769-9b65-f92bd2ca1cc8",
+      "scryfallId": "08737950-4662-4d36-a1ea-6fd87e38c02b",
+      "set": "clb",
+      "collector": "671"
+    },
+    {
+      "name": "Funeral Charm",
+      "oracleId": "8866272d-89cb-478c-82ae-20e1d510eab7",
+      "scryfallId": "6fc44e66-7ff8-4fcd-9f98-e53707590d67",
+      "set": "tsb",
+      "collector": "44"
+    },
+    {
+      "name": "Fury",
+      "oracleId": "fbf9f8c5-849f-45d5-8129-5fc683c21a04",
+      "scryfallId": "932d0fb9-382d-464a-9427-b91fa2398cdb",
+      "set": "ecc",
+      "collector": "50"
+    },
+    {
+      "name": "Ghost Quarter",
+      "oracleId": "2ec4288e-34c6-4831-a2c0-ba1ca1d9d1dc",
+      "scryfallId": "12f8071c-8955-4aa2-889c-6043df047223",
+      "set": "cm2",
+      "collector": "253"
+    },
+    {
+      "name": "Goblin Game",
+      "oracleId": "4a10c945-ad8b-47b6-8cbd-7b4e2612a9b0",
+      "scryfallId": "cbe6e7e5-ffea-4c6c-8a42-28e695029f24",
+      "set": "pls",
+      "collector": "61"
+    },
+    {
+      "name": "Goliath Paladin",
+      "oracleId": "269a02ca-1425-4b32-81f3-440e1caadb17",
+      "scryfallId": "ab8324aa-f356-42bc-9664-46803bc8a93b",
+      "set": "clb",
+      "collector": "21"
+    },
+    {
+      "name": "Grief",
+      "oracleId": "0d6b89dc-23fb-48e9-a54b-cea2838ae7c8",
+      "scryfallId": "e6befbc4-1320-4f26-bd9f-b1814fedda10",
+      "set": "mh2",
+      "collector": "87"
+    },
+    {
+      "name": "Hangarback Walker",
+      "oracleId": "dde55256-5259-44e7-a267-fca45a7f0d04",
+      "scryfallId": "2d2c323f-eecd-4560-a128-ab513d231552",
+      "set": "cmm",
+      "collector": "951"
+    },
+    {
+      "name": "Heartfire Hero",
+      "oracleId": "49e1e202-37bf-46ed-93d1-1adb13726039",
+      "scryfallId": "48ace959-66b2-40c8-9bff-fd7ed9c99a82",
+      "set": "blb",
+      "collector": "138"
+    },
+    {
+      "name": "Hexdrinker",
+      "oracleId": "69bc2afd-9f53-47f2-b9c8-f12732784e10",
+      "scryfallId": "89f5cc05-5d9d-4709-b3c5-a6249c294acc",
+      "set": "mh1",
+      "collector": "168"
+    },
+    {
+      "name": "Idol of False Gods",
+      "oracleId": "b30d583b-e770-47e8-9f26-fca7ef43285c",
+      "scryfallId": "d5e1ff6d-190a-497f-89c3-35e0979c93b5",
+      "set": "mh3",
+      "collector": "210"
+    },
+    {
+      "name": "Immovable Rod",
+      "oracleId": "ec664e13-b7c4-4ca3-80d6-55a564d97937",
+      "scryfallId": "214c87be-7ce3-48a0-b2eb-26eff75636c9",
+      "set": "afc",
+      "collector": "7"
+    },
+    {
+      "name": "Inkmoth Nexus",
+      "oracleId": "675281ff-b81f-4e5e-9f85-9f8cd202b50b",
+      "scryfallId": "ec50c1c3-885e-47d3-ada7-cc0edbf09df1",
+      "set": "mbs",
+      "collector": "145"
+    },
+    {
+      "name": "Inquisition of Kozilek",
+      "oracleId": "395611fa-aec2-4c9e-92c3-70cf95cc00f4",
+      "scryfallId": "17f38740-20fd-4097-90f8-f0c2c2ff7281",
+      "set": "2x2",
+      "collector": "80"
+    },
+    {
+      "name": "Intimidation Tactics",
+      "oracleId": "121bd1af-da21-4937-a911-377c5b430796",
+      "scryfallId": "9b4e6022-44d2-4dfe-8f7a-51581e298f23",
+      "set": "dft",
+      "collector": "92"
+    },
+    {
+      "name": "Intrepid Outlander",
+      "oracleId": "ff8d3532-bf4f-4209-ac01-351ddc9b9423",
+      "scryfallId": "30b00777-d921-4264-9faf-5c048b656210",
+      "set": "afr",
+      "collector": "191"
+    },
+    {
+      "name": "Invasion of Gobakhan // Lightshield Array",
+      "oracleId": "86c32a56-3272-4738-b0b3-a8aa49a17ce4",
+      "scryfallId": "11798730-6788-4e0b-a828-b46cab1a4fa7",
+      "set": "mom",
+      "collector": "22"
+    },
+    {
+      "name": "Isochron Scepter",
+      "oracleId": "ddd649f4-dbaf-48ec-8ff7-95581257772d",
+      "scryfallId": "2aa24fe0-e275-4307-b26c-2a656068a451",
+      "set": "2xm",
+      "collector": "264"
+    },
+    {
+      "name": "Jace, Wielder of Mysteries",
+      "oracleId": "5277a68e-1ceb-4b40-8e10-3d0564f5d7be",
+      "scryfallId": "6adb7d73-4482-4930-8497-cffd169b57e2",
+      "set": "war",
+      "collector": "54"
+    },
+    {
+      "name": "Keen-Eared Sentry",
+      "oracleId": "a5575201-0d73-43c4-9290-940bbaefc61b",
+      "scryfallId": "de169d64-8242-4f57-980e-47f901fd57ab",
+      "set": "afr",
+      "collector": "22"
+    },
+    {
+      "name": "Kick in the Door",
+      "oracleId": "d3278ddb-c198-450d-946e-8547e5c96dd1",
+      "scryfallId": "222102d0-fed3-41fd-87b0-f6d22766d7fd",
+      "set": "afr",
+      "collector": "153"
+    },
+    {
+      "name": "Krenko, Baron of Tin Street",
+      "oracleId": "91b2520e-85b6-4e1f-88cf-a585feeb8e65",
+      "scryfallId": "5524b712-c67d-4d2e-9344-9e85a6ce3227",
+      "set": "mkm",
+      "collector": "135"
+    },
+    {
+      "name": "Laboratory Maniac",
+      "oracleId": "aa286dd5-aa19-446d-9003-684d81eb57ca",
+      "scryfallId": "608567fd-9f94-4058-831a-77cb6019ef02",
+      "set": "uma",
+      "collector": "61"
+    },
+    {
+      "name": "Leyline of Singularity",
+      "oracleId": "bc9f159b-984d-4b9f-8904-b38b5cb79636",
+      "scryfallId": "d40d7e5c-3b6d-4e42-b495-b3cd7ae0d808",
+      "set": "gpt",
+      "collector": "29"
+    },
+    {
+      "name": "Lightstall Inquisitor",
+      "oracleId": "57012049-06d7-4354-8125-9ea9e742f14d",
+      "scryfallId": "635245e9-c27f-4a51-a6f1-bae62e696542",
+      "set": "eoe",
+      "collector": "24"
+    },
+    {
+      "name": "Lion's Eye Diamond",
+      "oracleId": "ee6099b0-fb1f-42f1-b862-7708c6e36d05",
+      "scryfallId": "758f95f8-bcb0-43ae-b474-56ebd855951e",
+      "set": "vma",
+      "collector": "271"
+    },
+    {
+      "name": "Living Conundrum",
+      "oracleId": "378ae023-04d3-44cc-9248-3d787796ed6c",
+      "scryfallId": "97fb11c7-7b7f-4bdb-a022-53e28ebadecc",
+      "set": "mkm",
+      "collector": "63"
+    },
+    {
+      "name": "Loot Dispute",
+      "oracleId": "7c885698-69f2-44b5-abfe-9a2833822794",
+      "scryfallId": "0669a2bb-11c7-45d8-9299-09246ff4e72c",
+      "set": "clb",
+      "collector": "677"
+    },
+    {
+      "name": "Lotus Bloom",
+      "oracleId": "04cf02dc-f053-414e-87d8-1537f25bcbf4",
+      "scryfallId": "db89ae4d-1cc2-41d8-a4de-a54b958c4429",
+      "set": "tsr",
+      "collector": "270"
+    },
+    {
+      "name": "Luminarch Aspirant",
+      "oracleId": "cb9994b9-924b-4e10-9075-9cfbec88f2bf",
+      "scryfallId": "dcd27fa3-f6b6-4137-9b6c-4cba7187664c",
+      "set": "ncc",
+      "collector": "205"
+    },
+    {
+      "name": "Lupine Prototype",
+      "oracleId": "303f91ae-1acb-4250-a4a5-71207c228dcc",
+      "scryfallId": "dd8272ca-8e3d-4980-99f2-352a1db76d74",
+      "set": "emn",
+      "collector": "197"
+    },
+    {
+      "name": "Mana Crypt",
+      "oracleId": "2c63e4e1-89d2-4bc6-a232-94e75c4b1c8a",
+      "scryfallId": "4d960186-4559-4af0-bd22-63baa15f8939",
+      "set": "2xm",
+      "collector": "270"
+    },
+    {
+      "name": "March from the Black Gate",
+      "oracleId": "9259e918-ace5-4f13-9035-d8bc8c820d25",
+      "scryfallId": "e57815d4-b21f-4ceb-a3f1-73cff5f0e612",
+      "set": "ltr",
+      "collector": "94"
+    },
+    {
+      "name": "Mayor of Avabruck // Howlpack Alpha",
+      "oracleId": "6e638587-30b3-4c4b-b463-fb415ea048f7",
+      "scryfallId": "dd8ca448-f734-4cb9-b1d5-790eed9a4b2d",
+      "set": "isd",
+      "collector": "193"
+    },
+    {
+      "name": "Meddling Mage",
+      "oracleId": "a5d02339-9f6d-486e-87d8-5ec2274cf680",
+      "scryfallId": "de734753-e102-489b-9160-b3f3d10be4f1",
+      "set": "2xm",
+      "collector": "210"
+    },
+    {
+      "name": "Menacing Ogre",
+      "oracleId": "8efcd591-c576-4d25-9670-578c5e3263a1",
+      "scryfallId": "8de4b5cc-748c-45d1-852b-0f522b8838ba",
+      "set": "hop",
+      "collector": "59"
+    },
+    {
+      "name": "Mesmeric Fiend",
+      "oracleId": "fb46b300-8a39-40d2-8bc7-31b90c822e22",
+      "scryfallId": "864930ce-7c56-4ad2-9b90-57b10e5a0842",
+      "set": "a25",
+      "collector": "97"
+    },
+    {
+      "name": "Midnight Pathlighter",
+      "oracleId": "e49228d6-6488-4cbc-aa53-303afd3a549b",
+      "scryfallId": "8eb6f699-1b5d-412b-a697-ee94b7be07a6",
+      "set": "afc",
+      "collector": "52"
+    },
+    {
+      "name": "Mind Rake",
+      "oracleId": "1d8e0d40-ab2c-46e2-80c2-69dfdd47aefc",
+      "scryfallId": "682ccb0a-5e73-462e-a035-87d4dac59779",
+      "set": "mh1",
+      "collector": "96"
+    },
+    {
+      "name": "Mind Swords",
+      "oracleId": "4af20f8c-2ba0-49d5-a64e-d3668cec30cd",
+      "scryfallId": "3d6d91df-008b-48f2-a84f-550702fbcdb3",
+      "set": "nem",
+      "collector": "60"
+    },
+    {
+      "name": "Minsc & Boo, Timeless Heroes",
+      "oracleId": "3a310554-3f69-4158-bb94-9d6965c7125a",
+      "scryfallId": "928036c9-11b8-493e-b9f2-8fbd3487cd19",
+      "set": "clb",
+      "collector": "285"
+    },
+    {
+      "name": "Mishra's Factory",
+      "oracleId": "5963e0ef-e0bc-4611-ad4f-813a4c0eacfb",
+      "scryfallId": "6e9fec20-a52c-42c0-9928-c572d9e1b21f",
+      "set": "dmr",
+      "collector": "251"
+    },
+    {
+      "name": "Mishra's Workshop",
+      "oracleId": "ba284fe6-bb29-455c-8321-9714a0cdc05e",
+      "scryfallId": "aac0c8df-f01d-4178-8d66-ee603f814d24",
+      "set": "vma",
+      "collector": "305"
+    },
+    {
+      "name": "Mox Diamond",
+      "oracleId": "f3c5978a-70fa-431f-933b-b954bd0db0ea",
+      "scryfallId": "bf9fecfd-d122-422f-bd0a-5bf69b434dfe",
+      "set": "tpr",
+      "collector": "228"
+    },
+    {
+      "name": "Mox Opal",
+      "oracleId": "de2440de-e948-4811-903c-0bbe376ff64d",
+      "scryfallId": "56001a36-126b-4c08-af98-a6cc4d84210e",
+      "set": "2xm",
+      "collector": "275"
+    },
+    {
+      "name": "Mutavault",
+      "oracleId": "6b3cc59a-7ea5-4eb5-9bf9-5a9c07f80e2b",
+      "scryfallId": "52cc2f10-142d-4e6a-984e-b25f566cc960",
+      "set": "clb",
+      "collector": "903"
+    },
+    {
+      "name": "Nadaar, Selfless Paladin",
+      "oracleId": "0e3f9345-d986-4d60-a343-45598ab59aff",
+      "scryfallId": "878a0d8c-11c1-4c65-9051-78e036ac496f",
+      "set": "afr",
+      "collector": "27"
+    },
+    {
+      "name": "Nezumi Shortfang // Stabwhisker the Odious",
+      "oracleId": "45c8e860-5ce5-4a1c-aebe-97ddffcb2f74",
+      "scryfallId": "c8265c39-d287-4c5a-baba-f2f09dd80a1c",
+      "set": "chk",
+      "collector": "131"
+    },
+    {
+      "name": "Ocelot Pride",
+      "oracleId": "b4ce2c8f-a19c-461e-8a2e-0ec2bd3ebca3",
+      "scryfallId": "89cf6f57-230f-497e-a14e-ad1e8737fd42",
+      "set": "mh3",
+      "collector": "38"
+    },
+    {
+      "name": "Oko, Thief of Crowns",
+      "oracleId": "60c60923-ff1b-43f7-8768-731499fcffc9",
+      "scryfallId": "3462a3d0-5552-49fa-9eb7-100960c55891",
+      "set": "eld",
+      "collector": "197"
+    },
+    {
+      "name": "Passageway Seer",
+      "oracleId": "2d8ebb48-5f37-4b7e-b8ec-3296d9a039c7",
+      "scryfallId": "8aeee54a-5e16-4519-b04a-49eaaf896b9a",
+      "set": "clb",
+      "collector": "141"
+    },
+    {
+      "name": "Path to Exile",
+      "oracleId": "d683d985-9888-4d21-8b5f-69e69ce4a03b",
+      "scryfallId": "a7aed564-2d2d-42c4-bf11-812bc1a0284c",
+      "set": "otc",
+      "collector": "85"
+    },
+    {
+      "name": "Phelia, Exuberant Shepherd",
+      "oracleId": "5d86a59a-ba1f-45f7-b829-dca6f9f3e624",
+      "scryfallId": "55707746-da6e-46e5-a5ca-7ac843fdc38e",
+      "set": "mh3",
+      "collector": "40"
+    },
+    {
+      "name": "Piracy Charm",
+      "oracleId": "dffde884-15bc-4985-90e2-a0888ef4cb48",
+      "scryfallId": "9cb19ac2-edf9-4f9a-b9ba-2a33ba96a4d8",
+      "set": "tsr",
+      "collector": "78"
+    },
+    {
+      "name": "Planar Ally",
+      "oracleId": "9ae30bd5-b638-4647-b59d-ffe08e77c182",
+      "scryfallId": "a9e7457a-8ab4-4f3c-a2d8-2da4d81b7470",
+      "set": "afr",
+      "collector": "31"
+    },
+    {
+      "name": "Prairie Dog",
+      "oracleId": "70987216-f84d-43b9-8d75-bb21ff37747b",
+      "scryfallId": "37302b5d-e528-4baa-947a-c859e4ddcff9",
+      "set": "otj",
+      "collector": "24"
+    },
+    {
+      "name": "Precipitous Drop",
+      "oracleId": "d60c8cfe-435c-419e-a44b-b47d49d1afef",
+      "scryfallId": "7293f9b4-565a-4065-940b-543f76ebecae",
+      "set": "afr",
+      "collector": "115"
+    },
+    {
+      "name": "Radiant Solar",
+      "oracleId": "21a86dcd-03e3-409b-b214-5feed07db584",
+      "scryfallId": "fa0e443a-c479-40ab-9702-8beca3e5ab95",
+      "set": "afc",
+      "collector": "9"
+    },
+    {
+      "name": "Ranger's Hawk",
+      "oracleId": "44924f1e-edc4-481b-93f3-78606d4fd691",
+      "scryfallId": "9d7a7744-e49d-4b4e-b6ae-7fc6d2892cef",
+      "set": "afr",
+      "collector": "37"
+    },
+    {
+      "name": "Ravenloft Adventurer",
+      "oracleId": "1822f924-51ba-4f81-92cc-6c5d741a33f9",
+      "scryfallId": "a5e27c36-d883-4681-8430-b4d0ad7f1df0",
+      "set": "clb",
+      "collector": "142"
+    },
+    {
+      "name": "Retrofitter Foundry",
+      "oracleId": "aaadfe41-b2be-4183-b45e-a70e53a59d2e",
+      "scryfallId": "5da578b8-19e6-4068-9336-e7cd33c585f1",
+      "set": "c18",
+      "collector": "57"
+    },
+    {
+      "name": "Riling Dawnbreaker // Signaling Roar",
+      "oracleId": "1fc31651-70fe-4a58-9b7e-7359510bba51",
+      "scryfallId": "312f7072-3bf8-449f-bfb7-93727ef26c66",
+      "set": "tdm",
+      "collector": "21"
+    },
+    {
+      "name": "Rilsa Rael, Kingpin",
+      "oracleId": "57f6a8c2-9d84-4640-9b92-8b8611e05773",
+      "scryfallId": "54484439-6f8a-47f1-8d62-4689af7f00c2",
+      "set": "clb",
+      "collector": "293"
+    },
+    {
+      "name": "Rishadan Port",
+      "oracleId": "f3e8dc56-2810-474e-a6a7-9c3555f94ae9",
+      "scryfallId": "d2507bc2-da17-4e46-b4c5-ba0080ce2c6f",
+      "set": "a25",
+      "collector": "246"
+    },
+    {
+      "name": "Sage of the Skies",
+      "oracleId": "cfc7cef7-0a95-49f8-970f-abff2cacd82d",
+      "scryfallId": "6ade6918-6d1d-448d-ab56-93996051e9a9",
+      "set": "tdm",
+      "collector": "22"
+    },
+    {
+      "name": "Sarcomancy",
+      "oracleId": "bd1e93da-7524-4bdd-9738-accd76bda7f7",
+      "scryfallId": "5e26f693-4e62-4925-923f-f46376a8a179",
+      "set": "tpr",
+      "collector": "115"
+    },
+    {
+      "name": "Sarevok's Tome",
+      "oracleId": "6ec54d84-7026-45a3-a7d7-37cd5c9a8463",
+      "scryfallId": "5a470690-a05d-4311-963c-50cbf779846d",
+      "set": "clb",
+      "collector": "685"
+    },
+    {
+      "name": "Sazh's Chocobo",
+      "oracleId": "c2b082b4-5d9c-4125-b353-d1cf4f334720",
+      "scryfallId": "dda6b4d0-1b60-46b0-b321-b9ffe15afff4",
+      "set": "fin",
+      "collector": "200"
+    },
+    {
+      "name": "Scion of Draco",
+      "oracleId": "fd547632-a29a-4dad-a9da-155882391815",
+      "scryfallId": "3e7da55c-7f05-46b2-aa3c-17f8d5df46bb",
+      "set": "mh2",
+      "collector": "234"
+    },
+    {
+      "name": "Seasoned Dungeoneer",
+      "oracleId": "5ea675aa-88d6-4387-a14d-e606fa9c3aec",
+      "scryfallId": "7fee3f76-20a8-4621-84fb-ddf79c955532",
+      "set": "clb",
+      "collector": "660"
+    },
+    {
+      "name": "Secret Door",
+      "oracleId": "a53baf90-8d0c-4900-9f24-893ad31628ec",
+      "scryfallId": "3191e400-aa4e-4955-aca0-ecbe63ea240f",
+      "set": "afr",
+      "collector": "71"
+    },
+    {
+      "name": "Sefris of the Hidden Ways",
+      "oracleId": "9b21e056-57e7-4e39-b2b4-2fdf8719d0d2",
+      "scryfallId": "d30255f6-e058-476a-b377-2ee4c9178ed1",
+      "set": "afc",
+      "collector": "3"
+    },
+    {
+      "name": "Shortcut Seeker",
+      "oracleId": "27cfa916-282d-476c-8ee9-ca7f0d84f551",
+      "scryfallId": "122d2635-c4f4-44cd-8f82-37e3016e421e",
+      "set": "afr",
+      "collector": "73"
+    },
+    {
+      "name": "Shrieking Affliction",
+      "oracleId": "9e3f5d0b-103f-40e2-beb5-26b1fcb136f3",
+      "scryfallId": "dfd08894-2534-4114-9365-40809ba95eb2",
+      "set": "rtr",
+      "collector": "76"
+    },
+    {
+      "name": "Sinkhole Surveyor",
+      "oracleId": "83a47724-b8d1-4884-9442-b62aa1510dc3",
+      "scryfallId": "37cb5599-7d2c-48e9-978b-902a01a74bde",
+      "set": "tdm",
+      "collector": "93"
+    },
+    {
+      "name": "Skrelv's Hive",
+      "oracleId": "06d219ff-0083-4c2a-b5b3-2b84bb58f57e",
+      "scryfallId": "ffbd77ec-fc81-41d5-934f-c3dd844cb053",
+      "set": "one",
+      "collector": "34"
+    },
+    {
+      "name": "Sleep-Cursed Faerie",
+      "oracleId": "a17633aa-b1a7-4ae5-b051-6747975d8a2f",
+      "scryfallId": "31051436-68f2-457e-8293-2b10ccf7684e",
+      "set": "woe",
+      "collector": "66"
+    },
+    {
+      "name": "Slumbering Trudge",
+      "oracleId": "d04bce9a-822b-4a52-8826-b503ef5f5b2e",
+      "scryfallId": "3a925370-58ac-4181-9acc-db7b0e0abf17",
+      "set": "sos",
+      "collector": "160"
+    },
+    {
+      "name": "SOLDIER Military Program",
+      "oracleId": "3e2034ee-adc5-4a24-9605-c9722bf813c1",
+      "scryfallId": "dddad2c2-bd19-42bd-aad6-bbf23ccef269",
+      "set": "fic",
+      "collector": "25"
+    },
+    {
+      "name": "Solitude",
+      "oracleId": "dcb9c2a7-ae54-4ddc-a567-640bf4bf4366",
+      "scryfallId": "47a6234f-309f-4e03-9263-66da48b57153",
+      "set": "mh2",
+      "collector": "32"
+    },
+    {
+      "name": "Steel Overseer",
+      "oracleId": "986ae327-f433-4c58-93dc-afc544b9bfcb",
+      "scryfallId": "3f1b0b1f-a152-4bc8-923c-1b3a7f151295",
+      "set": "c21",
+      "collector": "267"
+    },
+    {
+      "name": "Stingerback Terror",
+      "oracleId": "5cc6ca73-c38f-4ef8-a2c9-4f0342eebb73",
+      "scryfallId": "d84d6e52-5c35-47bc-b160-876a3b0fcbe1",
+      "set": "otj",
+      "collector": "147"
+    },
+    {
+      "name": "Stirring Bard",
+      "oracleId": "2583836d-7fd3-47b3-9b69-6814efe54a90",
+      "scryfallId": "d06d9d83-d1e6-4499-a1ac-6f865159f6b6",
+      "set": "clb",
+      "collector": "195"
+    },
+    {
+      "name": "Strip Mine",
+      "oracleId": "d21a89eb-7c5b-459a-acc7-12b20b13bf79",
+      "scryfallId": "f57fd4c9-0004-4f71-a30f-2720943f57ca",
+      "set": "vma",
+      "collector": "316"
+    },
+    {
+      "name": "Swarm Shambler",
+      "oracleId": "f46c72b8-e2e8-42e6-a2e7-ffa5810a9bf3",
+      "scryfallId": "7a7e4f99-ece4-473e-b712-40e4c53558e8",
+      "set": "znr",
+      "collector": "207"
+    },
+    {
+      "name": "Swords to Plowshares",
+      "oracleId": "b1544f21-7e98-461b-aed5-e748b0168c52",
+      "scryfallId": "9bbec76c-c1e4-4c6d-ad24-078fe097f195",
+      "set": "mkc",
+      "collector": "88"
+    },
+    {
+      "name": "Thassa's Oracle",
+      "oracleId": "1de1b591-a73f-4974-b507-8c63e07a0868",
+      "scryfallId": "726e8b29-13e9-4138-b6a9-d2a0d8188d1c",
+      "set": "thb",
+      "collector": "73"
+    },
+    {
+      "name": "The Last Ride",
+      "oracleId": "3ef03540-b538-466d-aa3c-da6750117ba4",
+      "scryfallId": "a901a616-b8bb-4e10-9886-ee9c6fdc6435",
+      "set": "dft",
+      "collector": "451"
+    },
+    {
+      "name": "The Rack",
+      "oracleId": "3d873e1d-4fac-42c4-bb31-77e76099e1ef",
+      "scryfallId": "696d1e25-5c25-4522-b085-90d49fe23a18",
+      "set": "tsb",
+      "collector": "113"
+    },
+    {
+      "name": "Thorough Investigation",
+      "oracleId": "e7504407-bb72-4baf-be4a-8152e4198e2b",
+      "scryfallId": "a40e6034-aa05-4542-ac12-78e6a76d86e9",
+      "set": "afc",
+      "collector": "12"
+    },
+    {
+      "name": "Thought-Knot Seer",
+      "oracleId": "cef7396d-2168-4282-bf38-670ca9eebd91",
+      "scryfallId": "bffc360e-db41-48f3-9365-680d55046e04",
+      "set": "ogw",
+      "collector": "9"
+    },
+    {
+      "name": "Thoughtseize",
+      "oracleId": "edd8d1e8-be43-4c38-bb3a-83081fbaf0b5",
+      "scryfallId": "b281a308-ab6b-47b6-bec7-632c9aaecede",
+      "set": "2xm",
+      "collector": "109"
+    },
+    {
+      "name": "Tidehollow Sculler",
+      "oracleId": "51b55057-8b14-4277-894b-4813b4f7eb39",
+      "scryfallId": "09521f23-52d6-482d-9f3b-c4d12fcc08cc",
+      "set": "mma",
+      "collector": "184"
+    },
+    {
+      "name": "Time Vault",
+      "oracleId": "99d4d99d-cf56-45aa-aa39-a250695612f2",
+      "scryfallId": "c367ffc1-8084-45a1-87d5-22183604d1cb",
+      "set": "vma",
+      "collector": "287"
+    },
+    {
+      "name": "Tomb of Horrors Adventurer",
+      "oracleId": "4f429b99-6aca-409f-9d2e-5743d81f1f22",
+      "scryfallId": "30b5bf0c-e617-4a41-bfaa-2b299728a93f",
+      "set": "clb",
+      "collector": "100"
+    },
+    {
+      "name": "Tomb of Urami",
+      "oracleId": "f002be6a-e459-49c4-b765-062e30107439",
+      "scryfallId": "90fedf90-825c-4814-8f0d-170f537db44c",
+      "set": "sok",
+      "collector": "165"
+    },
+    {
+      "name": "Trailblazer's Torch",
+      "oracleId": "1cdac498-3c94-48d6-b94c-1d98697370ea",
+      "scryfallId": "0c4f76ae-e93b-4ca1-ac62-753707f6319e",
+      "set": "clb",
+      "collector": "340"
+    },
+    {
+      "name": "Triumphant Adventurer",
+      "oracleId": "6aac0ae4-d9a7-4c40-a39e-229186c84d74",
+      "scryfallId": "214d3167-4eea-42a1-a464-ddff59843142",
+      "set": "afr",
+      "collector": "237"
+    },
+    {
+      "name": "Undercellar Sweep",
+      "oracleId": "2a747cdb-afbe-451d-8b1b-9458401a5419",
+      "scryfallId": "f8ca369b-4e04-4c80-923b-1212183419d8",
+      "set": "clb",
+      "collector": "47"
+    },
+    {
+      "name": "Underdark Explorer",
+      "oracleId": "7647682d-d491-4cb1-add7-b4d745994e62",
+      "scryfallId": "a2bf9736-b5f5-4fd4-8406-9f57fefd86e7",
+      "set": "clb",
+      "collector": "154"
+    },
+    {
+      "name": "Undermountain Adventurer",
+      "oracleId": "2e5e0abd-38a6-46ca-b922-556db52f1332",
+      "scryfallId": "541f53a3-521f-4463-a0b6-758a45d8f661",
+      "set": "clb",
+      "collector": "260"
+    },
+    {
+      "name": "Undiscovered Paradise",
+      "oracleId": "76c33d54-ce55-400e-bec5-79d33a5a20fb",
+      "scryfallId": "5f6e8830-5e62-4945-8b73-60f0628d38e7",
+      "set": "vis",
+      "collector": "167"
+    },
+    {
+      "name": "Unmask",
+      "oracleId": "1a3a274d-41da-47db-ad41-5720f36a7963",
+      "scryfallId": "2db7a0e6-eea5-4fa6-ac14-401411b106cc",
+      "set": "mmq",
+      "collector": "168"
+    },
+    {
+      "name": "Unstoppable Slasher",
+      "oracleId": "6662968e-ca9e-454c-be44-24ad10e43d3e",
+      "scryfallId": "c78da035-6b5b-4136-9ab6-f622b64fdc54",
+      "set": "dsk",
+      "collector": "119"
+    },
+    {
+      "name": "Urza's Saga",
+      "oracleId": "4c6a0c30-b547-4eff-8ff4-0ca25803c076",
+      "scryfallId": "c1e0f201-42cb-46a1-901a-65bb4fc18f6c",
+      "set": "mh2",
+      "collector": "259"
+    },
+    {
+      "name": "Varis, Silverymoon Ranger",
+      "oracleId": "bd751b25-9ea7-4ce4-b532-48be281c6da9",
+      "scryfallId": "e3bd3ea9-f06d-4df7-8b8d-ac6a0e591b09",
+      "set": "afr",
+      "collector": "209"
+    },
+    {
+      "name": "Veteran Dungeoneer",
+      "oracleId": "1ce7b966-2a10-4250-8c0d-525e73efe2f4",
+      "scryfallId": "d8fe33b3-afaf-4a98-ae64-7d7e0eabe993",
+      "set": "afr",
+      "collector": "40"
+    },
+    {
+      "name": "Vicious Battlerager",
+      "oracleId": "b8942c72-16ce-4f2f-875f-97a56e85a03e",
+      "scryfallId": "20f939d8-3d41-4d8b-baea-7f022104c704",
+      "set": "clb",
+      "collector": "155"
+    },
+    {
+      "name": "Volatile Fault",
+      "oracleId": "95c44f28-f7fa-4785-83b9-0d81be0db0c8",
+      "scryfallId": "9385abf3-b067-4586-bf3d-175526cf8f0a",
+      "set": "lci",
+      "collector": "286"
+    },
+    {
+      "name": "Wandering Troubadour",
+      "oracleId": "1a304703-6b48-4f3f-bd41-7f10ce0a751c",
+      "scryfallId": "d3c7f123-31c8-469b-85e5-d20c4d21b2a0",
+      "set": "afr",
+      "collector": "210"
+    },
+    {
+      "name": "Wasteland",
+      "oracleId": "09a70ae8-3859-4a09-901d-dce063fa3b5f",
+      "scryfallId": "aaafb9bc-7cea-4624-a227-595544fa42b0",
+      "set": "ema",
+      "collector": "248"
+    },
+    {
+      "name": "Wheel of Misfortune",
+      "oracleId": "10aff3f6-8347-4e1b-b8e7-c204c9e46657",
+      "scryfallId": "74177b51-a300-49d9-8ea7-557b19cf80c7",
+      "set": "cmr",
+      "collector": "211"
+    },
+    {
+      "name": "White Orchid Phantom",
+      "oracleId": "6edd2a36-3d65-4bf9-bd82-b6d03a7e8fea",
+      "scryfallId": "4f8d885c-5b57-457f-a658-fd0b79cf98cc",
+      "set": "mh3",
+      "collector": "47"
+    },
+    {
+      "name": "White Plume Adventurer",
+      "oracleId": "51f091a7-9b0b-4362-8e9c-c174752f369b",
+      "scryfallId": "b256ddc8-8b12-434c-a610-1a872e948f2f",
+      "set": "clb",
+      "collector": "49"
+    },
+    {
+      "name": "Wild Magic Surge",
+      "oracleId": "41d16975-d6c0-4343-bea2-4f360ead9a1c",
+      "scryfallId": "c4c89d88-9d40-46b6-bee0-6bc2e2ca8ba1",
+      "set": "clb",
+      "collector": "206"
+    },
+    {
+      "name": "Words of Wilding",
+      "oracleId": "888582df-4fe2-4d05-9b62-10c90aaa76f2",
+      "scryfallId": "fdb9565f-5b09-4127-b169-3146079dab84",
+      "set": "ons",
+      "collector": "305"
+    },
+    {
+      "name": "You Find a Cursed Idol",
+      "oracleId": "aa7b41ba-08eb-40b8-a8d5-e67dc09c88ba",
+      "scryfallId": "efb5671a-942a-4730-9756-32fe600e0528",
+      "set": "afr",
+      "collector": "213"
+    },
+    {
+      "name": "Yuan-Ti Fang-Blade",
+      "oracleId": "8ef06396-861d-4599-9976-6e5c04575456",
+      "scryfallId": "a7e0e09c-ed43-4a37-85f2-c60bdfdb2624",
+      "set": "afr",
+      "collector": "128"
+    },
+    {
+      "name": "Yuan-Ti Malison",
+      "oracleId": "f0e4dda1-2ffb-4353-a292-dcbc966967b4",
+      "scryfallId": "0f51afd9-7093-4aa3-ad5b-7383684d6285",
+      "set": "afr",
+      "collector": "86"
+    },
+    {
+      "name": "Zalto, Fire Giant Duke",
+      "oracleId": "fb1c507d-ef94-438e-bee5-29eb48dc8e70",
+      "scryfallId": "9c6da066-accb-4c09-9acb-4de263dadad3",
+      "set": "afr",
+      "collector": "171"
+    },
+    {
+      "name": "Zombie Ogre",
+      "oracleId": "0898fb77-d304-496c-8f2e-1cfe50cc5507",
+      "scryfallId": "d4dbed36-190c-4748-b282-409a2fb5d134",
+      "set": "afr",
+      "collector": "129"
+    }
+  ]
+}
