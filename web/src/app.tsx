@@ -1,14 +1,19 @@
 import type { ComponentChildren } from 'preact';
-import { useEffect, useReducer } from 'preact/hooks';
+import { useEffect, useMemo, useReducer } from 'preact/hooks';
 import { BuildScreen } from './components/BuildScreen';
+import { ConstructedBuildScreen } from './components/ConstructedBuildScreen';
 import { HandoffScreen } from './components/HandoffScreen';
 import { MatchScreen } from './components/MatchScreen';
 import { OrderScreen } from './components/OrderScreen';
 import { InstallBanner } from '@platform';
 import { ResultsScreen } from './components/ResultsScreen';
 import { StartScreen } from './components/StartScreen';
-import { MODE_RULES, createMatchups, dealPools, emptyDecks } from './game';
+import { basicsFromCatalogue } from './catalogue';
+import type { Catalogue } from './catalogue';
+import { effectiveBanned, loadCustomLists } from './banlists';
+import { MODE_RULES, createMatchups, dealPools, emptyDecks, isConstructed } from './game';
 import type {
+  CardData,
   CardRef,
   CubeData,
   DeckSlots,
@@ -23,11 +28,12 @@ type SetupState = { phase: { t: 'setup' }; lastConfig?: GameConfig };
 // variant), so a plain `GameState | SetupState` union does not discriminate
 // cleanly on `phase.t === 'setup'`. Narrow GameState's phase to exclude
 // 'setup' here so the two branches are mutually exclusive on that tag.
-type ActiveState = Omit<GameState, 'phase'> & { phase: Exclude<Phase, { t: 'setup' }> };
+type ActiveState = Omit<GameState, 'phase'> & { phase: Exclude<Phase, { t: 'setup' }>; catalogue?: Catalogue };
 type AppState = SetupState | ActiveState;
 
 type Action =
-  | { type: 'start'; config: GameConfig; cube: CubeData }
+  | { type: 'start'; config: GameConfig; cube: CubeData; catalogue?: Catalogue }
+  | { type: 'add-card'; player: 0 | 1; card: CardData; deck: number; slot: number }
   | { type: 'reveal' }
   | { type: 'set-slot'; player: 0 | 1; deck: number; slot: number; ref: CardRef | null }
   | { type: 'submit-decks'; player: 0 | 1 }
@@ -57,12 +63,14 @@ function advanceAfterDecks(state: ActiveState, player: 0 | 1): ActiveState {
 
 function reducer(state: AppState, action: Action): AppState {
   if (action.type === 'start') {
-    const pools = dealPools(
-      action.cube,
-      action.config.poolSize,
-      action.config.allowRepeats,
-      MODE_RULES[action.config.mode].poolSort
-    );
+    const pools: [CardData[], CardData[]] = isConstructed(action.config.mode)
+      ? [[], []]
+      : dealPools(
+          action.cube,
+          action.config.poolSize,
+          action.config.allowRepeats,
+          MODE_RULES[action.config.mode].poolSort
+        );
     return {
       phase: { t: 'handoff', player: 0 },
       config: action.config,
@@ -77,6 +85,7 @@ function reducer(state: AppState, action: Action): AppState {
         MODE_RULES[action.config.mode].randomFirstPlayer
       ),
       currentMatchup: 0,
+      catalogue: action.catalogue,
     };
   }
 
@@ -105,6 +114,22 @@ function reducer(state: AppState, action: Action): AppState {
           ? [changedPlayerDecks, state.decks[1]]
           : [state.decks[0], changedPlayerDecks];
       return { ...state, decks: changedDecks };
+    }
+    case 'add-card': {
+      const newPool = [...state.pools[action.player], action.card];
+      const newIndex = newPool.length - 1;
+      const pools: [CardData[], CardData[]] =
+        action.player === 0 ? [newPool, state.pools[1]] : [state.pools[0], newPool];
+      const selectedDeck = state.decks[action.player][action.deck];
+      if (!selectedDeck || action.slot < 0 || action.slot > 2) return { ...state, pools };
+      const changedDeck: DeckSlots = [...selectedDeck];
+      changedDeck[action.slot] = { kind: 'pool', index: newIndex };
+      const changedPlayerDecks = state.decks[action.player].map((deck, index) =>
+        index === action.deck ? changedDeck : deck
+      );
+      const decks: [DeckSlots[], DeckSlots[]] =
+        action.player === 0 ? [changedPlayerDecks, state.decks[1]] : [state.decks[0], changedPlayerDecks];
+      return { ...state, pools, decks };
     }
     case 'submit-decks':
       if (state.config.decksPerPlayer > 1) {
@@ -156,6 +181,38 @@ function reducer(state: AppState, action: Action): AppState {
 
 export function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const activeList = useMemo(() => {
+    if (!isActive(state) || !state.config.banlistId) return null;
+    return loadCustomLists().find((l) => l.id === state.config.banlistId) ?? null;
+  }, [isActive(state) ? state.config.banlistId : undefined]);
+
+  const activeCatalogue = useMemo(() => {
+    if (!isActive(state)) return undefined;
+    if (!state.catalogue) return state.catalogue;
+    return activeList
+      ? { ...state.catalogue, banned: effectiveBanned(state.catalogue.banned, activeList) }
+      : state.catalogue;
+  }, [isActive(state) ? state.catalogue : undefined, activeList]);
+
+  const banlist = useMemo(
+    () =>
+      isActive(state) && isConstructed(state.config.mode) && activeCatalogue
+        ? {
+            title: activeList ? activeList.name : 'Official 3CB',
+            cards: activeCatalogue.cards
+              .filter((card) => activeCatalogue.banned.has(card.name))
+              .map((card) => ({ name: card.name, scryfallId: card.scryfallId })),
+            subtitle: `${activeCatalogue.banned.size} cards`,
+            ...(activeList
+              ? {
+                  deviations: { added: activeList.added, removed: activeList.removed },
+                  baseLabel: 'Official 3CB',
+                }
+              : {}),
+          }
+        : undefined,
+    [activeCatalogue, activeList]
+  );
 
   const phaseTag = isActive(state)
     ? `${state.phase.t}${'player' in state.phase ? `-${state.phase.player}` : ''}`
@@ -174,26 +231,56 @@ export function App() {
         <InstallBanner />
         <StartScreen
           initial={state.lastConfig}
-          onStart={(config, cube) => dispatch({ type: 'start', config, cube })}
+          onStart={(config, cube, catalogue) => dispatch({ type: 'start', config, cube, catalogue })}
         />
       </>
     );
   } else {
     switch (state.phase.t) {
-      case 'handoff':
+      case 'handoff': {
+        // The handoff is the only screen BOTH players are guaranteed to read,
+        // so it has to name the list actually in force. Saying "Official 3CB"
+        // while a custom list quietly legalises Black Lotus is worse than
+        // saying nothing at all.
+        const terms =
+          isConstructed(state.config.mode) && activeCatalogue
+            ? {
+                title: activeList ? activeList.name : 'Official 3CB',
+                detail: activeList
+                  ? `${activeCatalogue.banned.size} banned - official +${activeList.added.length} -${activeList.removed.length}`
+                  : `${activeCatalogue.banlist.count} banned - synced ${activeCatalogue.banlist.fetchedAt}`,
+              }
+            : undefined;
         screen = (
           <HandoffScreen
             name={state.config.playerNames[state.phase.player]}
             player={state.phase.player}
             poolSize={state.config.poolSize}
             deckCount={state.config.decksPerPlayer}
+            terms={terms}
+            banlist={banlist}
             onReveal={() => dispatch({ type: 'reveal' })}
           />
         );
         break;
+      }
       case 'build': {
         const player = state.phase.player;
-        screen = (
+        screen = isConstructed(state.config.mode) && activeCatalogue ? (
+          <ConstructedBuildScreen
+            player={player}
+            name={state.config.playerNames[player]}
+            catalogue={activeCatalogue}
+            basics={basicsFromCatalogue(activeCatalogue)}
+            pool={state.pools[player]}
+            decks={state.decks[player]}
+            onAddCard={(card, deck, slot) => dispatch({ type: 'add-card', player, card, deck, slot })}
+            onSetSlot={(deck, slot, ref) =>
+              dispatch({ type: 'set-slot', player, deck, slot, ref })
+            }
+            onSubmit={() => dispatch({ type: 'submit-decks', player })}
+          />
+        ) : (
           <BuildScreen
             player={player}
             name={state.config.playerNames[player]}

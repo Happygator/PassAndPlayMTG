@@ -1,0 +1,35 @@
+{
+  "note": "Quick-lookup menu for the constructed 3CB build screen. Add or reorder cycles freely; every name is checked against the built card catalogue by `npm run lookup`, so a typo fails the build instead of silently vanishing from the menu.",
+  "cycles": [
+	{
+      "id": "moxen",
+      "name": "Moxen",
+      "note": "",
+      "cards": ["Mox Pearl", "Mox Sapphire", "Mox Jet", "Mox Ruby", "Mox Emerald"]
+    },
+    {
+      "id": "depletion",
+      "name": "Depletion lands",
+      "note": "",
+      "cards": ["Remote Farm", "Saprazzan Skerry", "Peat Bog", "Sandstone Needle", "Hickory Woodlot"]
+    },
+	{
+      "id": "storage_mono",
+      "name": "Storage lands",
+      "note": "",
+      "cards": ["Fountain of Cho", "Saprazzan Cove", "Subterranean Hangar", "Mercadian Bazaar", "Rushwood Grove", "Icatian Store", "Sand Silos", "Bottomless Vault", "Dwarven Hold", "Hollow Trees"]
+    },
+    {
+      "id": "storage_allied",
+      "name": "Multicolored storage lands",
+      "note": "",
+      "cards": ["Calciform Pools", "Dreadship Reef", "Fungal Reaches", "Molten Slagheap", "Saltcrusted Steppe"]
+    },
+    {
+      "id": "bounce",
+      "name": "Bounce lands",
+      "note": "",
+      "cards": ["Azorius Chancery", "Boros Garrison", "Dimir Aqueduct", "Golgari Rot Farm", "Gruul Turf", "Izzet Boilerworks", "Orzhov Basilica", "Rakdos Carnarium", "Selesnya Sanctuary", "Simic Growth Chamber"]
+    }
+  ]
+}

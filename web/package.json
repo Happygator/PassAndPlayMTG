@@ -6,11 +6,18 @@
   "scripts": {
     "dev": "vite",
     "start": "node scripts/start.mjs",
-    "build": "tsc --noEmit && vite build",
+    "generate": "npm run cube && npm run banlist && npm run catalogue && npm run lookup",
+  "prebuild": "npm run generate",
+  "prebuild:app": "npm run generate",
+  "prebuild:imessage": "npm run generate",
+  "build": "tsc --noEmit && vite build",
     "build:app": "tsc --noEmit && vite build --mode app",
     "build:imessage": "tsc --noEmit && vite build --mode imessage",
     "preview": "vite preview",
     "cube": "node scripts/build-cube.mjs",
+    "banlist": "node scripts/build-banlist.mjs",
+    "catalogue": "node scripts/build-catalogue.mjs",
+    "lookup": "node scripts/build-lookup.mjs",
     "icons": "node scripts/make-icons.mjs"
   },
   "dependencies": {

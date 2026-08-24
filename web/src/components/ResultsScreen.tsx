@@ -3,6 +3,7 @@ import { cardImageSrc } from '@platform';
 import {
   deckNames,
   formatPoints,
+  isConstructed,
   isDecisive,
   resolveRef,
   resultPillLabel,
@@ -64,6 +65,11 @@ function collectPoolUsage(decks: DeckSlots[]): Map<number, number> {
 export function ResultsScreen({ state, onNewGame }: ResultsScreenProps) {
   const [selectedPairing, setSelectedPairing] = useState<Pairing | null>(null);
   const [showPools, setShowPools] = useState(false);
+  // In constructed mode, "pools[player]" is just the cards the player pulled
+  // in while building, plus orphaned entries from cards added then removed.
+  // A "full pool" reveal there would show rejected search results as if they
+  // were a dealt sealed pool, so skip the reveal entirely in that mode.
+  const poolsWorthShowing = !isConstructed(state.config.mode);
   const [playerOnePoints, playerTwoPoints] = tally(state.matchups);
   const playerOneName = state.config.playerNames[0];
   const playerTwoName = state.config.playerNames[1];
@@ -171,7 +177,7 @@ export function ResultsScreen({ state, onNewGame }: ResultsScreenProps) {
         </section>
       )}
 
-      {showPools ? (
+      {poolsWorthShowing && (showPools ? (
         <section class="full-pools">
           <h2>Full pools</h2>
           <div class="pool-reveal">
@@ -215,7 +221,7 @@ export function ResultsScreen({ state, onNewGame }: ResultsScreenProps) {
         >
           See full pools
         </button>
-      )}
+      ))}
 
     </main>
   );

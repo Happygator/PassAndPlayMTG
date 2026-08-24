@@ -34,8 +34,19 @@ export interface ModeRules {
 }
 
 export const MODE_RULES: Record<GameMode, ModeRules> = {
-  '3cb': {
+  '3cb-real': {
     label: '3-Card Blind',
+    blurb: '20 life, perfect information, every legal card.',
+    defaultPoolSize: 0,
+    defaultDecksPerPlayer: 1,
+    allowBasics: true,
+    hiddenCards: false,
+    results: ['p1-sweep', 'p1-play', 'even', 'p2-play', 'p2-sweep'],
+    poolSort: 'cost',
+    randomFirstPlayer: false,
+  },
+  '3cb': {
+    label: '3CB Sealed',
     blurb: '20 life and perfect information.',
     defaultPoolSize: 10,
     defaultDecksPerPlayer: 1,
@@ -57,6 +68,11 @@ export const MODE_RULES: Record<GameMode, ModeRules> = {
     randomFirstPlayer: true,
   },
 };
+
+/** Constructed modes deal no pool — a player's "pool" fills up with the cards they search for. */
+export function isConstructed(mode: GameMode): boolean {
+  return mode === '3cb-real';
+}
 
 /** Deal two sealed pools from the cube (disjoint by default), each sorted for display. */
 export function dealPools(
@@ -266,7 +282,7 @@ export function resolveRef(ref: CardRef, pool: readonly CardData[], basics: read
   return ref.kind === 'pool' ? pool[ref.index] : basics[ref.index];
 }
 
-/** Comma-separated front-face card names of a deck, e.g. "Black Lotus, Daze, Memnite". */
+/** Pipe-separated front-face card names of a deck, e.g. "Black Lotus, Daze, Memnite". */
 export function deckNames(
   deck: DeckSlots,
   pool: readonly CardData[],
