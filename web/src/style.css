@@ -1006,7 +1006,7 @@ h1, h2, h3 {
   font-weight: 600;
 }
 
-/* Pai Gow: play-a-card-by-name field inline with each deck header */
+/* Pai Gow: the private-view button sits inline with each deck header */
 .match-deck-header {
   display: flex;
   align-items: center;
@@ -1018,23 +1018,7 @@ h1, h2, h3 {
   margin: 0;
   text-align: left;
 }
-.play-card {
-  display: flex;
-  flex: 1 1 160px;
-  min-width: 0;
-  gap: 6px;
-}
-.play-card input {
-  flex: 1;
-  min-width: 0;
-  min-height: 36px;
-  padding: var(--space-1) var(--space-2);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-sm);
-  background: var(--surface);
-  font-size: 16px; /* >= 16px: iOS does not auto-zoom the page on focus */
-}
-.play-card button {
+.peek-button {
   flex: 0 0 auto;
   min-height: 36px;
   padding: 0 var(--space-3);
@@ -1045,12 +1029,44 @@ h1, h2, h3 {
   font-size: 0.8rem;
   font-weight: 600;
 }
-.play-card-miss {
-  margin: 0;
-  color: var(--danger);
-  font-size: 0.78rem;
-  text-align: center;
+
+/* Private view: one player's own decks, on a screen of their own. Bordered
+   blocks rather than a bare stack, because four unlabelled rows of three cards
+   are indistinguishable at a glance — which is the exact problem this solves. */
+.deck-peek .screen-header { margin-bottom: var(--space-2); }
+.peek-deck {
+  padding: var(--space-2);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
 }
+.peek-deck + .peek-deck { margin-top: var(--space-2); }
+.peek-deck h3 {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-1);
+  font-size: 1.05rem;
+}
+/* --accent is the player holding the device (see .player-1 / .player-2), so the
+   deck in play is marked in their own colour rather than a third hue. */
+.peek-deck--current { border-color: var(--accent); background: var(--surface-2); }
+.peek-now {
+  color: var(--accent);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+/* Four decks at the match screen's card size would not fit a phone; these are
+   for recognition, not reading, and pinch-zoom is there for the rest. */
+.deck-peek .match-card-row .card-thumb { max-width: min(28vw, 16dvh); }
+/* The confirmation step before the cards appear. Deliberately sparse: the only
+   things on it are who is about to look and the two ways out. */
+.deck-peek-confirm h1 { color: var(--accent); }
+.deck-peek-confirm p { max-width: 34ch; }
 
 .first-player {
   margin: 2px 0 0;

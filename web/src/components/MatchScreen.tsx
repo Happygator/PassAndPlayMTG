@@ -16,16 +16,120 @@ interface MatchScreenProps {
   onGoto: (index: number) => void;
 }
 
-const NAMES_LIST_ID = 'cube-card-names';
+interface DeckCardsProps {
+  deck: DeckSlots;
+  pool: CardData[];
+  basics: CardData[];
+}
 
-/** Front-face name, trimmed and lowercased, for case-insensitive matching. */
-function frontName(name: string): string {
-  return name.split(' // ')[0].trim().toLowerCase();
+/** A deck's three cards, face up. Shared by the private view and the results-style rows. */
+function DeckCards({ deck, pool, basics }: DeckCardsProps) {
+  return (
+    <div class="match-card-row">
+      {deck.map((ref, index) => {
+        if (ref === null) return <div class="empty-slot" key={index} />;
+        const card = resolveRef(ref, pool, basics);
+        return (
+          <div class="card-thumb" key={index}>
+            <img src={cardImageSrc(card)} alt={card.name} draggable={false} />
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+interface DeckPeekProps {
+  name: string;
+  player: 0 | 1;
+  decks: DeckSlots[];
+  pool: CardData[];
+  basics: CardData[];
+  /** Which deck this matchup is being played with; marked so it is found at a glance. */
+  currentDeck: number;
+  onClose: () => void;
+}
+
+/**
+ * A player's own decks, shown privately.
+ *
+ * Pai Gow submits twelve cards across four decks and then plays them face-down
+ * over four matchups, which is more than anyone reliably remembers. This takes
+ * the whole screen rather than opening beside the board: the device is being
+ * passed, and a panel sharing the screen with the opponent's cards is a panel
+ * the opponent can read over your shoulder. Nothing here reveals anything on
+ * the shared board — looking at your own cards is not playing them.
+ */
+function DeckPeek({ name, player, decks, pool, basics, currentDeck, onClose }: DeckPeekProps) {
+  return (
+    <main class={`screen deck-peek player-${player + 1}`}>
+      <header class="screen-header">
+        <p class="kicker">For {name} only</p>
+        <h1>Your decks</h1>
+        <p class="muted">Turn the device away from your opponent.</p>
+      </header>
+
+      {decks.map((deck, index) => (
+        <section
+          class={`match-deck peek-deck${index === currentDeck ? ' peek-deck--current' : ''}`}
+          key={index}
+        >
+          <h3>
+            Deck {index + 1}
+            {index === currentDeck && <span class="peek-now">playing now</span>}
+          </h3>
+          <DeckCards deck={deck} pool={pool} basics={basics} />
+        </section>
+      ))}
+
+      <button type="button" class="primary-button" onClick={onClose}>
+        Done
+      </button>
+    </main>
+  );
+}
+
+interface DeckPeekConfirmProps {
+  name: string;
+  player: 0 | 1;
+  deckCount: number;
+  onConfirm: () => void;
+  onCancel: () => void;
+}
+
+/**
+ * The step between tapping "Deck reminder" and actually seeing the cards.
+ *
+ * The button sits inches from the face-down board on a device being passed
+ * back and forth, so a mis-tap is easy and its cost is asymmetric: cards seen
+ * cannot be unseen, and the opponent may still be holding the device. One
+ * deliberate confirmation makes the reveal intentional and gives a mis-tap a
+ * way out.
+ */
+function DeckPeekConfirm({ name, player, deckCount, onConfirm, onCancel }: DeckPeekConfirmProps) {
+  return (
+    <main class={`screen centered-screen deck-peek-confirm player-${player + 1}`}>
+      <div>
+        <h1>{name}</h1>
+        <p>
+          {deckCount === 1
+            ? 'The three cards you submitted will be shown.'
+            : `Every deck you submitted will be shown — all ${deckCount}, not just the one you are playing this match.`}{' '}
+          Make sure your opponent cannot see the screen.
+        </p>
+      </div>
+      <button type="button" class="primary-button" onClick={onConfirm}>
+        Show my decks
+      </button>
+      <button type="button" class="text-button" onClick={onCancel}>
+        Back
+      </button>
+    </main>
+  );
 }
 
 interface MatchDeckProps {
   name: string;
-  deckNumber: number;
   deck: DeckSlots;
   pool: CardData[];
   basics: CardData[];
@@ -34,15 +138,14 @@ interface MatchDeckProps {
   matchupIndex: number;
   revealed: Set<string>;
   onReveal: (key: string) => void;
-  /** Lowercased front-face names of every card in the cube (for auto-reveal on a picked suggestion). */
-  cubeNames: Set<string>;
-  /** Player 2's label and reveal field sit BELOW the cards, mirroring player 1 across the "vs". */
+  /** Opens this player's private view of their own decks. */
+  onPeek: () => void;
+  /** Player 2's label and controls sit BELOW the cards, mirroring player 1 across the "vs". */
   labelBelow: boolean;
 }
 
 function MatchDeck({
   name,
-  deckNumber,
   deck,
   pool,
   basics,
@@ -51,30 +154,10 @@ function MatchDeck({
   matchupIndex,
   revealed,
   onReveal,
-  cubeNames,
+  onPeek,
   labelBelow,
 }: MatchDeckProps) {
-  const [query, setQuery] = useState('');
-  const [miss, setMiss] = useState(false);
   const playerClass = player === 0 ? 'p1-text' : 'p2-text';
-
-  // Reveal-by-name: the player says what they are casting instead of guessing
-  // a position, so the wrong card can never be flipped by mistake.
-  const revealByName = (value: string): boolean => {
-    const wanted = frontName(value);
-    if (!wanted) return false;
-    const slot = deck.findIndex(
-      (ref) => ref !== null && frontName(resolveRef(ref, pool, basics).name) === wanted
-    );
-    if (slot === -1) {
-      setMiss(true);
-      return false;
-    }
-    onReveal(`${matchupIndex}:${player}:${slot}`);
-    setQuery('');
-    setMiss(false);
-    return true;
-  };
 
   const header = (
     <div class="match-deck-header">
@@ -82,38 +165,18 @@ function MatchDeck({
         <span class={playerClass}>{name}</span>
       </h2>
       {hidden && (
-        <form
-          class="play-card"
-          onSubmit={(event) => {
-            event.preventDefault();
-            revealByName(query);
-          }}
+        <button
+          type="button"
+          class="peek-button"
+          aria-label={`Deck reminder for ${name} — shows their own decks privately`}
+          onClick={onPeek}
         >
-          <input
-            type="text"
-            list={NAMES_LIST_ID}
-            placeholder="Reveal by name..."
-            aria-label={`${name}, deck ${deckNumber}: reveal a card by name`}
-            autocomplete="off"
-            autocapitalize="off"
-            spellcheck={false}
-            value={query}
-            onInput={(event) => {
-              setQuery(event.currentTarget.value);
-              setMiss(false);
-            }}
-            onChange={(event) => {
-              // Fires when a suggestion is picked: reveal immediately if it is a real cube card.
-              const value = event.currentTarget.value;
-              if (cubeNames.has(frontName(value))) revealByName(value);
-            }}
-          />
-          <button type="submit">Reveal</button>
-        </form>
+          Deck reminder
+        </button>
       )}
     </div>
   );
-  const missLine = hidden && miss ? <p class="play-card-miss">Not in this deck.</p> : null;
+
   const cards = (
     <div class="match-card-row">
       {deck.map((ref, index) => {
@@ -147,12 +210,10 @@ function MatchDeck({
         <>
           {cards}
           {header}
-          {missLine}
         </>
       ) : (
         <>
           {header}
-          {missLine}
           {cards}
         </>
       )}
@@ -163,15 +224,41 @@ function MatchDeck({
 export function MatchScreen({ state, onRecord, onGoto }: MatchScreenProps) {
   const rules = MODE_RULES[state.config.mode];
   const [revealed, setRevealed] = useState<Set<string>>(() => new Set());
+  // Two steps, not one: `player` is who asked, `confirmed` is whether they have
+  // passed the confirmation screen. Collapsing these into one value would make
+  // a mis-tap reveal the cards immediately.
+  const [peek, setPeek] = useState<{ player: 0 | 1; confirmed: boolean } | null>(null);
   const playerOneName = state.config.playerNames[0];
   const playerTwoName = state.config.playerNames[1];
 
-  // Suggestions span the whole cube so the list reveals nothing about either deck.
-  const allCards = [...state.cube.cards, ...state.cube.basics];
-  const nameOptions = [...new Set(allCards.map((card) => card.name.split(' // ')[0].trim()))].sort();
-  const cubeNames = new Set(nameOptions.map((name) => name.toLowerCase()));
-
   const matchup = state.matchups[state.currentMatchup];
+
+  if (peek !== null && !peek.confirmed) {
+    return (
+      <DeckPeekConfirm
+        name={state.config.playerNames[peek.player]}
+        player={peek.player}
+        deckCount={state.decks[peek.player].length}
+        onConfirm={() => setPeek({ player: peek.player, confirmed: true })}
+        onCancel={() => setPeek(null)}
+      />
+    );
+  }
+
+  if (peek !== null) {
+    return (
+      <DeckPeek
+        name={state.config.playerNames[peek.player]}
+        player={peek.player}
+        decks={state.decks[peek.player]}
+        pool={state.pools[peek.player]}
+        basics={state.cube.basics}
+        currentDeck={peek.player === 0 ? matchup.p1Deck : matchup.p2Deck}
+        onClose={() => setPeek(null)}
+      />
+    );
+  }
+
   const resultChoices = rules.results.map((result) => ({
     result,
     label: resultButtonLabel(result, [playerOneName, playerTwoName] as [string, string]),
@@ -197,17 +284,8 @@ export function MatchScreen({ state, onRecord, onGoto }: MatchScreenProps) {
         )}
       </header>
 
-      {rules.hiddenCards && (
-        <datalist id={NAMES_LIST_ID}>
-          {nameOptions.map((name) => (
-            <option value={name} key={name} />
-          ))}
-        </datalist>
-      )}
-
       <MatchDeck
         name={playerOneName}
-        deckNumber={matchup.p1Deck + 1}
         deck={state.decks[0][matchup.p1Deck]}
         pool={state.pools[0]}
         basics={state.cube.basics}
@@ -216,13 +294,12 @@ export function MatchScreen({ state, onRecord, onGoto }: MatchScreenProps) {
         matchupIndex={state.currentMatchup}
         revealed={revealed}
         onReveal={reveal}
-        cubeNames={cubeNames}
+        onPeek={() => setPeek({ player: 0, confirmed: false })}
         labelBelow={false}
       />
       <div class="versus">vs</div>
       <MatchDeck
         name={playerTwoName}
-        deckNumber={matchup.p2Deck + 1}
         deck={state.decks[1][matchup.p2Deck]}
         pool={state.pools[1]}
         basics={state.cube.basics}
@@ -231,7 +308,7 @@ export function MatchScreen({ state, onRecord, onGoto }: MatchScreenProps) {
         matchupIndex={state.currentMatchup}
         revealed={revealed}
         onReveal={reveal}
-        cubeNames={cubeNames}
+        onPeek={() => setPeek({ player: 1, confirmed: false })}
         labelBelow={true}
       />
 

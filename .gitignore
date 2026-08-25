@@ -45,3 +45,14 @@ desktop.ini
 web/public/catalogue/
 web/public/banlist/
 web/public/lookup/
+web/public/boosters/
+
+# Booster collation, both halves derived from MTGJSON and neither committed:
+# /boosters/ is the compact per-set output (~6 MB), web/.mtgjson-cache/ the
+# ~126 MB of raw MTGJSON set files it is built from. `npm run boosters:sync`
+# rebuilds both; the deploy workflow runs it with .mtgjson-cache restored from
+# the Actions cache, so only newly released sets are actually downloaded.
+# The leading slash pins this to the repo root -- web/src/boosters.ts is a
+# source file and must stay tracked.
+/boosters/
+web/.mtgjson-cache/
