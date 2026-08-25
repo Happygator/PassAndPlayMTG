@@ -32,7 +32,14 @@ type ActiveState = Omit<GameState, 'phase'> & { phase: Exclude<Phase, { t: 'setu
 type AppState = SetupState | ActiveState;
 
 type Action =
-  | { type: 'start'; config: GameConfig; cube: CubeData; catalogue?: Catalogue }
+  | {
+      type: 'start';
+      config: GameConfig;
+      cube: CubeData;
+      catalogue?: Catalogue;
+      /** Already-dealt pools; booster games open their packs on the start screen. */
+      pools?: [CardData[], CardData[]];
+    }
   | { type: 'add-card'; player: 0 | 1; card: CardData; deck: number; slot: number }
   | { type: 'reveal' }
   | { type: 'set-slot'; player: 0 | 1; deck: number; slot: number; ref: CardRef | null }
@@ -63,14 +70,18 @@ function advanceAfterDecks(state: ActiveState, player: 0 | 1): ActiveState {
 
 function reducer(state: AppState, action: Action): AppState {
   if (action.type === 'start') {
-    const pools: [CardData[], CardData[]] = isConstructed(action.config.mode)
-      ? [[], []]
-      : dealPools(
-          action.cube,
-          action.config.poolSize,
-          action.config.allowRepeats,
-          MODE_RULES[action.config.mode].poolSort
-        );
+    // A booster game arrives with its pools already opened: the set's collation
+    // decides what is in a pack, so there is nothing here to deal from.
+    const pools: [CardData[], CardData[]] =
+      action.pools ??
+      (isConstructed(action.config.mode)
+        ? [[], []]
+        : dealPools(
+            action.cube,
+            action.config.poolSize,
+            action.config.allowRepeats,
+            MODE_RULES[action.config.mode].poolSort
+          ));
     return {
       phase: { t: 'handoff', player: 0 },
       config: action.config,
@@ -231,7 +242,9 @@ export function App() {
         <InstallBanner />
         <StartScreen
           initial={state.lastConfig}
-          onStart={(config, cube, catalogue) => dispatch({ type: 'start', config, cube, catalogue })}
+          onStart={(config, cube, catalogue, pools) =>
+            dispatch({ type: 'start', config, cube, catalogue, pools })
+          }
         />
       </>
     );

@@ -53,6 +53,12 @@ export interface GameConfig {
   mode: GameMode;
   /** Banlist the game was started with; real-3CB only. */
   banlistId?: string;
+  /**
+   * Set the two booster packs were opened from, e.g. "BLB". Present only when
+   * the pools came from boosters rather than a cube, in which case `cubeId` is
+   * the matching `booster:<code>` sentinel.
+   */
+  boosterSetCode?: string;
   cubeId: string;
   poolSize: number;
   decksPerPlayer: number;

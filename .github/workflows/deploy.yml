@@ -31,6 +31,20 @@ jobs:
       # Syncs cube lists from Moxfield (falls back to the committed cubes/*.txt
       # if Moxfield is unreachable) and downloads card data/images from Scryfall.
       - run: npm run cube
+      # Raw MTGJSON set files are big and change only when a set is printed, so
+      # they are cached across runs. The key is stable, so the cache is written
+      # once and merely restored afterwards; a set released since then is the
+      # only thing boosters:sync has to fetch.
+      - name: Restore MTGJSON set files
+        uses: actions/cache@v4
+        with:
+          path: web/.mtgjson-cache
+          key: mtgjson-${{ runner.os }}-${{ hashFiles('web/scripts/build-boosters.mjs') }}
+          restore-keys: |
+            mtgjson-${{ runner.os }}-
+      # Rebuilds the gitignored boosters/ collation data. Without this step the
+      # build fails: `npm run boosters` (inside prebuild) has nothing to emit.
+      - run: npm run boosters:sync
       - run: npm run icons
       - run: npm run build
         env:

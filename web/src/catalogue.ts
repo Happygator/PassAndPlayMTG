@@ -32,6 +32,14 @@ export const cardImageUrl = (scryfallId: string): string =>
   `https://cards.scryfall.io/normal/front/${scryfallId[0]}/${scryfallId[1]}/${scryfallId}.jpg`;
 
 /**
+ * The back face of a double-faced card. Scryfall serves both faces under the
+ * SAME card id, on parallel `front/` and `back/` paths — there is no separate
+ * id to look up — so a card's back image is derivable from its front.
+ */
+export const cardBackImageUrl = (scryfallId: string): string =>
+  `https://cards.scryfall.io/normal/back/${scryfallId[0]}/${scryfallId[1]}/${scryfallId}.jpg`;
+
+/**
  * Fold a name or query to a comparison key: lower-cased, accents stripped, and
  * apostrophes/dashes removed entirely. iOS smart punctuation types a curly
  * apostrophe where every card name in the data uses an ASCII one, so a phone

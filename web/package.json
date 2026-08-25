@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "start": "node scripts/start.mjs",
-    "generate": "npm run cube && npm run banlist && npm run catalogue && npm run lookup",
+    "generate": "npm run cube && npm run banlist && npm run catalogue && npm run lookup && npm run boosters",
   "prebuild": "npm run generate",
   "prebuild:app": "npm run generate",
   "prebuild:imessage": "npm run generate",
@@ -18,6 +18,8 @@
     "banlist": "node scripts/build-banlist.mjs",
     "catalogue": "node scripts/build-catalogue.mjs",
     "lookup": "node scripts/build-lookup.mjs",
+    "boosters": "node scripts/build-boosters.mjs",
+    "boosters:sync": "node scripts/build-boosters.mjs --sync",
     "icons": "node scripts/make-icons.mjs"
   },
   "dependencies": {
