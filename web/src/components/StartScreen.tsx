@@ -912,6 +912,19 @@ export function StartScreen({ onStart, initial }: StartScreenProps) {
           {starting ? (isReal ? 'Loading cards…' : 'Dealing…') : 'Start game'}
         </button>
       </section>
+
+      {/* The Fan Content Policy notice has to appear in the app itself, not
+          only in the listing and on the support/privacy pages
+          (APP-MIGRATION.md section 9). The start screen is the one screen every
+          session passes through. */}
+      <footer class="fan-content">
+        <p>
+          Sealed Pass-and-Play is unofficial Fan Content permitted under the Wizards of the
+          Coast Fan Content Policy. Not approved or endorsed by Wizards. Portions of the
+          materials used are property of Wizards of the Coast. © Wizards of the Coast LLC.
+        </p>
+        <p>Card data and images courtesy of Scryfall.</p>
+      </footer>
     </main>
   );
 }

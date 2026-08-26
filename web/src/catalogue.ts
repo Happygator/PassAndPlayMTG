@@ -1,3 +1,4 @@
+import { fetchData } from './dataRefresh';
 import type { CardData } from './types';
 
 /** One catalogue row, in the fixed field order emitted by build-catalogue.mjs. */
@@ -75,7 +76,10 @@ interface BanlistJson {
 async function fetchCatalogue(): Promise<Catalogue> {
   const [catalogueRes, banlistRes] = await Promise.all([
     fetch('./catalogue/cards.json.gz'),
-    fetch('./banlist/3cb-official.json'),
+    // The catalogue itself stays bundled for now: at 2.4 MB it needs the
+    // version check and disk cache of section 7.3, which belong with the native
+    // image cache. The banlist is small enough to just re-fetch.
+    fetchData('./banlist/3cb-official.json'),
   ]);
   if (!catalogueRes.ok) {
     throw new Error(`Could not load the card catalogue (status ${catalogueRes.status}).`);
@@ -161,7 +165,7 @@ interface CatalogueMetaJson {
 async function fetchBanlistSummary(): Promise<BanlistSummary> {
   const [metaRes, banlistRes] = await Promise.all([
     fetch('./catalogue/meta.json'),
-    fetch('./banlist/3cb-official.json'),
+    fetchData('./banlist/3cb-official.json'),
   ]);
   if (!metaRes.ok) {
     throw new Error(`Could not load the catalogue metadata (status ${metaRes.status}).`);
@@ -204,7 +208,7 @@ export interface BanlistDetail {
 let banlistDetailPromise: Promise<BanlistDetail> | null = null;
 
 async function fetchBanlistDetail(): Promise<BanlistDetail> {
-  const res = await fetch('./banlist/3cb-official.json');
+  const res = await fetchData('./banlist/3cb-official.json');
   if (!res.ok) {
     throw new Error(`Could not load the banlist (status ${res.status}).`);
   }

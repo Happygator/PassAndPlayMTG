@@ -56,3 +56,12 @@ web/public/boosters/
 # source file and must stay tracked.
 /boosters/
 web/.mtgjson-cache/
+
+# --- iOS / Capacitor ------------------------------------------------------------
+# `web/ios/` itself IS committed (APP-MIGRATION.md section 3): it is the Xcode
+# project holding both targets. But CocoaPods regenerates Pods/ from the
+# Podfile on every `pod install`, and it is large, so only the lockfile is
+# worth keeping. This rule must exist BEFORE `npx cap add ios` runs, or the
+# first commit after it drags the whole Pods tree in.
+web/ios/App/Pods/
+web/ios/App/App/public/

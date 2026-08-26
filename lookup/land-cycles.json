@@ -30,6 +30,12 @@
       "name": "Bounce lands",
       "note": "",
       "cards": ["Azorius Chancery", "Boros Garrison", "Dimir Aqueduct", "Golgari Rot Farm", "Gruul Turf", "Izzet Boilerworks", "Orzhov Basilica", "Rakdos Carnarium", "Selesnya Sanctuary", "Simic Growth Chamber"]
+    },
+	{
+      "id": "duals",
+      "name": "Dual lands",
+      "note": "",
+      "cards": ["Badlands", "Bayou", "Plateau", "Savannah", "Scrubland", "Taiga", "Tropical Island", "Tundra", "Underground Sea", "Volcanic Island"]
     }
   ]
 }

@@ -46,7 +46,7 @@
   <body>
     <main>
       <h1>Privacy Policy</h1>
-      <p class="lede">Last updated: 21 August 2026</p>
+      <p class="lede">Last updated: 24 August 2026</p>
 
       <div class="panel">
         <p>
@@ -62,9 +62,10 @@
         and remember what you were doing:
       </p>
       <ul>
-        <li>Card images and cube lists, so play works without a connection.</li>
+        <li>The bundled cubes and their card images, so cube games work without a connection.</li>
+        <li>Card images downloaded while you play, kept so they are not fetched twice.</li>
         <li>Your in-progress game and your last-used game settings.</li>
-        <li>Any cube lists you choose to import.</li>
+        <li>Any custom banlists or cube lists you create or import.</li>
       </ul>
       <p>
         This data never leaves your device. It is not sent to us or to anyone else. Deleting the
@@ -72,19 +73,36 @@
       </p>
 
       <h2>Network connections</h2>
-      <p>Playing a game makes no network requests at all.</p>
       <p>
-        Network access is used only in two situations, and only for retrieving publicly available
-        Magic: The Gathering card information:
+        Whether a connection is needed depends on which mode you play. Every request the app
+        makes is for publicly available Magic: The Gathering card information; none of them
+        carry any information about you.
       </p>
       <ul>
-        <li>Loading or updating the app itself.</li>
         <li>
-          Importing a cube, if you choose to do so. Importing sends the deck list address you
-          provide to that deck-hosting service, and requests card data and card images from
-          Scryfall. No information about you is included in these requests.
+          <strong>Cube games need no connection at all.</strong> The cube's cards and their
+          images ship inside the app.
+        </li>
+        <li>
+          <strong>Booster games and 3-Card Blind</strong> draw on far more cards than could ever
+          ship inside an app, so their card images are requested from Scryfall as they are shown
+          and then kept on your device. 3-Card Blind's card search also queries Scryfall while
+          you type.
+        </li>
+        <li>
+          <strong>Loading or updating the app</strong>, including refreshing the banlist and the
+          list of sets it ships with.
+        </li>
+        <li>
+          <strong>Importing a cube</strong>, if you choose to do so. Importing sends the deck
+          list address you provide to that deck-hosting service, and requests card data and card
+          images from Scryfall.
         </li>
       </ul>
+      <p>
+        There is no account, no identifier and no server of ours involved in any of this, so
+        none of it tells us anything — including whether the app was ever opened.
+      </p>
       <p>
         These third-party services receive the ordinary technical information any web request
         includes, such as your device's IP address, and handle it under their own privacy

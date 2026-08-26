@@ -1,1 +1,22 @@
 @import '../native.css';
+
+/* ---------------------------------------------------------------------------
+   The expanded sheet is shorter than a browser viewport (~690pt against the
+   ~855px the start screen wants), which pushed the primary button just under
+   the fold. The shared `min-height: 41rem` exists to stop the start button
+   moving as cube blurbs change length -- a good trade in a tall viewport and a
+   bad one here, where it costs a scroll to reach the only action on screen.
+
+   Channel CSS rather than a media query, per §4: this is true of the extension
+   at every size, not of narrow screens generally.
+   --------------------------------------------------------------------------- */
+.start-screen .setup-form {
+  min-height: 0;
+}
+
+/* The app shell must fill the sheet so the compact view can centre in it. */
+html,
+body,
+.app-shell {
+  height: 100%;
+}

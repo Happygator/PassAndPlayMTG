@@ -1,13 +1,30 @@
 import type { ComponentChildren } from 'preact';
-import { useEffect, useMemo, useReducer } from 'preact/hooks';
+import { useEffect, useMemo, useReducer, useState } from 'preact/hooks';
 import { BuildScreen } from './components/BuildScreen';
 import { ConstructedBuildScreen } from './components/ConstructedBuildScreen';
 import { HandoffScreen } from './components/HandoffScreen';
 import { MatchScreen } from './components/MatchScreen';
 import { OrderScreen } from './components/OrderScreen';
-import { InstallBanner } from '@platform';
+import {
+  InstallBanner,
+  capabilities,
+  hasNativeBridge,
+  onIncomingState,
+  onPresentationChange,
+  receiveMessageState,
+  requestExpanded,
+  sendMessageState,
+} from '@platform';
 import { ResultsScreen } from './components/ResultsScreen';
+import { ResumeGate } from './components/ResumeGate';
 import { StartScreen } from './components/StartScreen';
+import { buildSavedGame, clearSavedGame, peekSavedGame, restoreGame, saveGame } from './resume';
+import { MESSAGE_VERSION, messageStateFromUrl, messageStateToUrl } from './messageState';
+import type { MessageState } from './messageState';
+import { MessageHarness } from './components/MessageHarness';
+import { WaitingScreen } from './components/WaitingScreen';
+import { CompactView } from './components/CompactView';
+import type { RestoredGame } from './resume';
 import { basicsFromCatalogue } from './catalogue';
 import type { Catalogue } from './catalogue';
 import { effectiveBanned, loadCustomLists } from './banlists';
@@ -49,6 +66,7 @@ type Action =
   | { type: 'confirm-order'; player: 0 | 1 }
   | { type: 'record'; result: MatchResult }
   | { type: 'goto-matchup'; index: number }
+  | { type: 'restore'; game: RestoredGame }
   | { type: 'new-game' };
 
 const initialState: AppState = { phase: { t: 'setup' } };
@@ -104,6 +122,25 @@ function reducer(state: AppState, action: Action): AppState {
     return {
       phase: { t: 'setup' },
       lastConfig: isActive(state) ? state.config : state.lastConfig,
+    };
+  }
+
+  // Handled before the isActive guard: restoring is the one action that runs
+  // FROM the setup screen and produces a live game.
+  if (action.type === 'restore') {
+    // safeResumePhase never returns 'setup', so this branch is unreachable in
+    // practice; it exists because Phase includes 'setup' structurally and
+    // ActiveState excludes it.
+    if (action.game.phase.t === 'setup') return state;
+    return {
+      phase: action.game.phase,
+      config: action.game.config,
+      cube: action.game.cube,
+      pools: action.game.pools,
+      decks: action.game.decks,
+      matchups: action.game.matchups,
+      currentMatchup: action.game.currentMatchup,
+      catalogue: action.game.catalogue,
     };
   }
   if (!isActive(state)) return state;
@@ -192,6 +229,115 @@ function reducer(state: AppState, action: Action): AppState {
 
 export function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
+  // Read once, during the first render, and BEFORE anything can overwrite it.
+  const [saved, setSaved] = useState(peekSavedGame);
+  const [resuming, setResuming] = useState(false);
+  const [resumeError, setResumeError] = useState<string | null>(null);
+
+  // Persist after every change to a live game. iOS discards a backgrounded
+  // WebView without warning, so there is no "save on exit" moment to hook --
+  // the only reliable point is every point. Cheap enough to do unconditionally:
+  // pools are stored as ids, so a payload is a few KB (APP-MIGRATION.md M7).
+  useEffect(() => {
+    if (isActive(state)) saveGame(state);
+  }, [state]);
+
+  const resumeSavedGame = () => {
+    if (!saved || resuming) return;
+    setResuming(true);
+    setResumeError(null);
+    restoreGame(saved)
+      .then((game) => {
+        setSaved(null);
+        dispatch({ type: 'restore', game });
+      })
+      .catch((err: unknown) =>
+        setResumeError(
+          err instanceof Error ? err.message : 'That saved game could not be restored.'
+        )
+      )
+      .finally(() => setResuming(false));
+  };
+
+  const discardSavedGame = () => {
+    clearSavedGame();
+    setSaved(null);
+    setResumeError(null);
+  };
+
+  // --- Messaging channel -------------------------------------------------
+  // All of this is compile-time dead outside the imessage build: capabilities
+  // is a const, so the bundler drops the branches and the imports with them.
+  const [messageError, setMessageError] = useState<string | null>(null);
+  /**
+   * Which end of the conversation this device is on. LOCAL state on purpose:
+   * it is not a property of the game and must never travel in the payload --
+   * both devices decode the same message and would otherwise both believe they
+   * were waiting. Set when this device stages a message, cleared when one
+   * arrives (APP-MIGRATION.md section 5).
+   */
+  const [awaitingReply, setAwaitingReply] = useState(false);
+  // The extension always opens compact, so that is the honest default -- but
+  // only when Swift is actually there to change it. In a browser nothing ever
+  // calls __setPresentation, so defaulting to compact would strand the dev
+  // server on the tap-to-open screen; the harness toggles it instead.
+  const [expanded, setExpanded] = useState(() => !hasNativeBridge());
+
+  const applyIncoming = (incoming: MessageState) => {
+    setMessageError(null);
+    // A message arrived, so this device is no longer the one waiting.
+    setAwaitingReply(false);
+    restoreGame(incoming)
+      .then((game) => {
+        setSaved(null);
+        dispatch({ type: 'restore', game });
+      })
+      .catch((err: unknown) =>
+        setMessageError(
+          err instanceof Error ? err.message : 'That message could not be opened.'
+        )
+      );
+  };
+
+  useEffect(() => {
+    if (!capabilities.messaging) return;
+    return onPresentationChange(setExpanded);
+  }, []);
+
+  useEffect(() => {
+    if (!capabilities.messaging) return;
+    // Two sources: the payload the extension opened with, and anything Swift
+    // delivers later -- willBecomeActive fires on every presentation, not just
+    // the first, so a one-shot read would miss the opponent's reply.
+    const opened = receiveMessageState();
+    if (opened) applyIncoming(opened);
+    return onIncomingState(applyIncoming);
+  }, []);
+
+  const buildOutgoing = (): string | null => {
+    if (!isActive(state)) return null;
+    const payload: MessageState = {
+      ...buildSavedGame(state, state.phase),
+      // The opposing pool is IN the payload either way -- this only says
+      // whether the receiving app may draw it (APP-MIGRATION.md §6.4). Both
+      // decks are locked once the match begins, so that is the reveal point.
+      revealed: state.phase.t === 'match' || state.phase.t === 'results',
+      v: MESSAGE_VERSION,
+    };
+    const caption = `${state.config.playerNames[0]} vs ${state.config.playerNames[1]}`;
+    sendMessageState(payload, caption);
+    setAwaitingReply(true);
+    return messageStateToUrl(payload);
+  };
+
+  const receiveOutgoing = (url: string) => {
+    const incoming = messageStateFromUrl(url);
+    if (!incoming) {
+      setMessageError('That is not a payload this version can open.');
+      return;
+    }
+    applyIncoming(incoming);
+  };
   const activeList = useMemo(() => {
     if (!isActive(state) || !state.config.banlistId) return null;
     return loadCustomLists().find((l) => l.id === state.config.banlistId) ?? null;
@@ -234,10 +380,38 @@ export function App() {
     window.scrollTo(0, 0);
   }, [phaseTag]);
 
+  /**
+   * In a conversation there is nobody to pass the device to, so a handoff phase
+   * means this player's own turn and opens straight into building. The one
+   * exception is the device that just sent: it waits instead (Edit 3b).
+   *
+   * `capabilities.messaging` is a compile-time constant, so for the web and app
+   * channels this whole effect tree-shakes away and the handoff screen behaves
+   * exactly as before.
+   */
+  useEffect(() => {
+    if (!capabilities.messaging || awaitingReply) return;
+    if (isActive(state) && state.phase.t === 'handoff') dispatch({ type: 'reveal' });
+  }, [phaseTag, awaitingReply]);
+
   let screen: ComponentChildren = null;
 
   if (!isActive(state)) {
-    screen = (
+    // An unfinished game takes the whole screen: the new-game form is not drawn
+    // until it has been resumed or discarded, so the start screen never has to
+    // compete with it for room on a phone.
+    screen = saved ? (
+      <ResumeGate
+        savedAt={saved.savedAt}
+        label={`${saved.config.playerNames[0]} vs ${saved.config.playerNames[1]} — ${
+          MODE_RULES[saved.config.mode] ? MODE_RULES[saved.config.mode].label : 'Saved game'
+        }`}
+        busy={resuming}
+        error={resumeError}
+        onResume={resumeSavedGame}
+        onDiscard={discardSavedGame}
+      />
+    ) : (
       <>
         <InstallBanner />
         <StartScreen
@@ -251,6 +425,18 @@ export function App() {
   } else {
     switch (state.phase.t) {
       case 'handoff': {
+        // The messaging channel never shows a handoff: either the effect above
+        // has already advanced this device to build, or this is the device that
+        // sent and is waiting for a reply.
+        if (capabilities.messaging) {
+          screen = (
+            <WaitingScreen
+              opponentName={state.config.playerNames[state.phase.player]}
+              staged={awaitingReply}
+            />
+          );
+          break;
+        }
         // The handoff is the only screen BOTH players are guaranteed to read,
         // so it has to name the list actually in force. Saying "Official 3CB"
         // while a custom list quietly legalises Black Lotus is worse than
@@ -339,12 +525,45 @@ export function App() {
         screen = (
           <ResultsScreen
             state={state}
-            onNewGame={() => dispatch({ type: 'new-game' })}
+            onNewGame={() => {
+              // The game is over: its save has served its purpose, and leaving
+              // it would offer to resume a finished game on the next launch.
+              clearSavedGame();
+              dispatch({ type: 'new-game' });
+            }}
           />
         );
         break;
     }
   }
 
-  return <div class="app-shell">{screen}</div>;
+  // Compact replaces the whole screen rather than wrapping it: the tray cannot
+  // show a game, and rendering one behind this would decode card images for a
+  // view nobody can see -- the exact cost §6.6 is about.
+  const compact = capabilities.messaging && !expanded;
+  const compactTitle = isActive(state)
+    ? `${state.config.playerNames[0]} vs ${state.config.playerNames[1]}`
+    : 'Sealed pass-and-play';
+  const compactDetail = isActive(state)
+    ? 'Tap to open the game.'
+    : 'Tap to start a game in this conversation.';
+
+  return (
+    <div class="app-shell">
+      {compact ? (
+        <CompactView title={compactTitle} detail={compactDetail} onOpen={requestExpanded} />
+      ) : (
+        screen
+      )}
+      {capabilities.messaging && import.meta.env.DEV && (
+        <MessageHarness
+          buildOutgoing={buildOutgoing}
+          onReceive={receiveOutgoing}
+          error={messageError}
+          expanded={expanded}
+          onToggleExpanded={() => setExpanded(!expanded)}
+        />
+      )}
+    </div>
+  );
 }

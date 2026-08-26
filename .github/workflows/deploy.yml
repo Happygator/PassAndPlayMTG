@@ -3,6 +3,13 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [master]
+  # The banlist is scraped, the booster sets come from MTGJSON and the card
+  # catalogue from Scryfall, all at build time -- so a deploy is how this data
+  # refreshes. Weekly keeps a newly printed set or a banlist change landing
+  # without anyone pushing. NOTE: GitHub disables scheduled workflows in a repo
+  # with no activity for 60 days; re-enable it in the Actions tab if that fires.
+  schedule:
+    - cron: '17 9 * * 1'
   workflow_dispatch:
 
 permissions:
@@ -49,6 +56,15 @@ jobs:
       - run: npm run build
         env:
           VITE_BASE: /PassAndPlayMTG/
+      # One vite.config.ts serves all three channels, so a mistake there breaks
+      # the native bundles silently unless CI builds them too. `npm run build`
+      # already ran `generate` and `tsc --noEmit` and the three channels share
+      # one source tree, so these skip straight to bundling. Only web/dist is
+      # uploaded to Pages; these two exist to fail the build, not to ship.
+      - name: Build the app and iMessage channels
+        run: |
+          npx vite build --mode app
+          npx vite build --mode imessage
       - uses: actions/upload-pages-artifact@v3
         with:
           path: web/dist

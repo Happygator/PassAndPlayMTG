@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:app": "vite --mode app --port 5175 --strictPort",
+    "dev:imessage": "vite --mode imessage --port 5176 --strictPort",
     "start": "node scripts/start.mjs",
     "generate": "npm run cube && npm run banlist && npm run catalogue && npm run lookup && npm run boosters",
   "prebuild": "npm run generate",
@@ -20,12 +22,16 @@
     "lookup": "node scripts/build-lookup.mjs",
     "boosters": "node scripts/build-boosters.mjs",
     "boosters:sync": "node scripts/build-boosters.mjs --sync",
-    "icons": "node scripts/make-icons.mjs"
+    "icons": "node scripts/make-icons.mjs",
+    "sync:ios": "npm run build:app && cap sync ios"
   },
   "dependencies": {
+    "@capacitor/core": "^8.5.0",
+    "@capacitor/ios": "^8.5.0",
     "preact": "^10.22.0"
   },
   "devDependencies": {
+    "@capacitor/cli": "^8.5.0",
     "@preact/preset-vite": "^2.9.0",
     "typescript": "^5.5.4",
     "vite": "^5.4.0",

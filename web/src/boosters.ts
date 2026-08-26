@@ -1,4 +1,5 @@
 import { cardBackImageUrl, cardImageUrl } from './catalogue';
+import { fetchData } from './dataRefresh';
 import { sortPool } from './game';
 import type { PoolSort } from './game';
 import type { CardData } from './types';
@@ -99,7 +100,7 @@ async function readMaybeGzipped<T>(response: Response): Promise<T> {
 }
 
 async function fetchBoosterIndex(): Promise<BoosterIndex> {
-  const response = await fetch('./boosters/index.json');
+  const response = await fetchData('./boosters/index.json');
   if (!response.ok) {
     throw new Error(`Could not load the booster set list (status ${response.status}).`);
   }
@@ -260,4 +261,26 @@ export function openBooster(set: BoosterSet, order: PoolSort = 'type-then-cost')
   return [...bySlot.entries()]
     .sort(([a], [b]) => a - b)
     .flatMap(([, cards]) => sortPool(cards, order));
+}
+
+/**
+ * Specific cards from a set, by Scryfall ID, in the order asked for.
+ *
+ * Only a resumed booster game needs this: its pool is whatever the packs
+ * opened, so it cannot be re-dealt -- it has to be looked up card by card.
+ * It lives here rather than in resume.ts because the row format and
+ * `toCardData` are private to this module.
+ *
+ * Throws when an ID is not in the set, which is the honest outcome: a save
+ * pointing at a card this set does not contain is corrupt, not partially
+ * recoverable (DESIGN.md's all-or-nothing rule for card resolution).
+ */
+export function cardsFromSet(set: BoosterSet, scryfallIds: readonly string[]): CardData[] {
+  const byId = new Map<string, BoosterCardRow>();
+  for (const row of set.cards) byId.set(row[5], row);
+  return scryfallIds.map((id) => {
+    const row = byId.get(id);
+    if (!row) throw new Error(`${set.code} does not contain the saved card ${id}.`);
+    return toCardData(row);
+  });
 }

@@ -36,17 +36,19 @@ function chunk(type, data) {
   return Buffer.concat([len, body, crc]);
 }
 
-function encodePng(size, rgb) {
-  const stride = size * 3 + 1;
-  const raw = Buffer.alloc(stride * size);
-  for (let y = 0; y < size; y++) {
+function encodePng(width, height, rgb) {
+  const stride = width * 3 + 1;
+  const raw = Buffer.alloc(stride * height);
+  for (let y = 0; y < height; y++) {
     raw[y * stride] = 0;
-    rgb.copy(raw, y * stride + 1, y * size * 3, (y + 1) * size * 3);
+    rgb.copy(raw, y * stride + 1, y * width * 3, (y + 1) * width * 3);
   }
   const ihdr = Buffer.alloc(13);
-  ihdr.writeUInt32BE(size, 0);
-  ihdr.writeUInt32BE(size, 4);
+  ihdr.writeUInt32BE(width, 0);
+  ihdr.writeUInt32BE(height, 4);
   ihdr[8] = 8; // bit depth
+  // Colour type 2 is RGB with NO alpha channel, which is what the App Store
+  // requires of an app icon -- a transparent icon is rejected outright.
   ihdr[9] = 2; // color type: RGB
   return Buffer.concat([
     Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]),
@@ -71,10 +73,14 @@ function insideCard(px, py, cx, cy, w, h, r, angle) {
   return ax > 0 && ay > 0 && ax * ax + ay * ay <= r * r;
 }
 
-function render(size, scale) {
-  const rgb = Buffer.alloc(size * size * 3);
-  const pivotX = size / 2;
-  const pivotY = size * 0.8;
+function render(width, height, scale) {
+  const rgb = Buffer.alloc(width * height * 3);
+  // Card geometry keys off the SHORTER side, so a wide canvas (the 4:3 iMessage
+  // icon) gets the same fan at the same size with more room either side of it
+  // rather than a stretched one.
+  const size = Math.min(width, height);
+  const pivotX = width / 2;
+  const pivotY = height * 0.8;
   const w = size * 0.34 * scale;
   const h = size * 0.5 * scale;
   const r = size * 0.04 * scale;
@@ -86,8 +92,8 @@ function render(size, scale) {
     cy: pivotY - Math.cos(card.angle) * reach,
   }));
   const SS = 3; // supersampling grid per axis
-  for (let py = 0; py < size; py++) {
-    for (let px = 0; px < size; px++) {
+  for (let py = 0; py < height; py++) {
+    for (let px = 0; px < width; px++) {
       let rs = 0;
       let gs = 0;
       let bs = 0;
@@ -108,23 +114,29 @@ function render(size, scale) {
           bs += color[2];
         }
       }
-      const i = (py * size + px) * 3;
+      const i = (py * width + px) * 3;
       rgb[i] = Math.round(rs / (SS * SS));
       rgb[i + 1] = Math.round(gs / (SS * SS));
       rgb[i + 2] = Math.round(bs / (SS * SS));
     }
   }
-  return encodePng(size, rgb);
+  return encodePng(width, height, rgb);
 }
 
 mkdirSync(OUT_DIR, { recursive: true });
+// The last two are App Store submission assets, not web assets: iOS wants a
+// 1024x1024 marketing icon, and a bundled iMessage extension has its own
+// separate 1024x768 icon well (APP-MIGRATION.md M10). Both are placeholders
+// until real artwork exists -- replace the files, not the filenames.
 const outputs = [
-  ['icon-192.png', 192, 1],
-  ['icon-512.png', 512, 1],
-  ['icon-512-maskable.png', 512, 0.78], // keep artwork inside the maskable safe zone
-  ['apple-touch-icon.png', 180, 1],
+  ['icon-192.png', 192, 192, 1],
+  ['icon-512.png', 512, 512, 1],
+  ['icon-512-maskable.png', 512, 512, 0.78], // keep artwork inside the maskable safe zone
+  ['apple-touch-icon.png', 180, 180, 1],
+  ['appstore-icon-1024.png', 1024, 1024, 1],
+  ['imessage-appstore-icon-1024x768.png', 1024, 768, 1],
 ];
-for (const [file, size, scale] of outputs) {
-  writeFileSync(join(OUT_DIR, file), render(size, scale));
-  console.log(`wrote icons/${file} (${size}x${size})`);
+for (const [file, width, height, scale] of outputs) {
+  writeFileSync(join(OUT_DIR, file), render(width, height, scale));
+  console.log(`wrote icons/${file} (${width}x${height})`);
 }

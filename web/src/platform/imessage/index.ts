@@ -19,3 +19,24 @@ export const InstallBanner: FunctionComponent = () => null;
 // Scryfall at runtime, so their imagePath is already absolute.
 export const cardImageSrc = (card: CardData): string =>
   /^https?:\/\//.test(card.imagePath) ? card.imagePath : `./${card.imagePath}`;
+
+/**
+ * Same source as the container app (APP-MIGRATION.md section 7.3). The
+ * extension is the channel most likely to be on a bad connection, which is
+ * exactly why the bundled fallback is not optional.
+ */
+export const dataBaseUrl: string | undefined = 'https://happygator.github.io/PassAndPlayMTG/';
+
+/**
+ * Transport (APP-MIGRATION.md §6.5). Re-exported through `@platform` so shared
+ * code never imports a channel directly -- the web and app channels export
+ * inert versions of the same names.
+ */
+export {
+  hasNativeBridge,
+  onIncomingState,
+  onPresentationChange,
+  receiveMessageState,
+  requestExpanded,
+  sendMessageState,
+} from './transport';

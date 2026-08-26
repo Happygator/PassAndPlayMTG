@@ -465,7 +465,18 @@ h1, h2, h3 {
 .pool-grid--3 { --card-min: 88px; }
 .pool-grid--2 { --card-min: 140px; }
 .pool-grid--1 { --card-min: 240px; }
-.pool-grid .card-thumb { max-width: none; }
+.pool-grid .card-thumb {
+  max-width: none;
+  /* Offscreen pool cards are never decoded. A Scryfall `normal` image decodes
+     to ~1.27 MB of RGBA regardless of its ~100 KB on disk, so a large pool or
+     a both-pools results screen can hold tens of MB of decoded bitmaps; an
+     iMessage extension is TERMINATED rather than degraded when it runs out
+     (APP-MIGRATION.md section 6.6). The `auto` in contain-intrinsic-size makes
+     the browser remember each card's real size after its first render, so the
+     scroll position stops shifting once a card has been seen. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 140px;
+}
 .pool-head {
   display: flex;
   align-items: center;
@@ -1598,4 +1609,134 @@ h1, h2, h3 {
 }
 .start-screen .setup-form .primary-button {
   margin-top: auto;
+}
+
+/* ---------------------------------------------------------------------------
+   Fan Content Policy notice. Required in the binary, not only on support.html
+   and privacy.html (APP-MIGRATION.md section 9). Deliberately quiet: it is a
+   legal requirement, not a design element, and it must not compete with the
+   start button above it.
+   --------------------------------------------------------------------------- */
+.fan-content {
+  margin-top: var(--space-3);
+  color: var(--muted);
+  font-size: 0.6rem;
+  line-height: 1.4;
+  text-align: center;
+  /* Sized to stay off the critical path: at 0.7rem/1.5 with a --space-5 margin
+     this notice was ~116px, which by itself pushed the start screen past a
+     375x812 phone and made the start button need a scroll. It is a legal
+     requirement that must be present and legible, not one that must be
+     prominent. */
+}
+.fan-content p { margin: 0 0 var(--space-1); }
+.fan-content p:last-child { margin-bottom: 0; }
+
+/* ---------------------------------------------------------------------------
+   Resume offer on the start screen (APP-MIGRATION.md M7). Sits above the setup
+   form, so it must read as a distinct offer rather than as part of the form:
+   the accent left edge does that without adding another surface colour.
+   --------------------------------------------------------------------------- */
+.resume-banner {
+  display: grid;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  border-left: 3px solid var(--accent);
+}
+.resume-banner__text { display: grid; gap: var(--space-1); }
+.resume-banner h2 { margin: 0; }
+.resume-banner p { margin: 0; }
+.resume-banner__when { color: var(--muted); font-size: 0.78rem; }
+.resume-banner__actions { display: flex; gap: var(--space-2); }
+.resume-banner__actions .primary-button { flex: 1; }
+/* The discard button was bare, so it rendered as UA chrome: inherited
+   near-white --ink text on the browser's default light-grey button face, i.e.
+   invisible. Found on device, not in review. It now carries the app's existing
+   .secondary-button class (defined once, near .primary-button) rather than a
+   second definition of that class down here -- the duplicate silently
+   overrode padding, radius and font-size on every secondary button in the app.
+   Only the width needs overriding: .secondary-button is full-width by default,
+   which is wrong beside a flex: 1 primary. */
+.resume-banner__actions .secondary-button { width: auto; }
+
+/* ---------------------------------------------------------------------------
+   Conversation stand-in (development only, imessage channel). Deliberately
+   utilitarian: it is scaffolding for testing the message flow without Xcode,
+   never part of the product, and it must not be mistaken for product UI.
+   --------------------------------------------------------------------------- */
+.message-harness {
+  position: fixed;
+  right: var(--space-2);
+  bottom: var(--space-2);
+  z-index: 50;
+  max-width: min(28rem, calc(100vw - var(--space-4)));
+  font-family: var(--font-data);
+  font-size: 0.7rem;
+}
+.message-harness__toggle {
+  border: 1px dashed var(--rule);
+  background: var(--surface-2);
+  color: var(--muted);
+  padding: var(--space-1) var(--space-2);
+}
+.message-harness--open .message-harness__body {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+  padding: var(--space-2);
+  border: 1px dashed var(--rule);
+  background: var(--surface);
+}
+.message-harness__row { display: flex; gap: var(--space-2); }
+.message-harness__row button { flex: 0 0 auto; }
+.message-harness__note { margin: 0; color: var(--muted); }
+.message-harness__error { margin: 0; color: var(--danger); }
+.message-harness__payload,
+.message-harness__input {
+  width: 100%;
+  font-family: var(--font-data);
+  font-size: 0.68rem;
+  word-break: break-all;
+}
+
+/* ---------------------------------------------------------------------------
+   The compact tray (imessage channel). One screen, one action, no scrolling:
+   ~270pt is not enough for anything else, and a compact view that scrolls is a
+   compact view that has already failed (APP-MIGRATION.md §6.2).
+   --------------------------------------------------------------------------- */
+.compact-view {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: var(--space-2);
+  height: 100%;
+  padding: var(--space-3) var(--space-4);
+  padding-right: calc(var(--space-4) + env(safe-area-inset-right));
+  padding-left: calc(var(--space-4) + env(safe-area-inset-left));
+  text-align: center;
+}
+.compact-view__kicker {
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--font-data);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.compact-view__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height: 1.1;
+}
+.compact-view__detail { margin: 0 0 var(--space-2); color: var(--muted); }
+.compact-view .primary-button { width: auto; min-width: 12rem; }
+
+/* The extension's stand-in for the handoff screen (APP-MIGRATION.md section 5).
+   Quiet on purpose: waiting is not an event, and this screen must not look
+   like it wants a tap. */
+.waiting-screen__note {
+  max-width: 28ch;
+  color: var(--muted);
+  text-wrap: balance;
 }
