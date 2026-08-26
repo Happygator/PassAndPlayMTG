@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'preact';
 import type { CardData } from '../../types';
-import type { PlatformCapabilities } from '../types';
+import type { PlatformCapabilities, RemoteImageSrc } from '../types';
 
 export const capabilities = {
   cardSizeControl: true,
@@ -18,7 +18,13 @@ export const InstallBanner: FunctionComponent = () => null;
 // Cube cards ship in the bundle; constructed-mode cards are fetched from
 // Scryfall at runtime, so their imagePath is already absolute.
 export const cardImageSrc = (card: CardData): string =>
-  /^https?:\/\//.test(card.imagePath) ? card.imagePath : `./${card.imagePath}`;
+  /^https?:\/\//.test(card.imagePath) ? remoteImageSrc(card.imagePath) : `./${card.imagePath}`;
+
+/**
+ * M8 replaces this with an App Group lookup, sharing the cache the container
+ * app fills (see ios-src/AppSchemeHandler.swift, which already reads it).
+ */
+export const remoteImageSrc: RemoteImageSrc = (url) => url;
 
 /**
  * Same source as the container app (APP-MIGRATION.md section 7.3). The

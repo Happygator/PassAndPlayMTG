@@ -22,6 +22,17 @@ export interface PlatformCapabilities {
 export type CardImageSrc = (card: CardData) => string;
 
 /**
+ * Resolve an absolute remote card-art URL to something an <img src> can load.
+ *
+ * Separate from `CardImageSrc` because not every card image arrives as a
+ * `CardData`: the banlist screens build a URL straight from a Scryfall id, and
+ * the Scryfall search screen gets one from the API. Those three call sites
+ * bypassed the platform layer entirely and hot-linked, which is the thing the
+ * app channel's disk cache exists to stop.
+ */
+export type RemoteImageSrc = (url: string) => string;
+
+/**
  * The conversation transport (APP-MIGRATION.md section 6.5). Every channel must
  * export all six, because shared code calls them without knowing which channel
  * it is in; the non-messaging channels export inert versions that tree-shake

@@ -1,7 +1,7 @@
 import type { FunctionComponent } from 'preact';
 import { PwaBanner } from '../../components/PwaBanner';
 import type { CardData } from '../../types';
-import type { PlatformCapabilities, PlatformTransport } from '../types';
+import type { PlatformCapabilities, PlatformTransport, RemoteImageSrc } from '../types';
 
 export const capabilities = {
   // Pinch-zoom and the size control do different jobs: zoom magnifies ONE card
@@ -20,7 +20,13 @@ export const InstallBanner: FunctionComponent = PwaBanner;
 // Cube cards ship in the bundle; constructed-mode cards are fetched from
 // Scryfall at runtime, so their imagePath is already absolute.
 export const cardImageSrc = (card: CardData): string =>
-  /^https?:\/\//.test(card.imagePath) ? card.imagePath : `./${card.imagePath}`;
+  /^https?:\/\//.test(card.imagePath) ? remoteImageSrc(card.imagePath) : `./${card.imagePath}`;
+
+/**
+ * The browser is the cache here: the service worker precaches bundled art,
+ * and Scryfall's own CDN headers cover the rest.
+ */
+export const remoteImageSrc: RemoteImageSrc = (url) => url;
 
 /**
  * No refresh source: this channel IS the deployed site, so a bundle-relative

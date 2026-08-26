@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'preact/hooks';
 import { cardImageUrl, loadBanlistDetail } from '../catalogue';
+import { remoteImageSrc } from '@platform';
 import type { BannedCard, BanlistDetail } from '../catalogue';
 
 interface BanlistScreenProps {
@@ -218,7 +219,7 @@ export function BanlistScreen({ title, cards, subtitle, deviations, baseLabel, o
         <div class={`pool-grid pool-grid--${viewMode}`}>
           {filtered.map((card) => (
             <div class="card-thumb" key={card.scryfallId}>
-              <img src={cardImageUrl(card.scryfallId)} alt={card.name} loading="lazy" draggable={false} />
+              <img src={remoteImageSrc(cardImageUrl(card.scryfallId))} alt={card.name} loading="lazy" draggable={false} />
             </div>
           ))}
         </div>

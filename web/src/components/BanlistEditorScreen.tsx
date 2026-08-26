@@ -1,6 +1,7 @@
 import { useState } from 'preact/hooks';
 import type { CardData } from '../types';
 import { cardImageUrl, cardLine, searchCatalogue } from '../catalogue';
+import { remoteImageSrc } from '@platform';
 import type { Catalogue } from '../catalogue';
 import { effectiveBanned, newListId } from '../banlists';
 import type { CustomBanlist } from '../banlists';
@@ -408,7 +409,7 @@ export function BanlistEditorScreen({
               const image = (
                 <>
                   <img
-                    src={cardImageUrl(card.scryfallId)}
+                    src={remoteImageSrc(cardImageUrl(card.scryfallId))}
                     loading="lazy"
                     alt={card.name}
                     draggable={false}

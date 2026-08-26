@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'preact/hooks';
 import type { Catalogue } from '../catalogue';
+import { remoteImageSrc } from '@platform';
 import type { CardData } from '../types';
 
 interface ScryfallSearchScreenProps {
@@ -276,7 +277,7 @@ export function ScryfallSearchScreen({ catalogue, onPick, onBack }: ScryfallSear
                   tabIndex={blocked ? undefined : 0}
                   aria-disabled={blocked}
                 >
-                  <img src={image} alt={card.name} loading="lazy" draggable={false} />
+                  <img src={remoteImageSrc(image)} alt={card.name} loading="lazy" draggable={false} />
                   {blocked && <span class="banned-flag">{notLegal ? 'Not legal' : 'Banned'}</span>}
                 </div>
               );
